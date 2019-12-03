@@ -3,6 +3,7 @@
     #region Using Directives
 
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Text;
 
     #endregion
@@ -119,6 +120,7 @@
         }
 
         /// <inheritdoc />
+        [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode")]
         public override int GetHashCode()
         {
             unchecked
