@@ -132,11 +132,13 @@
         }
 
         /// <inheritdoc />
-        public bool Equals(Coordinates other) =>
-            this.Direction.Equals(other.Direction) &&
-            this.X.Equals(other.X)                 &&
-            this.Y.Equals(other.Y)                 &&
-            this.Z.Equals(other.Z);
+        public bool Equals(Coordinates other)
+        {
+            return this.Direction.Equals(other.Direction) &&
+                   this.X.Equals(other.X)                 &&
+                   this.Y.Equals(other.Y)                 &&
+                   this.Z.Equals(other.Z);
+        }
 
         #endregion
     }
