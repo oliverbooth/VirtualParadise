@@ -17,12 +17,12 @@ namespace VirtualParadise.Tests
                                             double yaw = 0.0, bool   relative = false, string world = "")
         {
             Coordinates coordinates = Coordinates.Parse(input);
-            Assert.AreEqual(coordinates.X,                        x);
-            Assert.AreEqual(coordinates.Y,                        y);
-            Assert.AreEqual(coordinates.Z,                        z);
-            Assert.AreEqual(coordinates.Direction,                yaw);
-            Assert.AreEqual(coordinates.IsRelative,               relative);
-            Assert.AreEqual(coordinates.World.ToUpperInvariant(), world.ToUpperInvariant());
+            Assert.AreEqual(x,        coordinates.X);
+            Assert.AreEqual(y,        coordinates.Y);
+            Assert.AreEqual(z,        coordinates.Z);
+            Assert.AreEqual(yaw,      coordinates.Direction);
+            Assert.AreEqual(relative, coordinates.IsRelative);
+            Assert.AreEqual(world,    coordinates.World, true);
         }
 
         [TestMethod]
