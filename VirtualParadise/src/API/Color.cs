@@ -1,4 +1,4 @@
-﻿namespace VirtualParadise
+﻿namespace VirtualParadise.API
 {
     #region Using Directives
 
