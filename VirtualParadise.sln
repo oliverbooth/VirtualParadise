@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualParadise", "VirtualP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "X10D", "X10D\X10D\X10D.csproj", "{12951585-34DF-48D2-A5B8-518783E106F2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualParadise.Tests", "VirtualParadise.Tests\VirtualParadise.Tests.csproj", "{804D670E-04D7-4FD4-B08C-E9D745392EDE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{12951585-34DF-48D2-A5B8-518783E106F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12951585-34DF-48D2-A5B8-518783E106F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12951585-34DF-48D2-A5B8-518783E106F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{804D670E-04D7-4FD4-B08C-E9D745392EDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{804D670E-04D7-4FD4-B08C-E9D745392EDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{804D670E-04D7-4FD4-B08C-E9D745392EDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{804D670E-04D7-4FD4-B08C-E9D745392EDE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
