@@ -103,6 +103,30 @@
                 -2.6, 0.0, 25.0, 0.0, false, "asdf");
         }
 
+        [TestMethod]
+        public void TestScaleCommand()
+        {
+            Action       action       = Action.Parse("create scale 2 0.5 3");
+            TriggerBase  firstTrigger = action.Triggers.First();
+            CommandBase  firstCommand = firstTrigger.Commands.First();
+            ScaleCommand scaleCommand = firstCommand as ScaleCommand;
+
+            Assert.IsNotNull(scaleCommand);
+            Assert.AreEqual(2.0, scaleCommand.X);
+            Assert.AreEqual(0.5, scaleCommand.Y);
+            Assert.AreEqual(3.0, scaleCommand.Z);
+
+            action       = Action.Parse("create scale 1.5");
+            firstTrigger = action.Triggers.First();
+            firstCommand = firstTrigger.Commands.First();
+            scaleCommand = firstCommand as ScaleCommand;
+
+            Assert.IsNotNull(scaleCommand);
+            Assert.AreEqual(1.5, scaleCommand.X);
+            Assert.AreEqual(1.5, scaleCommand.Y);
+            Assert.AreEqual(1.5, scaleCommand.Z);
+        }
+
         #endregion
     }
 }
