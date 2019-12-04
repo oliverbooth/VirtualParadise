@@ -50,13 +50,19 @@
         /// <summary>
         /// Gets or sets the Y-axis scale.
         /// </summary>
-        [Parameter(1, "Y", typeof(double))]
+        [Parameter(1, "Y", typeof(double),
+            DefaultValue  = 1.0,
+            Optional      = true,
+            ParameterType = ParameterType.Literal)]
         public double Y { get; set; } = 1.0;
 
         /// <summary>
         /// Gets or sets the Z-axis scale.
         /// </summary>
-        [Parameter(2, "Z", typeof(double))]
+        [Parameter(2, "Z", typeof(double),
+            DefaultValue  = 1.0,
+            Optional      = true,
+            ParameterType = ParameterType.Literal)]
         public double Z { get; set; } = 1.0;
 
         #endregion

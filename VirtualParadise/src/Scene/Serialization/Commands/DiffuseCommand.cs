@@ -47,8 +47,8 @@
         /// Gets or sets the intensity.
         /// </summary>
         [Parameter(0, "INTENSITY", typeof(double),
-            DefaultValue = 0.0)]
-        public double Intensity { get; set; } = 0.0;
+            DefaultValue = 0.5)]
+        public double Intensity { get; set; } = 0.5;
 
         #endregion
     }
