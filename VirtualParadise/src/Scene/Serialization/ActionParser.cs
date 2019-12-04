@@ -50,6 +50,7 @@
             RegisterCommand<SoundCommand>();
             RegisterCommand<SpecularCommand>();
             RegisterCommand<SpecularMapCommand>();
+            RegisterCommand<TeleportCommand>();
             RegisterCommand<TeleportXyzCommand>();
             RegisterCommand<TextureCommand>();
         }
@@ -133,10 +134,10 @@
         /// <returns>Returns a new instance of <see cref="System.Action"/>.</returns>
         public static Action Parse(string text)
         {
-            ActionBuilder builder = new ActionBuilder();
+            ActionBuilder builder       = new ActionBuilder();
             StringBuilder triggerBuffer = new StringBuilder();
-            List<string> triggers = new List<string>();
-            bool triggerQuote = false;
+            List<string>  triggers      = new List<string>();
+            bool          triggerQuote  = false;
 
             foreach (char c in text ?? String.Empty)
             {
@@ -175,7 +176,7 @@
             foreach (string trigger in triggers)
             {
                 string triggerWord = Array.Find(Regex.Split(trigger, "\\s+"),
-                                                s => !String.IsNullOrWhiteSpace(s));
+                    s => !String.IsNullOrWhiteSpace(s));
 
                 if (!registeredTriggers.ContainsKey(triggerWord.ToUpperInvariant()))
                 {
@@ -191,8 +192,8 @@
                 builder.AddTrigger(currentTrigger);
 
                 StringBuilder commandBuffer = new StringBuilder();
-                List<string> commands = new List<string>();
-                bool commandQuote = false;
+                List<string>  commands      = new List<string>();
+                bool          commandQuote  = false;
 
                 foreach (char c in trigger.Substring(triggerWord.Length))
                 {
@@ -231,10 +232,10 @@
                 // split commands with ','
                 foreach (string command in commands)
                 {
-                    string[] commandWords = Regex.Split(command, "\\s+");
-                    string commandWord = commandWords.FirstOrDefault() ?? String.Empty;
-                    Dictionary<string, object> properties = GetPropertiesFromArgs(commandWords.Skip(1));
-                    IEnumerable<string> args = GetArgsWithoutProperties(commandWords.Skip(1));
+                    string[]                   commandWords = Regex.Split(command, "\\s+");
+                    string                     commandWord  = commandWords.FirstOrDefault() ?? String.Empty;
+                    Dictionary<string, object> properties   = GetPropertiesFromArgs(commandWords.Skip(1));
+                    IEnumerable<string>        args         = GetArgsWithoutProperties(commandWords.Skip(1));
 
                     if (!registeredCommands.ContainsKey(commandWord.ToUpperInvariant()))
                     {
@@ -242,7 +243,7 @@
                     }
 
                     if (!(Activator.CreateInstance(registeredCommands[commandWord.ToUpperInvariant()],
-                                                   new object[] { args.ToArray(), properties })
+                            new object[] {args.ToArray(), properties})
                         is CommandBase currentCommand))
                     {
                         continue;
@@ -263,12 +264,12 @@
 
         private static Dictionary<string, object> GetPropertiesFromArgs(IEnumerable<string> args)
         {
-            Regex regex = new Regex("([^\\s]+)=([^\\s]+)");
-            string str = String.Join(" ", args);
+            Regex  regex = new Regex("([^\\s]+)=([^\\s]+)");
+            string str   = String.Join(" ", args);
             return regex.Matches(str)
                         .Cast<Match>()
                         .ToDictionary(m => m.Groups[1].Value,
-                                      m => (object)m.Groups[2].Value);
+                             m => (object) m.Groups[2].Value);
         }
 
         #endregion
