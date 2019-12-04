@@ -29,7 +29,7 @@
         /// Initializes a new instance of the <see cref="TeleportCommand"/> class.
         /// </summary>
         /// <param name="args">The command arguments.</param>
-        /// <param name="properties">The command properties. For <c>teleportxyz</c>, this are ignored.</param>
+        /// <param name="properties">The command properties. For <c>teleport</c>, this is ignored.</param>
         public TeleportCommand(IReadOnlyCollection<string> args, Dictionary<string, object> properties)
             : base(args, new Dictionary<string, object>())
         {
