@@ -12,7 +12,7 @@ namespace VirtualParadise.Tests
     {
         #region Methods
 
-        private static void TestCoordinates(string input,
+        internal static void TestCoordinates(string input,
                                             double x,         double y,                double z,
                                             double yaw = 0.0, bool   relative = false, string world = "")
         {

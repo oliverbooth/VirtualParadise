@@ -87,6 +87,22 @@
                 false);
         }
 
+        [TestMethod]
+        public void TestTeleportCommand()
+        {
+            Action      action       = Action.Parse("activate teleport asdf 25n 2.6e");
+            TriggerBase firstTrigger = action.Triggers.First();
+            CommandBase firstCommand = firstTrigger.Commands.First();
+
+            TeleportCommand teleportCommand = firstCommand as TeleportCommand;
+
+            Assert.IsNotNull(teleportCommand);
+            Assert.IsTrue(firstTrigger is ActivateTrigger);
+
+            CoordinateParserTest.TestCoordinates(teleportCommand.Coordinates.ToString(),
+                -2.6, 0.0, 25.0, 0.0, false, "asdf");
+        }
+
         #endregion
     }
 }
