@@ -41,7 +41,7 @@
             RegisterTrigger<BumpTrigger>();
             RegisterTrigger<BumpEndTrigger>();
             RegisterTrigger<CreateTrigger>();
-
+            RegisterCommand<DiffuseCommand>();
             RegisterCommand<ColorCommand>();
             RegisterCommand<NameCommand>();
             RegisterCommand<NoiseCommand>();
