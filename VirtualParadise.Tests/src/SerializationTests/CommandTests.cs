@@ -122,6 +122,22 @@
         }
 
         /// <summary>
+        /// Tests the <c>camera</c> command.
+        /// </summary>
+        [TestMethod]
+        public void TestCamera()
+        {
+            {
+                Action        action = Action.Parse("create camera location=foo target=bar");
+                CameraCommand camera = action.Create.OfType<CameraCommand>().First();
+
+                Assert.IsNotNull(camera);
+                Assert.AreEqual("foo", camera.Location);
+                Assert.AreEqual("bar", camera.Target);
+            }
+        }
+
+        /// <summary>
         /// Tests the <c>color</c> command.
         /// </summary>
         [TestMethod]

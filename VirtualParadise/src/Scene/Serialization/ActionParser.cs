@@ -45,6 +45,7 @@
             RegisterCommand<AnimateCommand>();
             RegisterCommand<AstartCommand>();
             RegisterCommand<AstopCommand>();
+            RegisterCommand<CameraCommand>();
             RegisterCommand<ColorCommand>();
             RegisterCommand<DiffuseCommand>();
             RegisterCommand<FrameRateCommand>();
