@@ -41,11 +41,11 @@
             RegisterTrigger<BumpTrigger>();
             RegisterTrigger<BumpEndTrigger>();
             RegisterTrigger<CreateTrigger>();
-            RegisterCommand<DiffuseCommand>();
             RegisterCommand<AmbientCommand>();
             RegisterCommand<AnimateCommand>();
             RegisterCommand<AstartCommand>();
             RegisterCommand<ColorCommand>();
+            RegisterCommand<DiffuseCommand>();
             RegisterCommand<NameCommand>();
             RegisterCommand<NoiseCommand>();
             RegisterCommand<NormalMapCommand>();
