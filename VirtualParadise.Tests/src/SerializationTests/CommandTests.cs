@@ -247,6 +247,51 @@
         }
 
         /// <summary>
+        /// Tests the <c>move</c> command.
+        /// </summary>
+        [TestMethod]
+        public void TestMove()
+        {
+            {
+                Action      action  = Action.Parse("create move 5");
+                CommandBase command = action.Triggers.First().Commands.First();
+                MoveCommand move    = command as MoveCommand;
+
+                Assert.IsNotNull(move);
+                Assert.AreEqual(5.0, move.X);
+                Assert.AreEqual(0.0, move.Y);
+                Assert.AreEqual(0.0, move.Z);
+                Assert.IsFalse(move.Loop);
+                Assert.IsFalse(move.Sync);
+                Assert.IsFalse(move.Smooth);
+                Assert.IsFalse(move.Reset);
+                Assert.IsFalse(move.LocalAxis);
+                Assert.AreEqual(0.0, move.Wait);
+                Assert.AreEqual(1.0, move.Time);
+                Assert.AreEqual(0.0, move.Offset);
+            }
+
+            {
+                Action      action  = Action.Parse("create move 0 10 0 loop smooth ltm time=5 wait=3");
+                CommandBase command = action.Triggers.First().Commands.First();
+                MoveCommand move    = command as MoveCommand;
+
+                Assert.IsNotNull(move);
+                Assert.AreEqual(0.0,  move.X);
+                Assert.AreEqual(10.0, move.Y);
+                Assert.AreEqual(0.0,  move.Z);
+                Assert.IsTrue(move.Loop);
+                Assert.IsFalse(move.Sync);
+                Assert.IsTrue(move.Smooth);
+                Assert.IsFalse(move.Reset);
+                Assert.IsTrue(move.LocalAxis);
+                Assert.AreEqual(3.0, move.Wait);
+                Assert.AreEqual(5.0, move.Time);
+                Assert.AreEqual(0.0, move.Offset);
+            }
+        }
+
+        /// <summary>
         /// Tests the <c>name</c> command.
         /// </summary>
         [TestMethod]

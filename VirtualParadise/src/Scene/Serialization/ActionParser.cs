@@ -49,6 +49,7 @@
             RegisterCommand<DiffuseCommand>();
             RegisterCommand<FrameRateCommand>();
             RegisterCommand<LightCommand>();
+            RegisterCommand<MoveCommand>();
             RegisterCommand<NameCommand>();
             RegisterCommand<NoiseCommand>();
             RegisterCommand<NormalMapCommand>();
