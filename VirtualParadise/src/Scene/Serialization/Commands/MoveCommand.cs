@@ -40,13 +40,13 @@
         /// <summary>
         /// Gets or sets the file name or URL of the noise.
         /// </summary>
-        [Parameter(0, "URL", typeof(string))]
+        [Parameter(0, "X", typeof(string))]
         public double X { get; set; } = 0.0;
 
         /// <summary>
         /// Gets or sets the file name or URL of the noise.
         /// </summary>
-        [Parameter(1, "URL", typeof(string),
+        [Parameter(1, "Y", typeof(string),
             DefaultValue = 0.0,
             Optional     = true)]
         public double Y { get; set; } = 0.0;
@@ -54,7 +54,7 @@
         /// <summary>
         /// Gets or sets the file name or URL of the noise.
         /// </summary>
-        [Parameter(2, "URL", typeof(string),
+        [Parameter(2, "Z", typeof(string),
             DefaultValue = 0.0,
             Optional     = true)]
         public double Z { get; set; } = 0.0;
