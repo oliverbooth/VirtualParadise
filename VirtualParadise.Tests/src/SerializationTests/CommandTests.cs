@@ -207,6 +207,46 @@
         }
 
         /// <summary>
+        /// Tests the <c>light</c> command.
+        /// </summary>
+        [TestMethod]
+        public void TestLight()
+        {
+            {
+                Action       action  = Action.Parse("create light;");
+                CommandBase  command = action.Triggers.First().Commands.First();
+                LightCommand light   = command as LightCommand;
+
+                Assert.IsNotNull(light);
+                Assert.AreEqual(45.0,             light.Angle);
+                Assert.AreEqual(0.5,              light.Brightness);
+                Assert.AreEqual(Color.White,      light.Color);
+                Assert.AreEqual(LightEffect.None, light.Effect);
+                Assert.AreEqual(1000.0,           light.MaxDistance);
+                Assert.AreEqual(10.0,             light.Radius);
+                Assert.AreEqual(1.0,              light.Time);
+                Assert.AreEqual(LightType.Point,  light.Type);
+            }
+
+            {
+                Action action = Action.Parse(
+                    "create light fx=blink radius=5 maxdist=50 brightness=1 angle=90 color=00ff00 time=3 type=spot;");
+                CommandBase  command = action.Triggers.First().Commands.First();
+                LightCommand light   = command as LightCommand;
+
+                Assert.IsNotNull(light);
+                Assert.AreEqual(90.0,              light.Angle);
+                Assert.AreEqual(1.0,               light.Brightness);
+                Assert.AreEqual(Color.Green,       light.Color);
+                Assert.AreEqual(LightEffect.Blink, light.Effect);
+                Assert.AreEqual(50.0,              light.MaxDistance);
+                Assert.AreEqual(5.0,               light.Radius);
+                Assert.AreEqual(3.0,               light.Time);
+                Assert.AreEqual(LightType.Spot,    light.Type);
+            }
+        }
+
+        /// <summary>
         /// Tests the <c>name</c> command.
         /// </summary>
         [TestMethod]
