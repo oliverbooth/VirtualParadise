@@ -47,6 +47,7 @@
             RegisterCommand<AstopCommand>();
             RegisterCommand<ColorCommand>();
             RegisterCommand<DiffuseCommand>();
+            RegisterCommand<FrameRateCommand>();
             RegisterCommand<NameCommand>();
             RegisterCommand<NoiseCommand>();
             RegisterCommand<NormalMapCommand>();
