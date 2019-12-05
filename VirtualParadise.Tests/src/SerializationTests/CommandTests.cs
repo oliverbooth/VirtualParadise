@@ -355,6 +355,65 @@
         }
 
         /// <summary>
+        /// Tests the <c>rotate</c> command.
+        /// </summary>
+        [TestMethod]
+        public void TestRotate()
+        {
+            {
+                Action        action = Action.Parse("create rotate 1 90 3");
+                RotateCommand rotate = action.Create.OfType<RotateCommand>().First();
+
+                Assert.IsNotNull(rotate);
+                Assert.AreEqual(1.0,  rotate.X);
+                Assert.AreEqual(90.0, rotate.Y);
+                Assert.AreEqual(3.0,  rotate.Z);
+                Assert.IsFalse(rotate.Loop);
+                Assert.IsFalse(rotate.Sync);
+                Assert.IsFalse(rotate.Smooth);
+                Assert.IsFalse(rotate.Reset);
+                Assert.IsFalse(rotate.LocalAxis);
+                Assert.AreEqual(0.0, rotate.Wait);
+                Assert.AreEqual(1.0, rotate.Time);
+                Assert.AreEqual(0.0, rotate.Offset);
+            }
+
+            {
+                Action        action = Action.Parse("create rotate 45");
+                RotateCommand rotate = action.Create.OfType<RotateCommand>().First();
+
+                Assert.IsNotNull(rotate);
+                Assert.AreEqual(0.0,  rotate.X);
+                Assert.AreEqual(45.0, rotate.Y);
+                Assert.AreEqual(0.0,  rotate.Z);
+            }
+
+            {
+                Action        action = Action.Parse("create rotate 45 90 time=1 loop");
+                RotateCommand rotate = action.Create.OfType<RotateCommand>().First();
+
+                Assert.IsNotNull(rotate);
+                Assert.AreEqual(45.0, rotate.X);
+                Assert.AreEqual(90.0, rotate.Y);
+                Assert.AreEqual(0.0,  rotate.Z);
+                Assert.AreEqual(1.0,  rotate.Time);
+                Assert.IsTrue(rotate.Loop);
+            }
+
+            {
+                Action        action = Action.Parse("create rotate 45 90 reset wait=3");
+                RotateCommand rotate = action.Create.OfType<RotateCommand>().First();
+
+                Assert.IsNotNull(rotate);
+                Assert.AreEqual(45.0, rotate.X);
+                Assert.AreEqual(90.0, rotate.Y);
+                Assert.AreEqual(0.0,  rotate.Z);
+                Assert.AreEqual(3.0,  rotate.Wait);
+                Assert.IsTrue(rotate.Reset);
+            }
+        }
+
+        /// <summary>
         /// Tests the <c>normalmap</c> command.
         /// </summary>
         [TestMethod]

@@ -54,6 +54,7 @@
             RegisterCommand<NoiseCommand>();
             RegisterCommand<NormalMapCommand>();
             RegisterCommand<OpacityCommand>();
+            RegisterCommand<RotateCommand>();
             RegisterCommand<ScaleCommand>();
             RegisterCommand<SignCommand>();
             RegisterCommand<SoundCommand>();
