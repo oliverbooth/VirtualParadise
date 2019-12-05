@@ -52,8 +52,10 @@
         }
 
         /// <inheritdoc />
-        public override string ToString() =>
-            this.ToString(ActionFormat.None);
+        public override string ToString()
+        {
+            return this.ToString(ActionFormat.None);
+        }
 
         /// <summary>
         /// Returns a string that represents the current object.
