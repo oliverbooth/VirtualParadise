@@ -43,13 +43,16 @@
             ActionBuilder builder = new ActionBuilder();
             builder.AddTrigger(new CreateTrigger())
                    .AddCommand(new NameCommand {Name = "foo"})
+                   .AddCommand(new ShearCommand {Z   = new[] {2.0}})
                    .AddTrigger(new ActivateTrigger())
-                   .AddCommand(new DiffuseCommand {Intensity = 1.0, TargetName = "foo"});
+                   .AddCommand(new DiffuseCommand {Intensity = 1.0, TargetName = "foo"})
+                   .AddCommand(new ShearCommand
+                        {X = new[] {1.0, -1.0}, Y = new[] {2.0, -2.0}, Z = new[] {3.0, -3.0}});
 
             Action action = builder.Build();
 
             Assert.AreEqual(
-                "create name foo; activate diffuse 1 name=foo",
+                "create name foo, shear 2; activate diffuse 1 name=foo, shear 3 1 2 -2 -3 -1",
                 action.ToString(ActionFormat.None));
         }
 
