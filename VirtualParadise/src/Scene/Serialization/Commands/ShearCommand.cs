@@ -108,10 +108,11 @@
                              Math.Abs(this.Z.ElementAt(1)) > Double.Epsilon;
 
             string parameters = addOthers
-                ? $" {this.X.ElementAt(0)} {this.Z.ElementAt(0)} {this.Y.ElementAt(1)} {this.Z.ElementAt(1)} {this.X.ElementAt(1)}"
+                ? $" {this.X.ElementAt(0)} {this.Y.ElementAt(0)} {this.Y.ElementAt(1)} {this.Z.ElementAt(1)} {this.X.ElementAt(1)}"
                 : String.Empty;
 
             builder.Append(this.CommandName)
+                   .Append(' ')
                    .Append(this.Z.ElementAt(0))
                    .Append(parameters)
                    .Append(this.IsGlobal ? " global" : String.Empty)
