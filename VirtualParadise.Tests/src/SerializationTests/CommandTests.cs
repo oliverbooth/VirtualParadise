@@ -88,6 +88,33 @@
         }
 
         /// <summary>
+        /// Tests the <c>astart</c> command.
+        /// </summary>
+        [TestMethod]
+        public void TestAstart()
+        {
+            {
+                Action        action  = Action.Parse("create astart anim1;");
+                CommandBase   command = action.Triggers.First().Commands.First();
+                AstartCommand astart  = command as AstartCommand;
+
+                Assert.IsNotNull(astart);
+                Assert.AreEqual("anim1", astart.Name);
+                Assert.IsFalse(astart.Loop);
+            }
+
+            {
+                Action        action  = Action.Parse("create astart anim1 looping;");
+                CommandBase   command = action.Triggers.First().Commands.First();
+                AstartCommand astart  = command as AstartCommand;
+
+                Assert.IsNotNull(astart);
+                Assert.AreEqual("anim1", astart.Name);
+                Assert.IsTrue(astart.Loop);
+            }
+        }
+
+        /// <summary>
         /// Tests the <c>color</c> command.
         /// </summary>
         [TestMethod]

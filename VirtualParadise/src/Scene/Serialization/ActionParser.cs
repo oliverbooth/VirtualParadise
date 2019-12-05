@@ -44,6 +44,7 @@
             RegisterCommand<DiffuseCommand>();
             RegisterCommand<AmbientCommand>();
             RegisterCommand<AnimateCommand>();
+            RegisterCommand<AstartCommand>();
             RegisterCommand<ColorCommand>();
             RegisterCommand<NameCommand>();
             RegisterCommand<NoiseCommand>();
