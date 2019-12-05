@@ -129,20 +129,6 @@
         }
 
         /// <summary>
-        /// Tests the <c>framerate</c> command.
-        /// </summary>
-        [TestMethod]
-        public void TestFrameRate()
-        {
-            Action           action    = Action.Parse("create framerate 60;");
-            CommandBase      command   = action.Triggers.First().Commands.First();
-            FrameRateCommand framerate = command as FrameRateCommand;
-
-            Assert.IsNotNull(framerate);
-            Assert.AreEqual(60, framerate.Value);
-        }
-
-        /// <summary>
         /// Tests the <c>color</c> command.
         /// </summary>
         [TestMethod]
@@ -204,6 +190,20 @@
                 Assert.AreEqual(1.0,   diffuse.Intensity);
                 Assert.IsTrue(diffuse.IsLocked);
             }
+        }
+
+        /// <summary>
+        /// Tests the <c>framerate</c> command.
+        /// </summary>
+        [TestMethod]
+        public void TestFrameRate()
+        {
+            Action           action    = Action.Parse("create framerate 60;");
+            CommandBase      command   = action.Triggers.First().Commands.First();
+            FrameRateCommand framerate = command as FrameRateCommand;
+
+            Assert.IsNotNull(framerate);
+            Assert.AreEqual(60, framerate.Value);
         }
 
         /// <summary>
