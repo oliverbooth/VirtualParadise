@@ -115,6 +115,20 @@
         }
 
         /// <summary>
+        /// Tests the <c>astop</c> command.
+        /// </summary>
+        [TestMethod]
+        public void TestAstop()
+        {
+            Action       action  = Action.Parse("create astop anim1;");
+            CommandBase  command = action.Triggers.First().Commands.First();
+            AstopCommand astop   = command as AstopCommand;
+
+            Assert.IsNotNull(astop);
+            Assert.AreEqual("anim1", astop.Name);
+        }
+
+        /// <summary>
         /// Tests the <c>color</c> command.
         /// </summary>
         [TestMethod]
