@@ -63,7 +63,7 @@
         public double Radius { get; set; } = -1.0;
 
         /// <summary>
-        /// Gets or sets the solid value.
+        /// Gets or sets the visible value.
         /// </summary>
         [Parameter(0, "SOLID", typeof(bool),
             DefaultValue = true)]
