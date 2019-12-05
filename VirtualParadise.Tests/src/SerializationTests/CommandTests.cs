@@ -67,7 +67,7 @@
             }
 
             {
-                Action         action  = Action.Parse("create animate me jump 5 9 100 1 2 3 4 5 4 3 2 1 global;");
+                Action         action  = Action.Parse("create animate me jump 5 3 100 1 2 1 global;");
                 AnimateCommand animate = action.Create.OfType<AnimateCommand>().First();
 
                 Assert.IsNotNull(animate);
@@ -75,10 +75,10 @@
                 Assert.AreEqual("me",   animate.Name);
                 Assert.AreEqual("jump", animate.Animation);
                 Assert.AreEqual(5,      animate.ImageCount);
-                Assert.AreEqual(9,      animate.FrameCount);
+                Assert.AreEqual(3,      animate.FrameCount);
                 Assert.AreEqual(100,    animate.FrameDelay);
                 CollectionAssert.AreEqual(
-                    new[] {1, 2, 3, 4, 5, 4, 3, 2, 1}, animate.FrameList.ToArray());
+                    new[] {1, 2, 1}, animate.FrameList.ToArray());
                 Assert.IsTrue(animate.IsGlobal);
             }
         }
