@@ -99,25 +99,14 @@
                     {
                         if (parameter.ParameterType == ParameterType.Literal)
                         {
-                            switch (arg.ToUpperInvariant())
+                            if (Keyword.TryBool(arg, out bool b))
                             {
-                                case "OFF":
-                                case "NO":
-                                case "0":
-                                case "FALSE":
-                                    value = false;
-                                    break;
-
-                                case "ON":
-                                case "YES":
-                                case "1":
-                                case "TRUE":
-                                    value = true;
-                                    break;
-
-                                default:
-                                    i--;
-                                    continue;
+                                value = b;
+                            }
+                            else
+                            {
+                                i--;
+                                continue;
                             }
                         }
                         else if (parameter.ParameterType == ParameterType.Flag)
@@ -183,21 +172,9 @@
 
                     if (typeProperty.PropertyType == typeof(bool))
                     {
-                        switch (value.ToString().ToUpperInvariant())
+                        if (Keyword.TryBool(value.ToString(), out bool b))
                         {
-                            case "OFF":
-                            case "NO":
-                            case "0":
-                            case "FALSE":
-                                value = false;
-                                break;
-
-                            case "ON":
-                            case "YES":
-                            case "1":
-                            case "TRUE":
-                                value = true;
-                                break;
+                            value = b;
                         }
                     }
                     else if (typeProperty.PropertyType == typeof(Color))
