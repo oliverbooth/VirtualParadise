@@ -1,4 +1,4 @@
-﻿namespace VirtualParadise.Scene.Serialization.Commands
+﻿namespace VirtualParadise.Scene.Serialization.Commands.Parsing
 {
     /// <summary>
     /// Represents a command that supports the <c>tag</c> property.

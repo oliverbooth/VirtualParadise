@@ -9,6 +9,7 @@
     using System.Text;
     using System.Text.RegularExpressions;
     using Commands;
+    using Commands.Parsing;
     using Triggers;
 
     #endregion

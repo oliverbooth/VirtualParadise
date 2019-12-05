@@ -1,4 +1,4 @@
-﻿namespace VirtualParadise.Scene.Serialization.Commands
+﻿namespace VirtualParadise.Scene.Serialization.Commands.Parsing
 {
     /// <summary>
     /// Enumeration of parameter types.
