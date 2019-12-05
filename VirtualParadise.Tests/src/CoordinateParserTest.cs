@@ -13,16 +13,18 @@ namespace VirtualParadise.Tests
         #region Methods
 
         internal static void TestCoordinates(string input,
-                                            double x,         double y,                double z,
-                                            double yaw = 0.0, bool   relative = false, string world = "")
+                                             double x,         double y,                double z,
+                                             double yaw = 0.0, bool   relative = false, string world = "")
         {
+            string      message     = $"Input = {input}";
             Coordinates coordinates = Coordinates.Parse(input);
-            Assert.AreEqual(x,        coordinates.X);
-            Assert.AreEqual(y,        coordinates.Y);
-            Assert.AreEqual(z,        coordinates.Z);
-            Assert.AreEqual(yaw,      coordinates.Direction);
-            Assert.AreEqual(relative, coordinates.IsRelative);
-            Assert.AreEqual(world,    coordinates.World, true);
+
+            Assert.AreEqual(x,        coordinates.X,          message);
+            Assert.AreEqual(y,        coordinates.Y,          message);
+            Assert.AreEqual(z,        coordinates.Z,          message);
+            Assert.AreEqual(yaw,      coordinates.Direction,  message);
+            Assert.AreEqual(relative, coordinates.IsRelative, message);
+            Assert.AreEqual(world,    coordinates.World,      true, message);
         }
 
         [TestMethod]
