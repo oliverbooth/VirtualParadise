@@ -57,6 +57,7 @@
             RegisterCommand<RotateCommand>();
             RegisterCommand<ScaleCommand>();
             RegisterCommand<SignCommand>();
+            RegisterCommand<SolidCommand>();
             RegisterCommand<SoundCommand>();
             RegisterCommand<SpecularCommand>();
             RegisterCommand<SpecularMapCommand>();

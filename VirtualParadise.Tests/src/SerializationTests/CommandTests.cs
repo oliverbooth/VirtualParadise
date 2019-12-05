@@ -414,6 +414,49 @@
         }
 
         /// <summary>
+        /// Tests the <c>solid</c> command.
+        /// </summary>
+        [TestMethod]
+        public void TestSolid()
+        {
+            {
+                Action       action = Action.Parse("create solid yes");
+                SolidCommand solid  = action.Create.OfType<SolidCommand>().First();
+
+                Assert.IsNotNull(solid);
+                Assert.IsTrue(solid.Value);
+                Assert.AreEqual(String.Empty, solid.TargetName);
+            }
+
+            {
+                Action       action = Action.Parse("create solid 0");
+                SolidCommand solid  = action.Create.OfType<SolidCommand>().First();
+
+                Assert.IsNotNull(solid);
+                Assert.IsFalse(solid.Value);
+                Assert.AreEqual(String.Empty, solid.TargetName);
+            }
+
+            {
+                Action       action = Action.Parse("create solid foo no");
+                SolidCommand solid  = action.Create.OfType<SolidCommand>().First();
+
+                Assert.IsNotNull(solid);
+                Assert.IsFalse(solid.Value);
+                Assert.AreEqual("foo", solid.TargetName);
+            }
+
+            {
+                Action       action = Action.Parse("create solid false name=foo");
+                SolidCommand solid  = action.Create.OfType<SolidCommand>().First();
+
+                Assert.IsNotNull(solid);
+                Assert.IsFalse(solid.Value);
+                Assert.AreEqual("foo", solid.TargetName);
+            }
+        }
+
+        /// <summary>
         /// Tests the <c>normalmap</c> command.
         /// </summary>
         [TestMethod]
