@@ -57,6 +57,7 @@
             RegisterCommand<OpacityCommand>();
             RegisterCommand<RotateCommand>();
             RegisterCommand<ScaleCommand>();
+            RegisterCommand<ShearCommand>();
             RegisterCommand<SignCommand>();
             RegisterCommand<SolidCommand>();
             RegisterCommand<SoundCommand>();

@@ -500,6 +500,52 @@
         }
 
         /// <summary>
+        /// Tests the <c>shear</c> command.
+        /// </summary>
+        [TestMethod]
+        public void TestShear()
+        {
+            {
+                Action       action = Action.Parse("create shear 2");
+                ShearCommand shear  = action.Create.OfType<ShearCommand>().First();
+
+                Assert.IsNotNull(shear);
+                Assert.AreEqual(0.0, shear.X.ElementAt(0));
+                Assert.AreEqual(0.0, shear.X.ElementAt(1));
+                Assert.AreEqual(0.0, shear.Y.ElementAt(0));
+                Assert.AreEqual(0.0, shear.Y.ElementAt(1));
+                Assert.AreEqual(2.0, shear.Z.ElementAt(0));
+                Assert.AreEqual(0.0, shear.Z.ElementAt(1));
+            }
+
+            {
+                Action       action = Action.Parse("create shear 3 1 2");
+                ShearCommand shear  = action.Create.OfType<ShearCommand>().First();
+
+                Assert.IsNotNull(shear);
+                Assert.AreEqual(1.0, shear.X.ElementAt(0));
+                Assert.AreEqual(0.0, shear.X.ElementAt(1));
+                Assert.AreEqual(2.0, shear.Y.ElementAt(0));
+                Assert.AreEqual(0.0, shear.Y.ElementAt(1));
+                Assert.AreEqual(3.0, shear.Z.ElementAt(0));
+                Assert.AreEqual(0.0, shear.Z.ElementAt(1));
+            }
+
+            {
+                Action       action = Action.Parse("create shear 3 1 2 -2 -3 -1");
+                ShearCommand shear  = action.Create.OfType<ShearCommand>().First();
+
+                Assert.IsNotNull(shear);
+                Assert.AreEqual(1.0,  shear.X.ElementAt(0));
+                Assert.AreEqual(-1.0, shear.X.ElementAt(1));
+                Assert.AreEqual(2.0,  shear.Y.ElementAt(0));
+                Assert.AreEqual(-2.0, shear.Y.ElementAt(1));
+                Assert.AreEqual(3.0,  shear.Z.ElementAt(0));
+                Assert.AreEqual(-3.0, shear.Z.ElementAt(1));
+            }
+        }
+
+        /// <summary>
         /// Tests the <c>sign</c> command.
         /// </summary>
         [TestMethod]
