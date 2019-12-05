@@ -11,8 +11,9 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@master
-    - name: Checkout submodules
-      uses: textbook/git-checkout-submodule-action@master
+      with:
+        submodules: true
+        token: ${{ secrets.REPO_SCOPED_TOKEN }}
     - name: .NET Core Setup
       uses: actions/setup-dotnet@v1.2.0
       with:
