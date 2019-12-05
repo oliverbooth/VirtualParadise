@@ -1,0 +1,20 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build_and_test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macOS-latest, ubuntu-latest, windows-latest]
+    steps:
+    - name: .NET Core Setup
+      uses: actions/setup-dotnet@v1.2.0
+      with:
+        dotnet-version: 3.0.100
+      if: matrix.os == 'macOS-latest' || matrix.os == 'ubuntu-latest'
+    - name: Build
+      run: dotnet build ./VirtualParadise.sln --configuration Release
+    - name: Test
+      run: dotnet test ./VirtualParadise.sln --configuration Release
