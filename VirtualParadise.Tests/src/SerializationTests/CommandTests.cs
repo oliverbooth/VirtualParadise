@@ -20,6 +20,32 @@
         #region Methods
 
         /// <summary>
+        /// Tests the <c>ambient</c> command.
+        /// </summary>
+        [TestMethod]
+        public void TestAmbient()
+        {
+            {
+                Action         action  = Action.Parse("create ambient;");
+                CommandBase    command = action.Triggers.First().Commands.First();
+                AmbientCommand ambient = command as AmbientCommand;
+
+                Assert.IsNotNull(ambient);
+                Assert.AreEqual(1.0, ambient.Intensity);
+            }
+
+            {
+                Action         action  = Action.Parse("create ambient 0.8 tag=foo;");
+                CommandBase    command = action.Triggers.First().Commands.First();
+                AmbientCommand ambient = command as AmbientCommand;
+
+                Assert.IsNotNull(ambient);
+                Assert.AreEqual(0.8,   ambient.Intensity);
+                Assert.AreEqual("foo", ambient.Tag);
+            }
+        }
+
+        /// <summary>
         /// Tests the <c>color</c> command.
         /// </summary>
         [TestMethod]
