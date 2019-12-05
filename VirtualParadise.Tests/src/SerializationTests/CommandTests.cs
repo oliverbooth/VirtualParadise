@@ -657,6 +657,53 @@
             }
         }
 
+        /// <summary>
+        /// Tests the <c>visible</c> command.
+        /// </summary>
+        [TestMethod]
+        public void TestVisible()
+        {
+            {
+                Action         action  = Action.Parse("create visible yes");
+                VisibleCommand visible = action.Create.OfType<VisibleCommand>().First();
+
+                Assert.IsNotNull(visible);
+                Assert.IsTrue(visible.Value);
+                Assert.AreEqual(-1.0,         visible.Radius);
+                Assert.AreEqual(String.Empty, visible.TargetName);
+            }
+
+            {
+                Action         action  = Action.Parse("create visible 0");
+                VisibleCommand visible = action.Create.OfType<VisibleCommand>().First();
+
+                Assert.IsNotNull(visible);
+                Assert.IsFalse(visible.Value);
+                Assert.AreEqual(-1.0,         visible.Radius);
+                Assert.AreEqual(String.Empty, visible.TargetName);
+            }
+
+            {
+                Action         action  = Action.Parse("create visible foo no radius=2");
+                VisibleCommand visible = action.Create.OfType<VisibleCommand>().First();
+
+                Assert.IsNotNull(visible);
+                Assert.IsFalse(visible.Value);
+                Assert.AreEqual(2.0,   visible.Radius);
+                Assert.AreEqual("foo", visible.TargetName);
+            }
+
+            {
+                Action         action  = Action.Parse("create visible true name=foo radius=3.14");
+                VisibleCommand visible = action.Create.OfType<VisibleCommand>().First();
+
+                Assert.IsNotNull(visible);
+                Assert.IsTrue(visible.Value);
+                Assert.AreEqual(3.14,  visible.Radius);
+                Assert.AreEqual("foo", visible.TargetName);
+            }
+        }
+
         #endregion
     }
 }

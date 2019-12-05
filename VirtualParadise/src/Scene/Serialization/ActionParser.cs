@@ -64,6 +64,7 @@
             RegisterCommand<TeleportCommand>();
             RegisterCommand<TeleportXyzCommand>();
             RegisterCommand<TextureCommand>();
+            RegisterCommand<VisibleCommand>();
         }
 
         #endregion
