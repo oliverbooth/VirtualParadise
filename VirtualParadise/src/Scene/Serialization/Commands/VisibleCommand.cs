@@ -65,7 +65,7 @@
         /// <summary>
         /// Gets or sets the visible value.
         /// </summary>
-        [Parameter(0, "SOLID", typeof(bool),
+        [Parameter(0, "VISIBLE", typeof(bool),
             DefaultValue = true)]
         public bool Value { get; set; } = true;
 
