@@ -332,6 +332,29 @@
         }
 
         /// <summary>
+        /// Tests the <c>opacity</c> command.
+        /// </summary>
+        [TestMethod]
+        public void TestOpacity()
+        {
+            {
+                Action         action  = Action.Parse("create opacity;");
+                OpacityCommand opacity = action.Create.OfType<OpacityCommand>().First();
+
+                Assert.IsNotNull(opacity);
+                Assert.AreEqual(1.0, opacity.Value);
+            }
+
+            {
+                Action         action  = Action.Parse("create opacity 0.5;");
+                OpacityCommand opacity = action.Create.OfType<OpacityCommand>().First();
+
+                Assert.IsNotNull(opacity);
+                Assert.AreEqual(0.5, opacity.Value);
+            }
+        }
+
+        /// <summary>
         /// Tests the <c>normalmap</c> command.
         /// </summary>
         [TestMethod]
