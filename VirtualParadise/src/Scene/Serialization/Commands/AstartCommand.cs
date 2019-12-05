@@ -12,7 +12,7 @@
     /// Represents a class which serializes the <c>astart</c> command.
     /// </summary>
     [Command("ASTART", "TAG")]
-    public class AstartCommand : CommandBase, ITaggedCommand
+    public class AstartCommand : CommandBase
     {
         #region Constructors
 
@@ -52,12 +52,6 @@
             Optional      = true,
             ParameterType = ParameterType.Flag)]
         public bool Loop { get; set; } = false;
-
-        /// <summary>
-        /// Gets or sets the object tag.
-        /// </summary>
-        [Property("TAG", "")]
-        public string Tag { get; set; } = String.Empty;
 
         #endregion
     }

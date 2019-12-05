@@ -12,7 +12,7 @@
     /// Represents a class which serializes the <c>astop</c> command.
     /// </summary>
     [Command("ASTOP", "TAG")]
-    public class AstopCommand : CommandBase, ITaggedCommand
+    public class AstopCommand : CommandBase
     {
         #region Constructors
 
@@ -43,12 +43,6 @@
         /// </summary>
         [Parameter(0, "NAME", typeof(string))]
         public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the object tag.
-        /// </summary>
-        [Property("TAG", "")]
-        public string Tag { get; set; } = String.Empty;
 
         #endregion
     }
