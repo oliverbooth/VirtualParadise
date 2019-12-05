@@ -43,6 +43,7 @@
             RegisterTrigger<CreateTrigger>();
             RegisterCommand<DiffuseCommand>();
             RegisterCommand<AmbientCommand>();
+            RegisterCommand<AnimateCommand>();
             RegisterCommand<ColorCommand>();
             RegisterCommand<NameCommand>();
             RegisterCommand<NoiseCommand>();

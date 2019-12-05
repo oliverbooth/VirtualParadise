@@ -46,6 +46,48 @@
         }
 
         /// <summary>
+        /// Tests the <c>animate</c> command.
+        /// </summary>
+        [TestMethod]
+        public void TestAnimate()
+        {
+            {
+                Action         action  = Action.Parse("create animate tag=foo mask me jump 5 9 100 1 2 3 4 5 4 3 2 1;");
+                CommandBase    command = action.Triggers.First().Commands.First();
+                AnimateCommand animate = command as AnimateCommand;
+
+                Assert.IsNotNull(animate);
+                Assert.AreEqual("foo", animate.Tag);
+                Assert.IsTrue(animate.Mask);
+                Assert.AreEqual("me",   animate.Name);
+                Assert.AreEqual("jump", animate.Animation);
+                Assert.AreEqual(5,      animate.ImageCount);
+                Assert.AreEqual(9,      animate.FrameCount);
+                Assert.AreEqual(100,    animate.FrameDelay);
+                CollectionAssert.AreEqual(
+                    new[] {1, 2, 3, 4, 5, 4, 3, 2, 1}, animate.FrameList.ToArray());
+                Assert.IsFalse(animate.IsGlobal);
+            }
+
+            {
+                Action         action  = Action.Parse("create animate me jump 5 9 100 1 2 3 4 5 4 3 2 1 global;");
+                CommandBase    command = action.Triggers.First().Commands.First();
+                AnimateCommand animate = command as AnimateCommand;
+
+                Assert.IsNotNull(animate);
+                Assert.IsFalse(animate.Mask);
+                Assert.AreEqual("me",   animate.Name);
+                Assert.AreEqual("jump", animate.Animation);
+                Assert.AreEqual(5,      animate.ImageCount);
+                Assert.AreEqual(9,      animate.FrameCount);
+                Assert.AreEqual(100,    animate.FrameDelay);
+                CollectionAssert.AreEqual(
+                    new[] {1, 2, 3, 4, 5, 4, 3, 2, 1}, animate.FrameList.ToArray());
+                Assert.IsTrue(animate.IsGlobal);
+            }
+        }
+
+        /// <summary>
         /// Tests the <c>color</c> command.
         /// </summary>
         [TestMethod]
