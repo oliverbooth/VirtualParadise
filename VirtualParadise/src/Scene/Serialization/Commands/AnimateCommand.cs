@@ -121,7 +121,8 @@
                    .Append(' ').Append(this.FrameCount)
                    .Append(' ').Append(this.FrameDelay)
                    .Append(String.IsNullOrWhiteSpace(frameList) ? String.Empty : $" {frameList}")
-                   .Append(this.IsGlobal ? " global" : String.Empty);
+                   .Append(this.IsGlobal ? " global" : String.Empty)
+                   .Append(this.IsLocked ? " lock" : String.Empty);
 
             return builder.ToString();
         }
