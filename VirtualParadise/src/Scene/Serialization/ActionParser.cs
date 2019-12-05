@@ -24,6 +24,11 @@
         private static readonly Dictionary<string, Type> registeredCommands = new Dictionary<string, Type>();
 
         /// <summary>
+        /// Backing field for <see cref="RegisteredCommandParsers"/>.
+        /// </summary>
+        private static readonly Dictionary<Type, Type> registeredCommandParsers = new Dictionary<Type, Type>();
+
+        /// <summary>
         /// Backing field for <see cref="RegisteredTriggers"/>.
         /// </summary>
         private static readonly Dictionary<string, Type> registeredTriggers = new Dictionary<string, Type>();
@@ -58,7 +63,7 @@
             RegisterCommand<OpacityCommand>();
             RegisterCommand<RotateCommand>();
             RegisterCommand<ScaleCommand>();
-            RegisterCommand<SignCommand>();
+            RegisterCommand<SignCommand, SignCommandParser>();
             RegisterCommand<SolidCommand>();
             RegisterCommand<SoundCommand>();
             RegisterCommand<SpecularCommand>();
@@ -80,6 +85,12 @@
             registeredCommands.Values;
 
         /// <summary>
+        /// Gets the command parsers registered to the parser.
+        /// </summary>
+        public static IEnumerable<Type> RegisteredCommandParsers =>
+            registeredCommandParsers.Values;
+
+        /// <summary>
         /// Gets the triggers registered to the parser.
         /// </summary>
         public static IEnumerable<Type> RegisteredTriggers =>
@@ -92,54 +103,42 @@
         /// <summary>
         /// Registers a command that is recognized by the parser.
         /// </summary>
-        /// <param name="type">The command type.</param>
-        private static void RegisterCommand(Type type)
+        /// <typeparam name="TCommand">A <see cref="CommandBase"/> derived type.</typeparam>
+        private static void RegisterCommand<TCommand>()
+            where TCommand : CommandBase
         {
-            Type commandType = typeof(CommandBase);
-
-            if (!commandType.IsAssignableFrom(type) && !type.IsSubclassOf(commandType))
-            {
-                return;
-            }
-
-            if (type.GetCustomAttribute<CommandAttribute>() is { } command)
-            {
-                registeredCommands?.Add(command.Name.ToUpperInvariant(), type);
-            }
+            RegisterCommand<TCommand, CommandParser<TCommand>>();
         }
 
         /// <summary>
         /// Registers a command that is recognized by the parser.
         /// </summary>
-        /// <typeparam name="T">A <see cref="CommandBase"/> derived type.</typeparam>
-        private static void RegisterCommand<T>() where T : CommandBase =>
-            RegisterCommand(typeof(T));
-
-        /// <summary>
-        /// Registers a trigger that is recognized by the parser.
-        /// </summary>
-        /// <param name="type">The trigger type.</param>
-        private static void RegisterTrigger(Type type)
+        /// <typeparam name="TCommand">A <see cref="CommandBase"/> derived type.</typeparam>
+        /// <typeparam name="TParser">A <see cref="CommandParser{TCommand}"/> derived type.</typeparam>
+        private static void RegisterCommand<TCommand, TParser>()
+            where TCommand : CommandBase
+            where TParser : CommandParser<TCommand>
         {
-            Type triggerType = typeof(TriggerBase);
-
-            if (!triggerType.IsAssignableFrom(type) && !type.IsSubclassOf(triggerType))
+            if (!(typeof(TCommand).GetCustomAttribute<CommandAttribute>() is { } command))
             {
                 return;
             }
 
-            if (type.GetCustomAttribute<TriggerAttribute>() is { } trigger)
-            {
-                registeredTriggers?.Add(trigger.Name.ToUpperInvariant(), type);
-            }
+            registeredCommands?.Add(command.Name.ToUpperInvariant(), typeof(TCommand));
+            registeredCommandParsers?.Add(typeof(TCommand), typeof(TParser));
         }
 
         /// <summary>
         /// Registers a trigger that is recognized by the parser.
         /// </summary>
-        /// <typeparam name="T">A <see cref="TriggerBase"/> derived type.</typeparam>
-        private static void RegisterTrigger<T>() where T : TriggerBase =>
-            RegisterTrigger(typeof(T));
+        /// <typeparam name="TTrigger">A <see cref="TriggerBase"/> derived type.</typeparam>
+        private static void RegisterTrigger<TTrigger>() where TTrigger : TriggerBase
+        {
+            if (typeof(TTrigger).GetCustomAttribute<TriggerAttribute>() is { } trigger)
+            {
+                registeredTriggers?.Add(trigger.Name.ToUpperInvariant(), typeof(TTrigger));
+            }
+        }
 
         /// <summary>
         /// Parses a raw action value into serialized triggers and commands.
@@ -263,6 +262,13 @@
                         continue;
                     }
 
+                    if (!(Activator.CreateInstance(registeredCommandParsers[currentCommand.GetType()])
+                        is CommandParser parser))
+                    {
+                        continue;
+                    }
+
+                    currentCommand = parser.Parse(String.Join(" ", commandWords.Skip(1)));
                     builder.AddCommand(currentCommand);
                 }
             }
