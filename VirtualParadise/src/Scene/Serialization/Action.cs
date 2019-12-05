@@ -5,6 +5,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Commands;
     using Triggers;
 
     #endregion
@@ -35,6 +36,36 @@
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// Gets all commands within the <c>adone</c> trigger.
+        /// </summary>
+        public IEnumerable<CommandBase> Adone =>
+            this.Triggers.OfType<AdoneTrigger>().SelectMany(t => t.Commands);
+
+        /// <summary>
+        /// Gets all commands within the <c>activate</c> trigger.
+        /// </summary>
+        public IEnumerable<CommandBase> Activate =>
+            this.Triggers.OfType<ActivateTrigger>().SelectMany(t => t.Commands);
+
+        /// <summary>
+        /// Gets all commands within the <c>bump</c> trigger.
+        /// </summary>
+        public IEnumerable<CommandBase> Bump =>
+            this.Triggers.OfType<BumpTrigger>().SelectMany(t => t.Commands);
+
+        /// <summary>
+        /// Gets all commands within the <c>bumpend</c> trigger.
+        /// </summary>
+        public IEnumerable<CommandBase> BumpEnd =>
+            this.Triggers.OfType<BumpEndTrigger>().SelectMany(t => t.Commands);
+
+        /// <summary>
+        /// Gets all commands within the <c>create</c> trigger.
+        /// </summary>
+        public IEnumerable<CommandBase> Create =>
+            this.Triggers.OfType<CreateTrigger>().SelectMany(t => t.Commands);
 
         /// <summary>
         /// Gets the triggers.

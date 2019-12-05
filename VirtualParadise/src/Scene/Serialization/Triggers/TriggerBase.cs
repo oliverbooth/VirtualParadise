@@ -57,18 +57,18 @@
         #region Methods
 
         /// <summary>
-        /// Adds a commands to the trigger.
+        /// Gets the first command of the specified type.
         /// </summary>
-        /// <param name="command">The commands to add.</param>
-        internal void AddCommand(params CommandBase[] command)
+        /// <typeparam name="T">A <see cref="CommandBase"/> derived type.</typeparam>
+        public T GetCommandOfType<T>() where T : CommandBase
         {
-            this.commands.AddRange(command);
+            return this.GetCommandsOfType<T>().First();
         }
 
         /// <summary>
         /// Gets all commands of the specified type.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">A <see cref="CommandBase"/> derived type.</typeparam>
         public IEnumerable<T> GetCommandsOfType<T>() where T : CommandBase
         {
             return this.commands.OfType<T>();
@@ -88,8 +88,8 @@
             Justification = "String literal wanted")]
         public string ToString(ActionFormat format)
         {
-            string join = ",";
-            bool indent = false;
+            string join   = ",";
+            bool   indent = false;
 
             switch (format)
             {
@@ -99,7 +99,7 @@
                     join += " ";
                     break;
                 case ActionFormat.Indented:
-                    join = ",\n  ";
+                    join   = ",\n  ";
                     indent = true;
                     break;
                 default:
@@ -108,8 +108,17 @@
 
             return
                 this.TriggerName.ToLowerInvariant() +
-                (indent ? "\n  " : " ") +
+                (indent ? "\n  " : " ")             +
                 String.Join(join, this.Commands.Select(c => c.ToString().Trim()));
+        }
+
+        /// <summary>
+        /// Adds a commands to the trigger.
+        /// </summary>
+        /// <param name="command">The commands to add.</param>
+        internal void AddCommand(params CommandBase[] command)
+        {
+            this.commands.AddRange(command);
         }
 
         #endregion
