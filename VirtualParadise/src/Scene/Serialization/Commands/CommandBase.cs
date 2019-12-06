@@ -333,7 +333,8 @@
                 PropertyAttribute property = typeProperty.GetCustomAttribute<PropertyAttribute>();
                 object            value    = typeProperty.GetValue(this, null);
 
-                if (!property.Optional || !value.Equals(property.DefaultValue))
+                if (!property.Optional || !value.ToString().Equals(property.DefaultValue.ToString(),
+                        StringComparison.InvariantCultureIgnoreCase))
                 {
                     if (value is Enum)
                     {
