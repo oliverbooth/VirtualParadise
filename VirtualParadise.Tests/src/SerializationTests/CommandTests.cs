@@ -6,6 +6,7 @@
     using System.Linq;
     using API;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Scene.Serialization;
     using Scene.Serialization.Commands;
     using Action = Scene.Serialization.Action;
 
@@ -587,6 +588,20 @@
                 Assert.AreEqual(new Color(0x00, 0x00, 0xC0), sign.BackColor);
                 Assert.AreEqual(Color.White,                 sign.ForeColor);
                 Assert.AreEqual(TextAlignment.Center,        sign.Alignment);
+            }
+
+            {
+                Action      action = Action.Parse("create sign bcolor=red");
+                SignCommand sign   = action.Create.OfType<SignCommand>().First();
+
+                Assert.IsNotNull(sign);
+                Assert.AreEqual(String.Empty,         sign.Text);
+                Assert.AreEqual(Color.Red,            sign.BackColor);
+                Assert.AreEqual(Color.White,          sign.ForeColor);
+                Assert.AreEqual(TextAlignment.Center, sign.Alignment);
+
+                string actionString = action.ToString(ActionFormat.None);
+                Assert.AreEqual("create sign bcolor=FF0000", actionString);
             }
         }
 
