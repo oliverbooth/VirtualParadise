@@ -577,6 +577,17 @@
                 Assert.AreEqual("Shadow Unit Test",         sign.Text);
                 Assert.IsTrue(sign.Shadow);
             }
+
+            {
+                Action      action = Action.Parse("create sign");
+                SignCommand sign   = action.Create.OfType<SignCommand>().First();
+
+                Assert.IsNotNull(sign);
+                Assert.AreEqual(String.Empty,                sign.Text);
+                Assert.AreEqual(new Color(0x00, 0x00, 0xC0), sign.BackColor);
+                Assert.AreEqual(Color.White,                 sign.ForeColor);
+                Assert.AreEqual(TextAlignment.Center,        sign.Alignment);
+            }
         }
 
         /// <summary>

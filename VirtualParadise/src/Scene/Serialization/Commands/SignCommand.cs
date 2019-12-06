@@ -35,16 +35,26 @@
         public SignCommand(IReadOnlyCollection<string> args, Dictionary<string, object> properties)
             : base(args, properties)
         {
-            string argString = String.Join(" ", args);
-            int firstQuote = argString.IndexOf('"');
-            int lastQuote = argString.IndexOf('"', firstQuote + 1);
-            this.Text = argString.Substring(firstQuote + 1, lastQuote - firstQuote - 1);
+            string argString  = String.Join(" ", args);
+            int    firstQuote = argString.IndexOf('"');
+            int    lastQuote  = argString.IndexOf('"', firstQuote + 1);
+            if (lastQuote - firstQuote - 1 > 0)
+            {
+                this.Text = argString.Substring(firstQuote + 1, lastQuote - firstQuote - 1);
+            }
 
             StringBuilder argBuilder = new StringBuilder();
-            argBuilder.Append(argString.Substring(0, firstQuote));
-            argBuilder.Append(argString.Substring(lastQuote + 1));
+            if (firstQuote < 0)
+            {
+                argBuilder.Append(argString);
+            }
+            else
+            {
+                argBuilder.Append(argString.Substring(0, firstQuote));
+                argBuilder.Append(argString.Substring(lastQuote + 1));
+            }
 
-            args = Regex.Split(argBuilder.ToString().ToUpperInvariant(), "\\s");
+            args        = Regex.Split(argBuilder.ToString().ToUpperInvariant(), "\\s");
             this.Shadow = args.Contains("SHADOW");
         }
 
@@ -86,15 +96,15 @@
         /// Gets or sets a value indicating whether this sound doesn't loop.
         /// </summary>
         [Parameter(1, "SHADOW", typeof(bool),
-            DefaultValue = false,
-            Optional = true,
+            DefaultValue  = false,
+            Optional      = true,
             ParameterType = ParameterType.Flag)]
         public bool Shadow { get; set; }
 
         /// <summary>
         /// Gets or sets the sign text.
         /// </summary>
-        public string Text { get; set; }
+        public string Text { get; set; } = String.Empty;
 
         /// <summary>
         /// Gets or sets the vertical margin.
