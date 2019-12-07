@@ -40,32 +40,92 @@
         /// <summary>
         /// Gets all commands within the <c>adone</c> trigger.
         /// </summary>
-        public IEnumerable<CommandBase> Adone =>
-            this.Triggers.OfType<AdoneTrigger>().SelectMany(t => t.Commands);
+        public AdoneTrigger Adone
+        {
+            get
+            {
+                AdoneTrigger             trigger  = new AdoneTrigger();
+                IEnumerable<CommandBase> commands = this.Triggers.OfType<AdoneTrigger>().SelectMany(t => t.Commands);
+                foreach (CommandBase command in commands)
+                {
+                    trigger.AddCommand(command);
+                }
+
+                return trigger;
+            }
+        }
 
         /// <summary>
         /// Gets all commands within the <c>activate</c> trigger.
         /// </summary>
-        public IEnumerable<CommandBase> Activate =>
-            this.Triggers.OfType<ActivateTrigger>().SelectMany(t => t.Commands);
+        public ActivateTrigger Activate
+        {
+            get
+            {
+                ActivateTrigger          trigger  = new ActivateTrigger();
+                IEnumerable<CommandBase> commands = this.Triggers.OfType<ActivateTrigger>().SelectMany(t => t.Commands);
+                foreach (CommandBase command in commands)
+                {
+                    trigger.AddCommand(command);
+                }
+
+                return trigger;
+            }
+        }
 
         /// <summary>
         /// Gets all commands within the <c>bump</c> trigger.
         /// </summary>
-        public IEnumerable<CommandBase> Bump =>
-            this.Triggers.OfType<BumpTrigger>().SelectMany(t => t.Commands);
+        public BumpTrigger Bump
+        {
+            get
+            {
+                BumpTrigger              trigger  = new BumpTrigger();
+                IEnumerable<CommandBase> commands = this.Triggers.OfType<BumpTrigger>().SelectMany(t => t.Commands);
+                foreach (CommandBase command in commands)
+                {
+                    trigger.AddCommand(command);
+                }
+
+                return trigger;
+            }
+        }
 
         /// <summary>
         /// Gets all commands within the <c>bumpend</c> trigger.
         /// </summary>
-        public IEnumerable<CommandBase> BumpEnd =>
-            this.Triggers.OfType<BumpEndTrigger>().SelectMany(t => t.Commands);
+        public BumpEndTrigger BumpEnd
+        {
+            get
+            {
+                BumpEndTrigger           trigger  = new BumpEndTrigger();
+                IEnumerable<CommandBase> commands = this.Triggers.OfType<BumpEndTrigger>().SelectMany(t => t.Commands);
+                foreach (CommandBase command in commands)
+                {
+                    trigger.AddCommand(command);
+                }
+
+                return trigger;
+            }
+        }
 
         /// <summary>
         /// Gets all commands within the <c>create</c> trigger.
         /// </summary>
-        public IEnumerable<CommandBase> Create =>
-            this.Triggers.OfType<CreateTrigger>().SelectMany(t => t.Commands);
+        public CreateTrigger Create
+        {
+            get
+            {
+                CreateTrigger            trigger  = new CreateTrigger();
+                IEnumerable<CommandBase> commands = this.Triggers.OfType<CreateTrigger>().SelectMany(t => t.Commands);
+                foreach (CommandBase command in commands)
+                {
+                    trigger.AddCommand(command);
+                }
+
+                return trigger;
+            }
+        }
 
         /// <summary>
         /// Gets the triggers.

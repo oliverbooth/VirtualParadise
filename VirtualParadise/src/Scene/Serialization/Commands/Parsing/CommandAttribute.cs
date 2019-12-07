@@ -3,8 +3,6 @@
     #region Using Directives
 
     using System;
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
 
     #endregion
 
@@ -21,14 +19,15 @@
         /// Initializes a new instance of the <see cref="CommandAttribute"/> class.
         /// </summary>
         /// <param name="name">The command name.</param>
-        /// <param name="propertyNames">The property names that this command understands.</param>
-        [SuppressMessage("Globalization",
-            "CA1308:Normalize strings to uppercase",
-            Justification = "Lower case string necessary")]
-        public CommandAttribute(string name, params string[] propertyNames)
+        /// <param name="parser">The command parser responsible for this command.</param>
+        public CommandAttribute(string name, Type parser)
         {
-            this.Name          = name?.ToLowerInvariant() ?? String.Empty;
-            this.PropertyNames = propertyNames;
+            this.Name = name?.ToUpperInvariant() ?? String.Empty;
+
+            if (parser.IsSubclassOf(typeof(CommandParser)) || typeof(CommandParser).IsAssignableFrom(parser))
+            {
+                this.Parser = parser;
+            }
         }
 
         #endregion
@@ -41,9 +40,9 @@
         public string Name { get; }
 
         /// <summary>
-        /// Gets the valid property names that this command accepts.
+        /// Gets the command parser type.
         /// </summary>
-        public IReadOnlyCollection<string> PropertyNames { get; }
+        public Type Parser { get; }
 
         #endregion
     }

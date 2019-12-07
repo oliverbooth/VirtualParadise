@@ -4,7 +4,11 @@
 
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Linq;
+    using System.Runtime.InteropServices;
+    using System.Runtime.Serialization;
+    using Parsers;
     using Parsing;
 
     #endregion
@@ -12,138 +16,84 @@
     /// <summary>
     /// Represents a class which serializes the <c>rotate</c> command.
     /// </summary>
-    [Command("ROTATE", "WAIT", "TIME", "OFFSET")]
+    [Command("rotate", typeof(RotateCommandParser))]
     public class RotateCommand : CommandBase
     {
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RotateCommand"/> class.
-        /// </summary>
-        public RotateCommand()
-            : this(Array.Empty<string>(), new Dictionary<string, object>())
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RotateCommand"/> class.
-        /// </summary>
-        /// <param name="args">The command arguments.</param>
-        /// <param name="properties">The command properties.</param>
-        public RotateCommand(IReadOnlyCollection<string> args, Dictionary<string, object> properties)
-            : base(args, properties)
-        {
-            double a = 0.0, b = 0.0, c = 0.0;
-            this.X = a;
-            this.Y = b;
-            this.Z = c;
-
-            if (args.Count >= 1 && Double.TryParse(args.ElementAt(0), out a))
-            {
-                this.Y = a;
-            }
-
-            if (args.Count >= 2 && Double.TryParse(args.ElementAt(1), out b))
-            {
-                this.X = a;
-                this.Y = b;
-            }
-
-            if (args.Count >= 3 && Double.TryParse(args.ElementAt(2), out c))
-            {
-                this.Z = c;
-            }
-        }
-
-        #endregion
-
         #region Properties
 
         /// <summary>
-        /// Gets or sets the file name or URL of the noise.
+        /// Gets or sets the X axis rotation.
         /// </summary>
-        [Parameter(0, "X", typeof(string),
-            DefaultValue = 0.0,
+        [DefaultValue(0.0)]
+        [Parameter(0, "x",
             Optional     = true)]
         public double X { get; set; } = 0.0;
 
         /// <summary>
-        /// Gets or sets the file name or URL of the noise.
+        /// Gets or sets the Y axis rotation.
         /// </summary>
-        [Parameter(1, "Y", typeof(string),
-            DefaultValue = 0.0,
+        [DefaultValue(0.0)]
+        [Parameter(1, "y",
             Optional     = false)]
         public double Y { get; set; } = 0.0;
 
         /// <summary>
-        /// Gets or sets the file name or URL of the noise.
+        /// Gets or sets the Z axis rotation.
         /// </summary>
-        [Parameter(2, "Z", typeof(string),
-            DefaultValue = 0.0,
+        [DefaultValue(0.0)]
+        [Parameter(2, "z",
             Optional     = true)]
         public double Z { get; set; } = 0.0;
 
         /// <summary>
-        /// Gets or sets a value indicating whether this movement is along the object axis (as opposed to world axis).
+        /// Gets or sets a value indicating whether this rotation is along the object axis (as opposed to world axis).
         /// </summary>
-        [Parameter(7, "LTM", typeof(bool),
-            DefaultValue  = false,
-            Optional      = true,
-            ParameterType = ParameterType.Flag)]
+        [Flag("ltm")]
         public bool LocalAxis { get; set; } = false;
 
         /// <summary>
-        /// Gets or sets a value indicating whether this movement loops.
+        /// Gets or sets a value indicating whether this rotation loops.
         /// </summary>
-        [Parameter(3, "LOOP", typeof(bool),
-            DefaultValue  = false,
-            Optional      = true,
-            ParameterType = ParameterType.Flag)]
+        [Flag("loop")]
         public bool Loop { get; set; } = false;
 
         /// <summary>
         /// Gets or sets the offset - in seconds - to apply to universe time when synchronizing.
         /// </summary>
-        [Property("OFFSET", 0.0)]
+        [DefaultValue(0.0)]
+        [Property("offset")]
         public double Offset { get; set; } = 0.0;
 
         /// <summary>
-        /// Gets or sets a value indicating whether this movement resets after completing half a cycle.
+        /// Gets or sets a value indicating whether this rotation resets after completing half a cycle.
         /// </summary>
-        [Parameter(6, "RESET", typeof(bool),
-            DefaultValue  = false,
-            Optional      = true,
-            ParameterType = ParameterType.Flag)]
+        [Flag("reset")]
         public bool Reset { get; set; } = false;
 
         /// <summary>
-        /// Gets or sets a value indicating whether this movement is smooth.
+        /// Gets or sets a value indicating whether this rotation is smooth.
         /// </summary>
-        [Parameter(5, "SMOOTH", typeof(bool),
-            DefaultValue  = false,
-            Optional      = true,
-            ParameterType = ParameterType.Flag)]
+        [Flag("smooth")]
         public bool Smooth { get; set; } = false;
 
         /// <summary>
-        /// Gets or sets a value indicating whether this movement syncs.
+        /// Gets or sets a value indicating whether this rotation syncs.
         /// </summary>
-        [Parameter(4, "SYNC", typeof(bool),
-            DefaultValue  = false,
-            Optional      = true,
-            ParameterType = ParameterType.Flag)]
+        [Flag("sync")]
         public bool Sync { get; set; } = false;
 
         /// <summary>
         /// Gets or sets the duration - in seconds - of half of a cycle.
         /// </summary>
-        [Property("TIME", 1.0)]
+        [DefaultValue(1.0)]
+        [Property("time")]
         public double Time { get; set; } = 1.0;
 
         /// <summary>
-        /// Gets or sets the time - in seconds - before continuing movement after one half of a cycle.
+        /// Gets or sets the time - in seconds - before continuing rotation after one half of a cycle.
         /// </summary>
-        [Property("WAIT", 0.0)]
+        [DefaultValue(0.0)]
+        [Property("wait")]
         public double Wait { get; set; } = 0.0;
 
         #endregion

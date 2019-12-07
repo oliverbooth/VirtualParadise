@@ -24,11 +24,6 @@
         private static readonly Dictionary<string, Type> registeredCommands = new Dictionary<string, Type>();
 
         /// <summary>
-        /// Backing field for <see cref="RegisteredCommandParsers"/>.
-        /// </summary>
-        private static readonly Dictionary<Type, Type> registeredCommandParsers = new Dictionary<Type, Type>();
-
-        /// <summary>
         /// Backing field for <see cref="RegisteredTriggers"/>.
         /// </summary>
         private static readonly Dictionary<string, Type> registeredTriggers = new Dictionary<string, Type>();
@@ -63,7 +58,7 @@
             RegisterCommand<OpacityCommand>();
             RegisterCommand<RotateCommand>();
             RegisterCommand<ScaleCommand>();
-            RegisterCommand<SignCommand, SignCommandParser>();
+            RegisterCommand<SignCommand>();
             RegisterCommand<SolidCommand>();
             RegisterCommand<SoundCommand>();
             RegisterCommand<SpecularCommand>();
@@ -85,12 +80,6 @@
             registeredCommands.Values;
 
         /// <summary>
-        /// Gets the command parsers registered to the parser.
-        /// </summary>
-        public static IEnumerable<Type> RegisteredCommandParsers =>
-            registeredCommandParsers.Values;
-
-        /// <summary>
         /// Gets the triggers registered to the parser.
         /// </summary>
         public static IEnumerable<Type> RegisteredTriggers =>
@@ -104,20 +93,7 @@
         /// Registers a command that is recognized by the parser.
         /// </summary>
         /// <typeparam name="TCommand">A <see cref="CommandBase"/> derived type.</typeparam>
-        private static void RegisterCommand<TCommand>()
-            where TCommand : CommandBase
-        {
-            RegisterCommand<TCommand, CommandParser<TCommand>>();
-        }
-
-        /// <summary>
-        /// Registers a command that is recognized by the parser.
-        /// </summary>
-        /// <typeparam name="TCommand">A <see cref="CommandBase"/> derived type.</typeparam>
-        /// <typeparam name="TParser">A <see cref="CommandParser{TCommand}"/> derived type.</typeparam>
-        private static void RegisterCommand<TCommand, TParser>()
-            where TCommand : CommandBase
-            where TParser : CommandParser<TCommand>
+        private static void RegisterCommand<TCommand>() where TCommand : CommandBase
         {
             if (!(typeof(TCommand).GetCustomAttribute<CommandAttribute>() is { } command))
             {
@@ -125,7 +101,6 @@
             }
 
             registeredCommands?.Add(command.Name.ToUpperInvariant(), typeof(TCommand));
-            registeredCommandParsers?.Add(typeof(TCommand), typeof(TParser));
         }
 
         /// <summary>
@@ -245,30 +220,28 @@
                 // split commands with ','
                 foreach (string command in commands)
                 {
-                    string[]                   commandWords = Regex.Split(command, "\\s+");
-                    string                     commandWord  = commandWords.FirstOrDefault() ?? String.Empty;
-                    Dictionary<string, object> properties   = GetPropertiesFromArgs(commandWords.Skip(1));
-                    IEnumerable<string>        args         = GetArgsWithoutProperties(commandWords.Skip(1));
+                    string[] commandWords = Regex.Split(command, "\\s+");
+                    string   commandWord  = commandWords.FirstOrDefault() ?? String.Empty;
 
                     if (!registeredCommands.ContainsKey(commandWord.ToUpperInvariant()))
                     {
                         continue;
                     }
 
-                    if (!(Activator.CreateInstance(registeredCommands[commandWord.ToUpperInvariant()],
-                            new object[] {args.ToArray(), properties})
-                        is CommandBase currentCommand))
+                    Type commandType = registeredCommands[commandWord.ToUpperInvariant()];
+
+                    if (!(Activator.CreateInstance(commandType) is CommandBase currentCommand))
                     {
                         continue;
                     }
 
-                    if (!(Activator.CreateInstance(registeredCommandParsers[currentCommand.GetType()])
-                        is CommandParser parser))
+                    CommandAttribute commandAttribute = commandType.GetCustomAttribute<CommandAttribute>();
+                    if (Activator.CreateInstance(commandAttribute.Parser) is CommandParser parser)
                     {
-                        continue;
+                        currentCommand = parser.Parse(currentCommand.GetType(),
+                            String.Join(" ", commandWords.Skip(1)));
                     }
 
-                    currentCommand = parser.Parse(String.Join(" ", commandWords.Skip(1)));
                     builder.AddCommand(currentCommand);
                 }
             }

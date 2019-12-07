@@ -3,7 +3,6 @@
     #region Using Directives
 
     using System;
-    using System.Diagnostics.CodeAnalysis;
 
     #endregion
 
@@ -21,19 +20,9 @@
         /// Initializes a new instance of the <see cref="PropertyAttribute"/> class.
         /// </summary>
         /// <param name="name">The name / key of the property.</param>
-        /// <param name="defaultValue">The default value.</param>
-        /// <param name="optional">Optional. Whether or not the property itself is optional. Defaults to
-        /// <see langword="false"/>.</param>
-        [SuppressMessage("Globalization",
-            "CA1308:Normalize strings to uppercase",
-            Justification = "Lower case string necessary")]
-        public PropertyAttribute(string name,
-                                 object defaultValue = default,
-                                 bool   optional     = true)
+        public PropertyAttribute(string name)
         {
-            this.Name         = name?.ToLowerInvariant() ?? String.Empty;
-            this.DefaultValue = defaultValue;
-            this.Optional     = optional;
+            this.Name     = name?.ToUpperInvariant() ?? String.Empty;
         }
 
         #endregion
@@ -41,19 +30,14 @@
         #region Properties
 
         /// <summary>
-        /// Gets the default value of this property.
-        /// </summary>
-        public object DefaultValue { get; }
-
-        /// <summary>
         /// Gets the property name.
         /// </summary>
         public string Name { get; }
 
         /// <summary>
-        /// Gets a value indicating whether this property is optional.
+        /// Gets or sets a value indicating whether this property is optional.
         /// </summary>
-        public bool Optional { get; }
+        public bool Optional { get; set; }
 
         #endregion
     }

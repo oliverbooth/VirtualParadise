@@ -27,7 +27,7 @@
         {
             {
                 Action         action  = Action.Parse("create ambient;");
-                AmbientCommand ambient = action.Create.OfType<AmbientCommand>().First();
+                AmbientCommand ambient = action.Create.GetCommandOfType<AmbientCommand>();
 
                 Assert.IsNotNull(ambient);
                 Assert.AreEqual(1.0, ambient.Intensity);
@@ -35,7 +35,7 @@
 
             {
                 Action         action  = Action.Parse("create ambient 0.8 tag=foo;");
-                AmbientCommand ambient = action.Create.OfType<AmbientCommand>().First();
+                AmbientCommand ambient = action.Create.GetCommandOfType<AmbientCommand>();
 
                 Assert.IsNotNull(ambient);
                 Assert.AreEqual(0.8,   ambient.Intensity);
@@ -51,7 +51,7 @@
         {
             {
                 Action         action  = Action.Parse("create animate tag=foo mask me jump 5 9 100 1 2 3 4 5 4 3 2 1;");
-                AnimateCommand animate = action.Create.OfType<AnimateCommand>().First();
+                AnimateCommand animate = action.Create.GetCommandOfType<AnimateCommand>();
 
                 Assert.IsNotNull(animate);
                 Assert.AreEqual("foo", animate.Tag);
@@ -68,7 +68,7 @@
 
             {
                 Action         action  = Action.Parse("create animate me jump 5 3 100 1 2 1 global;");
-                AnimateCommand animate = action.Create.OfType<AnimateCommand>().First();
+                AnimateCommand animate = action.Create.GetCommandOfType<AnimateCommand>();
 
                 Assert.IsNotNull(animate);
                 Assert.IsFalse(animate.Mask);
@@ -91,7 +91,7 @@
         {
             {
                 Action        action = Action.Parse("create astart anim1;");
-                AstartCommand astart = action.Create.OfType<AstartCommand>().First();
+                AstartCommand astart = action.Create.GetCommandOfType<AstartCommand>();
 
                 Assert.IsNotNull(astart);
                 Assert.AreEqual("anim1", astart.Name);
@@ -100,7 +100,7 @@
 
             {
                 Action        action = Action.Parse("create astart anim1 looping;");
-                AstartCommand astart = action.Create.OfType<AstartCommand>().First();
+                AstartCommand astart = action.Create.GetCommandOfType<AstartCommand>();
 
                 Assert.IsNotNull(astart);
                 Assert.AreEqual("anim1", astart.Name);
@@ -115,7 +115,7 @@
         public void TestAstop()
         {
             Action       action = Action.Parse("create astop anim1;");
-            AstopCommand astop  = action.Create.OfType<AstopCommand>().First();
+            AstopCommand astop  = action.Create.GetCommandOfType<AstopCommand>();
 
             Assert.IsNotNull(astop);
             Assert.AreEqual("anim1", astop.Name);
@@ -129,7 +129,7 @@
         {
             {
                 Action        action = Action.Parse("create camera location=foo target=bar");
-                CameraCommand camera = action.Create.OfType<CameraCommand>().First();
+                CameraCommand camera = action.Create.GetCommandOfType<CameraCommand>();
 
                 Assert.IsNotNull(camera);
                 Assert.AreEqual("foo", camera.Location);
@@ -145,7 +145,7 @@
         {
             {
                 Action       action = Action.Parse("activate color blue global;");
-                ColorCommand color  = action.Activate.OfType<ColorCommand>().First();
+                ColorCommand color  = action.Activate.GetCommandOfType<ColorCommand>();
 
                 Assert.IsNotNull(color);
                 Assert.AreEqual(Color.Blue, color.Color);
@@ -154,7 +154,7 @@
 
             {
                 Action       action = Action.Parse("create color tint 238e23 tag=foo;");
-                ColorCommand color  = action.Create.OfType<ColorCommand>().First();
+                ColorCommand color  = action.Create.GetCommandOfType<ColorCommand>();
 
                 Assert.IsNotNull(color);
                 Assert.IsTrue(color.Tint);
@@ -171,7 +171,7 @@
         {
             {
                 Action         action  = Action.Parse("create  diffuse;");
-                DiffuseCommand diffuse = action.Create.OfType<DiffuseCommand>().First();
+                DiffuseCommand diffuse = action.Create.GetCommandOfType<DiffuseCommand>();
 
                 Assert.IsNotNull(diffuse);
                 Assert.AreEqual(0.5, diffuse.Intensity);
@@ -179,7 +179,7 @@
 
             {
                 Action         action  = Action.Parse("bump diffuse 0.12345;");
-                DiffuseCommand diffuse = action.Bump.OfType<DiffuseCommand>().First();
+                DiffuseCommand diffuse = action.Bump.GetCommandOfType<DiffuseCommand>();
 
                 Assert.IsNotNull(diffuse);
                 Assert.AreEqual(0.12345, diffuse.Intensity);
@@ -187,7 +187,7 @@
 
             {
                 Action         action  = Action.Parse(" activate diffuse 1.0 tag=foo lock;");
-                DiffuseCommand diffuse = action.Activate.OfType<DiffuseCommand>().First();
+                DiffuseCommand diffuse = action.Activate.GetCommandOfType<DiffuseCommand>();
 
                 Assert.IsNotNull(diffuse);
                 Assert.AreEqual("foo", diffuse.Tag);
@@ -203,7 +203,7 @@
         public void TestFrameRate()
         {
             Action           action    = Action.Parse("create framerate 60;");
-            FrameRateCommand framerate = action.Create.OfType<FrameRateCommand>().First();
+            FrameRateCommand framerate = action.Create.GetCommandOfType<FrameRateCommand>();
 
             Assert.IsNotNull(framerate);
             Assert.AreEqual(60, framerate.Value);
@@ -217,7 +217,7 @@
         {
             {
                 Action       action = Action.Parse("create light;");
-                LightCommand light  = action.Create.OfType<LightCommand>().First();
+                LightCommand light  = action.Create.GetCommandOfType<LightCommand>();
 
                 Assert.IsNotNull(light);
                 Assert.AreEqual(45.0,             light.Angle);
@@ -233,7 +233,7 @@
             {
                 Action action = Action.Parse(
                     "create light fx=blink radius=5 maxdist=50 brightness=1 angle=90 color=00ff00 time=3 type=spot;");
-                LightCommand light = action.Create.OfType<LightCommand>().First();
+                LightCommand light = action.Create.GetCommandOfType<LightCommand>();
 
                 Assert.IsNotNull(light);
                 Assert.AreEqual(90.0,              light.Angle);
@@ -255,7 +255,7 @@
         {
             {
                 Action      action = Action.Parse("create move 5");
-                MoveCommand move   = action.Create.OfType<MoveCommand>().First();
+                MoveCommand move   = action.Create.GetCommandOfType<MoveCommand>();
 
                 Assert.IsNotNull(move);
                 Assert.AreEqual(5.0, move.X);
@@ -273,7 +273,7 @@
 
             {
                 Action      action = Action.Parse("create move 0 10 0 loop smooth ltm time=5 wait=3");
-                MoveCommand move   = action.Create.OfType<MoveCommand>().First();
+                MoveCommand move   = action.Create.GetCommandOfType<MoveCommand>();
 
                 Assert.IsNotNull(move);
                 Assert.AreEqual(0.0,  move.X);
@@ -298,7 +298,7 @@
         {
             {
                 Action      action = Action.Parse("create name foo;");
-                NameCommand name   = action.Create.OfType<NameCommand>().First();
+                NameCommand name   = action.Create.GetCommandOfType<NameCommand>();
 
                 Assert.IsNotNull(name);
                 Assert.AreEqual("foo", name.Name);
@@ -306,7 +306,7 @@
 
             {
                 Action      action = Action.Parse("activate   name bar name=foo;");
-                NameCommand name   = action.Activate.OfType<NameCommand>().First();
+                NameCommand name   = action.Activate.GetCommandOfType<NameCommand>();
 
                 Assert.IsNotNull(name);
                 Assert.AreEqual("bar", name.Name);
@@ -322,7 +322,7 @@
         {
             {
                 Action       action = Action.Parse("create noise ambient1 loop volume=0.8");
-                NoiseCommand noise  = action.Create.OfType<NoiseCommand>().First();
+                NoiseCommand noise  = action.Create.GetCommandOfType<NoiseCommand>();
 
                 Assert.IsNotNull(noise);
                 Assert.IsTrue(noise.Loop);
@@ -339,7 +339,7 @@
         {
             {
                 Action           action    = Action.Parse("create normalmap stone1 mask=stone1m");
-                NormalMapCommand normalMap = action.Create.OfType<NormalMapCommand>().First();
+                NormalMapCommand normalMap = action.Create.GetCommandOfType<NormalMapCommand>();
 
                 Assert.IsNotNull(normalMap);
                 Assert.AreEqual("stone1",  normalMap.Texture);
@@ -355,7 +355,7 @@
         {
             {
                 Action         action  = Action.Parse("create opacity;");
-                OpacityCommand opacity = action.Create.OfType<OpacityCommand>().First();
+                OpacityCommand opacity = action.Create.GetCommandOfType<OpacityCommand>();
 
                 Assert.IsNotNull(opacity);
                 Assert.AreEqual(1.0, opacity.Value);
@@ -363,7 +363,7 @@
 
             {
                 Action         action  = Action.Parse("create opacity 0.5;");
-                OpacityCommand opacity = action.Create.OfType<OpacityCommand>().First();
+                OpacityCommand opacity = action.Create.GetCommandOfType<OpacityCommand>();
 
                 Assert.IsNotNull(opacity);
                 Assert.AreEqual(0.5, opacity.Value);
@@ -378,7 +378,7 @@
         {
             {
                 Action        action = Action.Parse("create rotate 1 90 3");
-                RotateCommand rotate = action.Create.OfType<RotateCommand>().First();
+                RotateCommand rotate = action.Create.GetCommandOfType<RotateCommand>();
 
                 Assert.IsNotNull(rotate);
                 Assert.AreEqual(1.0,  rotate.X);
@@ -396,7 +396,7 @@
 
             {
                 Action        action = Action.Parse("create rotate 45");
-                RotateCommand rotate = action.Create.OfType<RotateCommand>().First();
+                RotateCommand rotate = action.Create.GetCommandOfType<RotateCommand>();
 
                 Assert.IsNotNull(rotate);
                 Assert.AreEqual(0.0,  rotate.X);
@@ -406,7 +406,7 @@
 
             {
                 Action        action = Action.Parse("create rotate 45 90 time=1 loop");
-                RotateCommand rotate = action.Create.OfType<RotateCommand>().First();
+                RotateCommand rotate = action.Create.GetCommandOfType<RotateCommand>();
 
                 Assert.IsNotNull(rotate);
                 Assert.AreEqual(45.0, rotate.X);
@@ -418,7 +418,7 @@
 
             {
                 Action        action = Action.Parse("create rotate 45 90 reset wait=3");
-                RotateCommand rotate = action.Create.OfType<RotateCommand>().First();
+                RotateCommand rotate = action.Create.GetCommandOfType<RotateCommand>();
 
                 Assert.IsNotNull(rotate);
                 Assert.AreEqual(45.0, rotate.X);
@@ -437,7 +437,7 @@
         {
             {
                 Action       action = Action.Parse("create solid yes");
-                SolidCommand solid  = action.Create.OfType<SolidCommand>().First();
+                SolidCommand solid  = action.Create.GetCommandOfType<SolidCommand>();
 
                 Assert.IsNotNull(solid);
                 Assert.IsTrue(solid.Value);
@@ -446,7 +446,7 @@
 
             {
                 Action       action = Action.Parse("create solid 0");
-                SolidCommand solid  = action.Create.OfType<SolidCommand>().First();
+                SolidCommand solid  = action.Create.GetCommandOfType<SolidCommand>();
 
                 Assert.IsNotNull(solid);
                 Assert.IsFalse(solid.Value);
@@ -455,7 +455,7 @@
 
             {
                 Action       action = Action.Parse("create solid foo no");
-                SolidCommand solid  = action.Create.OfType<SolidCommand>().First();
+                SolidCommand solid  = action.Create.GetCommandOfType<SolidCommand>();
 
                 Assert.IsNotNull(solid);
                 Assert.IsFalse(solid.Value);
@@ -464,7 +464,7 @@
 
             {
                 Action       action = Action.Parse("create solid false name=foo");
-                SolidCommand solid  = action.Create.OfType<SolidCommand>().First();
+                SolidCommand solid  = action.Create.GetCommandOfType<SolidCommand>();
 
                 Assert.IsNotNull(solid);
                 Assert.IsFalse(solid.Value);
@@ -480,7 +480,7 @@
         {
             {
                 Action       action = Action.Parse("create scale 2 0.5 3");
-                ScaleCommand scale  = action.Create.OfType<ScaleCommand>().First();
+                ScaleCommand scale  = action.Create.GetCommandOfType<ScaleCommand>();
 
                 Assert.IsNotNull(scale);
                 Assert.AreEqual(2.0, scale.X);
@@ -490,7 +490,7 @@
 
             {
                 Action       action = Action.Parse("create scale 1.5");
-                ScaleCommand scale  = action.Create.OfType<ScaleCommand>().First();
+                ScaleCommand scale  = action.Create.GetCommandOfType<ScaleCommand>();
 
                 Assert.IsNotNull(scale);
                 Assert.AreEqual(1.5, scale.X);
@@ -508,7 +508,7 @@
             {
                 Action action = Action.Parse("create sign color=red bcolor=000000 \"Hello World\" " +
                                              "margin=1.0 hmargin=1.5 vmargin=2.0 align=right");
-                SignCommand sign = action.Create.OfType<SignCommand>().First();
+                SignCommand sign = action.Create.GetCommandOfType<SignCommand>();
 
                 Assert.IsNotNull(sign);
                 Assert.AreEqual(Color.Red,           sign.ForeColor);
@@ -523,7 +523,7 @@
 
             {
                 Action      action = Action.Parse("create sign shadow \"Shadow Unit Test\"");
-                SignCommand sign   = action.Create.OfType<SignCommand>().First();
+                SignCommand sign   = action.Create.GetCommandOfType<SignCommand>();
 
                 Assert.IsNotNull(sign);
                 Assert.AreEqual(Color.White,                sign.ForeColor);
@@ -541,7 +541,7 @@
         {
             {
                 Action       action = Action.Parse("create sound ambient1");
-                SoundCommand sound  = action.Create.OfType<SoundCommand>().First();
+                SoundCommand sound  = action.Create.GetCommandOfType<SoundCommand>();
 
                 Assert.IsNotNull(sound);
                 Assert.IsTrue(sound.Loop);
@@ -555,7 +555,7 @@
             {
                 Action action = Action.Parse("create sound ambient1 noloop " +
                                              "leftspk=foo rightspk=bar radius=10 volume=0.5");
-                SoundCommand sound = action.Create.OfType<SoundCommand>().First();
+                SoundCommand sound = action.Create.GetCommandOfType<SoundCommand>();
 
                 Assert.IsNotNull(sound);
                 Assert.IsFalse(sound.Loop);
@@ -575,7 +575,7 @@
         {
             {
                 Action          action   = Action.Parse("create specular;");
-                SpecularCommand specular = action.Create.OfType<SpecularCommand>().First();
+                SpecularCommand specular = action.Create.GetCommandOfType<SpecularCommand>();
 
                 Assert.IsNotNull(specular);
                 Assert.AreEqual(1.0,  specular.Intensity);
@@ -585,7 +585,7 @@
 
             {
                 Action          action   = Action.Parse("create specular 0.4 22.3 alpha;");
-                SpecularCommand specular = action.Create.OfType<SpecularCommand>().First();
+                SpecularCommand specular = action.Create.GetCommandOfType<SpecularCommand>();
 
                 Assert.IsNotNull(specular);
                 Assert.AreEqual(0.4,  specular.Intensity);
@@ -602,7 +602,7 @@
         {
             {
                 Action             action      = Action.Parse("create specularmap specular123 mask=stone1m");
-                SpecularMapCommand specularMap = action.Create.OfType<SpecularMapCommand>().First();
+                SpecularMapCommand specularMap = action.Create.GetCommandOfType<SpecularMapCommand>();
 
                 Assert.IsNotNull(specularMap);
                 Assert.AreEqual("specular123", specularMap.Texture);
@@ -618,7 +618,7 @@
         {
             {
                 Action          action   = Action.Parse("activate teleport asdf 25n 2.6e");
-                TeleportCommand teleport = action.Activate.OfType<TeleportCommand>().First();
+                TeleportCommand teleport = action.Activate.GetCommandOfType<TeleportCommand>();
 
                 Assert.IsNotNull(teleport);
 
@@ -635,7 +635,7 @@
         {
             {
                 Action             action   = Action.Parse("activate teleportxyz 1 -3.14 12");
-                TeleportXyzCommand teleport = action.Activate.OfType<TeleportXyzCommand>().First();
+                TeleportXyzCommand teleport = action.Activate.GetCommandOfType<TeleportXyzCommand>();
 
                 Assert.IsNotNull(teleport);
                 Assert.AreEqual(1.0,   teleport.X);
@@ -646,7 +646,7 @@
 
             {
                 Action             action   = Action.Parse("bump teleportxyz 0 0 0 180");
-                TeleportXyzCommand teleport = action.Bump.OfType<TeleportXyzCommand>().First();
+                TeleportXyzCommand teleport = action.Bump.GetCommandOfType<TeleportXyzCommand>();
 
                 Assert.IsNotNull(teleport);
                 Assert.AreEqual(0.0,   teleport.X);
@@ -664,7 +664,7 @@
         {
             {
                 Action         action  = Action.Parse("create texture stone1 mask=rail1m tag=foo");
-                TextureCommand texture = action.Create.OfType<TextureCommand>().First();
+                TextureCommand texture = action.Create.GetCommandOfType<TextureCommand>();
 
                 Assert.IsNotNull(texture);
                 Assert.AreEqual("stone1", texture.Texture);
@@ -681,7 +681,7 @@
         {
             {
                 Action         action  = Action.Parse("create visible yes");
-                VisibleCommand visible = action.Create.OfType<VisibleCommand>().First();
+                VisibleCommand visible = action.Create.GetCommandOfType<VisibleCommand>();
 
                 Assert.IsNotNull(visible);
                 Assert.IsTrue(visible.Value);
@@ -691,7 +691,7 @@
 
             {
                 Action         action  = Action.Parse("create visible 0");
-                VisibleCommand visible = action.Create.OfType<VisibleCommand>().First();
+                VisibleCommand visible = action.Create.GetCommandOfType<VisibleCommand>();
 
                 Assert.IsNotNull(visible);
                 Assert.IsFalse(visible.Value);
@@ -701,7 +701,7 @@
 
             {
                 Action         action  = Action.Parse("create visible foo no radius=2");
-                VisibleCommand visible = action.Create.OfType<VisibleCommand>().First();
+                VisibleCommand visible = action.Create.GetCommandOfType<VisibleCommand>();
 
                 Assert.IsNotNull(visible);
                 Assert.IsFalse(visible.Value);
@@ -711,7 +711,7 @@
 
             {
                 Action         action  = Action.Parse("create visible true name=foo radius=3.14");
-                VisibleCommand visible = action.Create.OfType<VisibleCommand>().First();
+                VisibleCommand visible = action.Create.GetCommandOfType<VisibleCommand>();
 
                 Assert.IsNotNull(visible);
                 Assert.IsTrue(visible.Value);

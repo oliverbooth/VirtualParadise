@@ -2,8 +2,6 @@
 {
     #region Using Directives
 
-    using System;
-
     #endregion
 
     /// <summary>
@@ -19,11 +17,7 @@
         /// </summary>
         /// <param name="input">The input.</param>
         /// <returns>Returns a <see cref="TCommand"/>.</returns>
-        public new virtual TCommand Parse(string input)
-        {
-            TCommand command = Activator.CreateInstance<TCommand>();
-            return command;
-        }
+        public abstract TCommand Parse(string input);
 
         #endregion
     }
