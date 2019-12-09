@@ -54,7 +54,7 @@
         /// <summary>
         /// Gets or sets a value indicating whether this sound loops.
         /// </summary>
-        public bool Loop { get; set; } = true;
+        public bool IsLooping { get; set; } = true;
 
         /// <summary>
         /// Gets or sets a value indicating whether this sound doesn't loop.
@@ -62,8 +62,8 @@
         [Flag("noloop")]
         private bool NoLoop
         {
-            get => !this.Loop;
-            set => this.Loop = !value;
+            get => !this.IsLooping;
+            set => this.IsLooping = !value;
         }
 
         #endregion

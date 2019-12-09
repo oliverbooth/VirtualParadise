@@ -66,7 +66,7 @@
         /// Gets or sets a value indicating whether this animation is masked.
         /// </summary>
         [Flag("mask")]
-        public bool Mask { get; set; } = false;
+        public bool IsMask { get; set; } = false;
 
         /// <summary>
         /// Gets or sets the target object to be animated.
@@ -95,16 +95,16 @@
 
             string frameList = String.Join(" ", this.FrameList);
 
-            builder.Append(this.CommandName)
-                   .Append(String.IsNullOrWhiteSpace(this.Tag) ? String.Empty : $" tag={this.Tag} ")
-                   .Append(this.Mask ? " mask" : String.Empty)
+            builder.Append(this.CommandName.ToLowerInvariant())
+                   .Append(String.IsNullOrWhiteSpace(this.Tag) ? String.Empty : $" tag={this.Tag}")
+                   .Append(this.IsMask ? " mask" : String.Empty)
                    .Append(' ').Append(this.Name)
                    .Append(' ').Append(this.Animation)
                    .Append(' ').Append(this.ImageCount)
                    .Append(' ').Append(this.FrameCount)
                    .Append(' ').Append(this.FrameDelay)
                    .Append(String.IsNullOrWhiteSpace(frameList) ? String.Empty : $" {frameList}")
-                   .Append(this.IsGlobal ? " global" : String.Empty);
+                   .Append(this.GetFlagsString("mask"));
 
             return builder.ToString();
         }

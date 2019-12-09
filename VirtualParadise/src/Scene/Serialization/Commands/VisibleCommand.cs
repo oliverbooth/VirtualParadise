@@ -28,7 +28,7 @@
         /// </summary>
         [DefaultValue(true)]
         [Parameter(0, "visible")]
-        public bool Value { get; set; } = true;
+        public bool IsVisible { get; set; } = true;
 
         #endregion
     }

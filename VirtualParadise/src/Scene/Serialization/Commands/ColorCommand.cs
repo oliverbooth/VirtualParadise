@@ -36,7 +36,7 @@
         /// Gets or sets a value indicating whether this color is a tint.
         /// </summary>
         [Flag("tint")]
-        public bool Tint { get; set; } = false;
+        public bool IsTint { get; set; } = false;
 
         #endregion
     }

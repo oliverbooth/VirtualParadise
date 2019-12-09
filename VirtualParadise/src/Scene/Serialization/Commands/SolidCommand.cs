@@ -21,7 +21,7 @@
         /// </summary>
         [DefaultValue(true)]
         [Parameter(0, "solid")]
-        public bool Value { get; set; } = true;
+        public bool IsSolid { get; set; } = true;
 
         #endregion
     }

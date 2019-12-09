@@ -49,13 +49,13 @@
         /// Gets or sets a value indicating whether this rotation is along the object axis (as opposed to world axis).
         /// </summary>
         [Flag("ltm")]
-        public bool LocalAxis { get; set; } = false;
+        public bool IsLocalAxis { get; set; } = false;
 
         /// <summary>
         /// Gets or sets a value indicating whether this rotation loops.
         /// </summary>
         [Flag("loop")]
-        public bool Loop { get; set; } = false;
+        public bool IsLooping { get; set; } = false;
 
         /// <summary>
         /// Gets or sets the offset - in seconds - to apply to universe time when synchronizing.
@@ -68,19 +68,19 @@
         /// Gets or sets a value indicating whether this rotation resets after completing half a cycle.
         /// </summary>
         [Flag("reset")]
-        public bool Reset { get; set; } = false;
+        public bool ShouldReset { get; set; } = false;
 
         /// <summary>
         /// Gets or sets a value indicating whether this rotation is smooth.
         /// </summary>
         [Flag("smooth")]
-        public bool Smooth { get; set; } = false;
+        public bool IsSmooth { get; set; } = false;
 
         /// <summary>
         /// Gets or sets a value indicating whether this rotation syncs.
         /// </summary>
         [Flag("sync")]
-        public bool Sync { get; set; } = false;
+        public bool ShouldSync { get; set; } = false;
 
         /// <summary>
         /// Gets or sets the duration - in seconds - of half of a cycle.

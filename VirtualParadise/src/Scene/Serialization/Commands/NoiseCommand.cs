@@ -27,7 +27,7 @@
         /// Gets or sets a value indicating whether this noise loops.
         /// </summary>
         [Flag("loop")]
-        public bool Loop { get; set; } = false;
+        public bool IsLooping { get; set; } = false;
 
         /// <summary>
         /// Gets or sets the volume of this sound, between 0.0 and 1.0.
