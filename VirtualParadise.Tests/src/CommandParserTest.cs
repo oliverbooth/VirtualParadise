@@ -3,6 +3,7 @@
     #region Using Directives
 
     using System;
+    using System.Linq;
     using API;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Scene.Serialization.Commands;
@@ -14,6 +15,46 @@
     public class CommandParserTest
     {
         #region Methods
+
+        /// <summary>
+        /// Tests the <c>animate</c> command.
+        /// </summary>
+        [TestMethod]
+        public void TestAnimate()
+        {
+            {
+                Action         action  = Action.Parse("create animate tag=foo mask me jump 5 9 100 1 2 3 4 5 4 3 2 1;");
+                AnimateCommand animate = action.Create.GetCommandOfType<AnimateCommand>();
+
+                Assert.IsNotNull(animate);
+                Assert.AreEqual("foo", animate.Tag);
+                Assert.IsTrue(animate.IsMask);
+                Assert.AreEqual("me",   animate.Name);
+                Assert.AreEqual("jump", animate.Animation);
+                Assert.AreEqual(5,      animate.ImageCount);
+                Assert.AreEqual(9,      animate.FrameCount);
+                Assert.AreEqual(100,    animate.FrameDelay);
+                CollectionAssert.AreEqual(
+                    new[] { 1, 2, 3, 4, 5, 4, 3, 2, 1 }, animate.FrameList.ToArray());
+                Assert.IsFalse(animate.IsGlobal);
+            }
+
+            {
+                Action         action  = Action.Parse("create animate me jump 5 3 100 1 2 1 global;");
+                AnimateCommand animate = action.Create.GetCommandOfType<AnimateCommand>();
+
+                Assert.IsNotNull(animate);
+                Assert.IsFalse(animate.IsMask);
+                Assert.AreEqual("me",   animate.Name);
+                Assert.AreEqual("jump", animate.Animation);
+                Assert.AreEqual(5,      animate.ImageCount);
+                Assert.AreEqual(3,      animate.FrameCount);
+                Assert.AreEqual(100,    animate.FrameDelay);
+                CollectionAssert.AreEqual(
+                    new[] { 1, 2, 1 }, animate.FrameList.ToArray());
+                Assert.IsTrue(animate.IsGlobal);
+            }
+        }
 
         [TestMethod]
         public void TestAstartLooping()
