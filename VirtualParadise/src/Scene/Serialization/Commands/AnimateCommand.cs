@@ -5,11 +5,9 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Linq;
     using System.Text;
     using Parsers;
     using Parsing;
-    using X10D;
 
     #endregion
 

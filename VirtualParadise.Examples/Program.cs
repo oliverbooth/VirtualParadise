@@ -7,7 +7,6 @@
     using System.Reflection;
     using Scene.Serialization.Commands;
     using Scene.Serialization.Triggers;
-    using X10D;
     using Action = Scene.Serialization.Action;
 
     internal class Program
