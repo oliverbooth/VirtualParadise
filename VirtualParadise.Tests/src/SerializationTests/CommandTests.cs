@@ -55,7 +55,7 @@
 
                 Assert.IsNotNull(animate);
                 Assert.AreEqual("foo", animate.Tag);
-                Assert.IsTrue(animate.Mask);
+                Assert.IsTrue(animate.IsMask);
                 Assert.AreEqual("me",   animate.Name);
                 Assert.AreEqual("jump", animate.Animation);
                 Assert.AreEqual(5,      animate.ImageCount);
@@ -71,7 +71,7 @@
                 AnimateCommand animate = action.Create.GetCommandOfType<AnimateCommand>();
 
                 Assert.IsNotNull(animate);
-                Assert.IsFalse(animate.Mask);
+                Assert.IsFalse(animate.IsMask);
                 Assert.AreEqual("me",   animate.Name);
                 Assert.AreEqual("jump", animate.Animation);
                 Assert.AreEqual(5,      animate.ImageCount);
@@ -157,7 +157,7 @@
                 ColorCommand color  = action.Create.GetCommandOfType<ColorCommand>();
 
                 Assert.IsNotNull(color);
-                Assert.IsTrue(color.Tint);
+                Assert.IsTrue(color.IsTint);
                 Assert.AreEqual("foo",             color.Tag);
                 Assert.AreEqual(Color.ForestGreen, color.Color);
             }
@@ -261,11 +261,11 @@
                 Assert.AreEqual(5.0, move.X);
                 Assert.AreEqual(0.0, move.Y);
                 Assert.AreEqual(0.0, move.Z);
-                Assert.IsFalse(move.Loop);
-                Assert.IsFalse(move.Sync);
-                Assert.IsFalse(move.Smooth);
-                Assert.IsFalse(move.Reset);
-                Assert.IsFalse(move.LocalAxis);
+                Assert.IsFalse(move.IsLooping);
+                Assert.IsFalse(move.ShouldSync);
+                Assert.IsFalse(move.IsSmooth);
+                Assert.IsFalse(move.ShouldReset);
+                Assert.IsFalse(move.IsLocalAxis);
                 Assert.AreEqual(0.0, move.Wait);
                 Assert.AreEqual(1.0, move.Time);
                 Assert.AreEqual(0.0, move.Offset);
@@ -279,11 +279,11 @@
                 Assert.AreEqual(0.0,  move.X);
                 Assert.AreEqual(10.0, move.Y);
                 Assert.AreEqual(0.0,  move.Z);
-                Assert.IsTrue(move.Loop);
-                Assert.IsFalse(move.Sync);
-                Assert.IsTrue(move.Smooth);
-                Assert.IsFalse(move.Reset);
-                Assert.IsTrue(move.LocalAxis);
+                Assert.IsTrue(move.IsLooping);
+                Assert.IsFalse(move.ShouldSync);
+                Assert.IsTrue(move.IsSmooth);
+                Assert.IsFalse(move.ShouldReset);
+                Assert.IsTrue(move.IsLocalAxis);
                 Assert.AreEqual(3.0, move.Wait);
                 Assert.AreEqual(5.0, move.Time);
                 Assert.AreEqual(0.0, move.Offset);
@@ -325,7 +325,7 @@
                 NoiseCommand noise  = action.Create.GetCommandOfType<NoiseCommand>();
 
                 Assert.IsNotNull(noise);
-                Assert.IsTrue(noise.Loop);
+                Assert.IsTrue(noise.IsLooping);
                 Assert.AreEqual("ambient1", noise.FileName);
                 Assert.AreEqual(0.8,        noise.Volume);
             }
@@ -384,11 +384,11 @@
                 Assert.AreEqual(1.0,  rotate.X);
                 Assert.AreEqual(90.0, rotate.Y);
                 Assert.AreEqual(3.0,  rotate.Z);
-                Assert.IsFalse(rotate.Loop);
-                Assert.IsFalse(rotate.Sync);
-                Assert.IsFalse(rotate.Smooth);
-                Assert.IsFalse(rotate.Reset);
-                Assert.IsFalse(rotate.LocalAxis);
+                Assert.IsFalse(rotate.IsLooping);
+                Assert.IsFalse(rotate.ShouldSync);
+                Assert.IsFalse(rotate.IsSmooth);
+                Assert.IsFalse(rotate.ShouldReset);
+                Assert.IsFalse(rotate.IsLocalAxis);
                 Assert.AreEqual(0.0, rotate.Wait);
                 Assert.AreEqual(1.0, rotate.Time);
                 Assert.AreEqual(0.0, rotate.Offset);
@@ -413,7 +413,7 @@
                 Assert.AreEqual(90.0, rotate.Y);
                 Assert.AreEqual(0.0,  rotate.Z);
                 Assert.AreEqual(1.0,  rotate.Time);
-                Assert.IsTrue(rotate.Loop);
+                Assert.IsTrue(rotate.IsLooping);
             }
 
             {
@@ -425,7 +425,7 @@
                 Assert.AreEqual(90.0, rotate.Y);
                 Assert.AreEqual(0.0,  rotate.Z);
                 Assert.AreEqual(3.0,  rotate.Wait);
-                Assert.IsTrue(rotate.Reset);
+                Assert.IsTrue(rotate.ShouldReset);
             }
         }
 
@@ -440,7 +440,7 @@
                 SolidCommand solid  = action.Create.GetCommandOfType<SolidCommand>();
 
                 Assert.IsNotNull(solid);
-                Assert.IsTrue(solid.Value);
+                Assert.IsTrue(solid.IsSolid);
                 Assert.AreEqual(String.Empty, solid.TargetName);
             }
 
@@ -449,7 +449,7 @@
                 SolidCommand solid  = action.Create.GetCommandOfType<SolidCommand>();
 
                 Assert.IsNotNull(solid);
-                Assert.IsFalse(solid.Value);
+                Assert.IsFalse(solid.IsSolid);
                 Assert.AreEqual(String.Empty, solid.TargetName);
             }
 
@@ -458,7 +458,7 @@
                 SolidCommand solid  = action.Create.GetCommandOfType<SolidCommand>();
 
                 Assert.IsNotNull(solid);
-                Assert.IsFalse(solid.Value);
+                Assert.IsFalse(solid.IsSolid);
                 Assert.AreEqual("foo", solid.TargetName);
             }
 
@@ -467,7 +467,7 @@
                 SolidCommand solid  = action.Create.GetCommandOfType<SolidCommand>();
 
                 Assert.IsNotNull(solid);
-                Assert.IsFalse(solid.Value);
+                Assert.IsFalse(solid.IsSolid);
                 Assert.AreEqual("foo", solid.TargetName);
             }
         }
@@ -544,7 +544,7 @@
                 SoundCommand sound  = action.Create.GetCommandOfType<SoundCommand>();
 
                 Assert.IsNotNull(sound);
-                Assert.IsTrue(sound.Loop);
+                Assert.IsTrue(sound.IsLooping);
                 Assert.AreEqual("ambient1",   sound.FileName);
                 Assert.AreEqual(String.Empty, sound.LeftSpeaker);
                 Assert.AreEqual(String.Empty, sound.RightSpeaker);
@@ -558,7 +558,7 @@
                 SoundCommand sound = action.Create.GetCommandOfType<SoundCommand>();
 
                 Assert.IsNotNull(sound);
-                Assert.IsFalse(sound.Loop);
+                Assert.IsFalse(sound.IsLooping);
                 Assert.AreEqual("ambient1", sound.FileName);
                 Assert.AreEqual("foo",      sound.LeftSpeaker);
                 Assert.AreEqual("bar",      sound.RightSpeaker);
@@ -684,7 +684,7 @@
                 VisibleCommand visible = action.Create.GetCommandOfType<VisibleCommand>();
 
                 Assert.IsNotNull(visible);
-                Assert.IsTrue(visible.Value);
+                Assert.IsTrue(visible.IsVisible);
                 Assert.AreEqual(-1.0,         visible.Radius);
                 Assert.AreEqual(String.Empty, visible.TargetName);
             }
@@ -694,7 +694,7 @@
                 VisibleCommand visible = action.Create.GetCommandOfType<VisibleCommand>();
 
                 Assert.IsNotNull(visible);
-                Assert.IsFalse(visible.Value);
+                Assert.IsFalse(visible.IsVisible);
                 Assert.AreEqual(-1.0,         visible.Radius);
                 Assert.AreEqual(String.Empty, visible.TargetName);
             }
@@ -704,7 +704,7 @@
                 VisibleCommand visible = action.Create.GetCommandOfType<VisibleCommand>();
 
                 Assert.IsNotNull(visible);
-                Assert.IsFalse(visible.Value);
+                Assert.IsFalse(visible.IsVisible);
                 Assert.AreEqual(2.0,   visible.Radius);
                 Assert.AreEqual("foo", visible.TargetName);
             }
@@ -714,7 +714,7 @@
                 VisibleCommand visible = action.Create.GetCommandOfType<VisibleCommand>();
 
                 Assert.IsNotNull(visible);
-                Assert.IsTrue(visible.Value);
+                Assert.IsTrue(visible.IsVisible);
                 Assert.AreEqual(3.14,  visible.Radius);
                 Assert.AreEqual("foo", visible.TargetName);
             }
