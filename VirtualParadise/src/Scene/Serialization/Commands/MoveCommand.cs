@@ -2,7 +2,9 @@
 {
     #region Using Directives
 
+    using System;
     using System.ComponentModel;
+    using System.Text;
     using Parsers;
     using Parsing;
 
@@ -27,7 +29,7 @@
         /// </summary>
         [DefaultValue(0.0)]
         [Parameter(1, "y",
-            Optional     = true)]
+            Optional = true)]
         public double Y { get; set; } = 0.0;
 
         /// <summary>
@@ -35,7 +37,7 @@
         /// </summary>
         [DefaultValue(0.0)]
         [Parameter(2, "z",
-            Optional     = true)]
+            Optional = true)]
         public double Z { get; set; } = 0.0;
 
         /// <summary>
@@ -88,6 +90,42 @@
         [DefaultValue(0.0)]
         [Property("wait")]
         public double Wait { get; set; } = 0.0;
+
+        #endregion
+
+        #region Methods
+
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            StringBuilder builder    = new StringBuilder();
+            string        properties = this.GetPropertiesString();
+
+            builder.Append(this.CommandName.ToLowerInvariant()).Append(' ');
+
+            builder.Append(this.X).Append(' ');
+
+            if (this.Y > 0.0 || this.Z > 0.0)
+            {
+                builder.Append(this.Y).Append(' ');
+
+                if (this.Z > 0.0)
+                {
+                    builder.Append(this.Z).Append(' ');
+                }
+            }
+
+            builder.Append(properties);
+
+            if (!String.IsNullOrWhiteSpace(properties))
+            {
+                builder.Append(' ');
+            }
+
+            builder.Append(this.GetFlagsString());
+
+            return builder.ToString().Trim();
+        }
 
         #endregion
     }

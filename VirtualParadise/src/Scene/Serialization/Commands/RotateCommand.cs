@@ -103,11 +103,20 @@
             StringBuilder builder    = new StringBuilder();
             string        properties = this.GetPropertiesString();
 
-            builder.Append(this.CommandName.ToLowerInvariant()).Append(' ')
-                   .Append(this.X).Append(' ')
-                   .Append(this.Y).Append(' ')
-                   .Append(this.Z).Append(' ')
-                   .Append(properties);
+            builder.Append(this.CommandName.ToLowerInvariant()).Append(' ');
+
+            if (Math.Abs(this.X) < Double.Epsilon && Math.Abs(this.Z) < Double.Epsilon)
+            {
+                builder.Append(this.Y);
+            }
+            else
+            {
+                builder.Append(this.X).Append(' ')
+                       .Append(this.Y).Append(' ')
+                       .Append(this.Z);
+            }
+
+            builder.Append(' ').Append(properties);
 
             if (!String.IsNullOrWhiteSpace(properties))
             {
