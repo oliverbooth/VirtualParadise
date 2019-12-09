@@ -36,19 +36,19 @@
         /// <summary>
         /// Gets or sets the animation name.
         /// </summary>
-        [Parameter(2, "animation")]
+        [Parameter(1, "animation")]
         public string Animation { get; set; }
 
         /// <summary>
         /// Gets or sets the frame count.
         /// </summary>
-        [Parameter(4, "framecount")]
+        [Parameter(3, "framecount")]
         public int FrameCount { get; set; }
 
         /// <summary>
         /// Gets or sets the delay, in milliseconds, between frames.
         /// </summary>
-        [Parameter(5, "framedelay")]
+        [Parameter(4, "framedelay")]
         public int FrameDelay { get; set; }
 
         /// <summary>
@@ -59,7 +59,7 @@
         /// <summary>
         /// Gets or sets the image count.
         /// </summary>
-        [Parameter(3, "imagecount")]
+        [Parameter(2, "imagecount")]
         public int ImageCount { get; set; }
 
         /// <summary>
@@ -71,7 +71,7 @@
         /// <summary>
         /// Gets or sets the target object to be animated.
         /// </summary>
-        [Parameter(1, "name")]
+        [Parameter(0, "name")]
         public string Name { get; set; }
 
         /// <summary>
