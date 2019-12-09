@@ -2,7 +2,9 @@
 {
     #region Using Directives
 
+    using System;
     using System.ComponentModel;
+    using System.Text;
     using Parsers;
     using Parsing;
 
@@ -38,6 +40,32 @@
         [Parameter(2, "z",
             Optional      = true)]
         public double Z { get; set; } = 1.0;
+
+        #endregion
+
+        #region Methods
+
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            StringBuilder builder    = new StringBuilder();
+            string        properties = this.GetPropertiesString();
+
+            builder.Append(this.CommandName.ToLowerInvariant()).Append(' ')
+                   .Append(this.X).Append(' ')
+                   .Append(this.Y).Append(' ')
+                   .Append(this.Z).Append(' ')
+                   .Append(properties);
+
+            if (!String.IsNullOrWhiteSpace(properties))
+            {
+                builder.Append(' ');
+            }
+
+            builder.Append(this.GetFlagsString());
+
+            return builder.ToString().Trim();
+        }
 
         #endregion
     }
