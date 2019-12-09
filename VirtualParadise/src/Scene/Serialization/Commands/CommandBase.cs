@@ -273,70 +273,116 @@
             Justification = "Lower case string necessary")]
         public override string ToString()
         {
-            StringBuilder builder = new StringBuilder();
-            builder.Append(this.CommandName.ToLowerInvariant())
-                   .Append(' ');
+            {
+                StringBuilder builder = new StringBuilder();
+                builder.Append(this.CommandName.ToLowerInvariant())
+                       .Append(' ');
 
-            // Add necessary arguments
+                // Add necessary arguments
+                PropertyInfo[] members = this.GetType().GetProperties(BindingFlags.Instance |
+                                                                      BindingFlags.Public   |
+                                                                      BindingFlags.NonPublic);
+
+                foreach (PropertyInfo member in members.Where(t => !(t.ToVpParameter() is null))
+                                                       .OrderBy(p => p.ToVpParameter().Index))
+                {
+                    ParameterAttribute parameter = member.ToVpParameter();
+                    object             value     = member.GetValue(this, null);
+
+                    if (value is string str && Regex.Match(str, "\\s").Success)
+                    {
+                        value = $"\"{str}\"";
+                    }
+
+                    if (member.PropertyType.IsEnum)
+                    {
+                        value = value.ToString().ToLowerInvariant();
+                    }
+
+                    switch (value)
+                    {
+                        /*case Enum _:
+                            builder.Append(value.ToString().ToLowerInvariant())
+                                   .Append(' ');
+    
+                            break;*/
+
+                        case bool b:
+                            if (!parameter.Optional || b != member.GetDefaultValue<bool>())
+                            {
+                                // Append ON or OFF for literals, or the parameter name for flags
+                                builder.Append(parameter.ParameterType == ParameterType.Flag
+                                    ? parameter.Name.ToLowerInvariant()
+                                    : b
+                                        ? "on"
+                                        : "off").Append(' ');
+                            }
+
+                            break;
+
+                        default:
+                            if (!parameter.Optional ||
+                                !value.ToString().Equals(member.GetDefaultValue(member.PropertyType).ToString(),
+                                    StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                // Just append the value
+                                builder.Append(value)
+                                       .Append(' ');
+                            }
+
+                            break;
+                    }
+                }
+
+                builder.Append(this.GetPropertiesString()).Append(' ');
+                builder.Append(this.GetFlagsString()).Append(' ');
+
+                return builder.ToString().Trim();
+            }
+        }
+
+        /// <summary>
+        /// Gets the flags in this command.
+        /// </summary>
+        protected virtual string GetFlagsString(params string[] ignore)
+        {
+            StringBuilder builder = new StringBuilder();
             PropertyInfo[] members = this.GetType().GetProperties(BindingFlags.Instance |
                                                                   BindingFlags.Public   |
                                                                   BindingFlags.NonPublic);
 
-            foreach (PropertyInfo member in members.Where(t => !(t.ToVpParameter() is null))
-                                                   .OrderBy(p => p.ToVpParameter().Index))
+            foreach (PropertyInfo member in members.Where(t => !(t.GetCustomAttribute<FlagAttribute>() is null)))
             {
-                ParameterAttribute parameter = member.ToVpParameter();
-                object             value     = member.GetValue(this, null);
-
-                if (value is string str && Regex.Match(str, "\\s").Success)
+                FlagAttribute flag  = member.GetCustomAttribute<FlagAttribute>();
+                object        value = member.GetValue(this, null);
+                if (value is bool b && b && !ignore.Contains(flag.Name, StringComparer.InvariantCultureIgnoreCase))
                 {
-                    value = $"\"{str}\"";
-                }
-
-                if (member.PropertyType.IsEnum)
-                {
-                    value = value.ToString().ToLowerInvariant();
-                }
-
-                switch (value)
-                {
-                    /*case Enum _:
-                        builder.Append(value.ToString().ToLowerInvariant())
-                               .Append(' ');
-
-                        break;*/
-
-                    case bool b:
-                        if (!parameter.Optional || b != member.GetDefaultValue<bool>())
-                        {
-                            // Append ON or OFF for literals, or the parameter name for flags
-                            builder.Append(parameter.ParameterType == ParameterType.Flag
-                                ? parameter.Name.ToLowerInvariant()
-                                : b
-                                    ? "on"
-                                    : "off").Append(' ');
-                        }
-
-                        break;
-
-                    default:
-                        if (!parameter.Optional || !value.Equals(member.GetDefaultValue(member.PropertyType)))
-                        {
-                            // Just append the value
-                            builder.Append(value)
-                                   .Append(' ');
-                        }
-
-                        break;
+                    builder.Append(flag.Name.ToLowerInvariant())
+                           .Append(' ');
                 }
             }
+
+            return builder.ToString().Trim();
+        }
+
+        /// <summary>
+        /// Gets the properties in this command.
+        /// </summary>
+        protected virtual string GetPropertiesString()
+        {
+            StringBuilder builder = new StringBuilder();
+            PropertyInfo[] members = this.GetType().GetProperties(BindingFlags.Instance |
+                                                                  BindingFlags.Public   |
+                                                                  BindingFlags.NonPublic);
 
             foreach (PropertyInfo member in members.Where(t => !(t.ToVpProperty() is null)))
             {
                 PropertyAttribute property = member.ToVpProperty();
                 object            value    = member.GetValue(this, null);
 
-                if (!property.Optional || !value.Equals(member.GetDefaultValue(member.PropertyType)))
+                if (!property.Optional ||
+                    !value.ToString().Equals(member.GetDefaultValue(member.PropertyType).ToString(),
+                        StringComparison.InvariantCultureIgnoreCase))
                 {
                     if (value is Enum)
                     {
@@ -463,10 +509,11 @@
                 {
                     value = Enum.Parse(type, value?.ToString() ?? String.Empty, true);
                 }
-                catch (Exception)
+                catch
                 {
                     // ignored
                 }
+
             }
             else if (type == typeof(string) && value == default)
             {
