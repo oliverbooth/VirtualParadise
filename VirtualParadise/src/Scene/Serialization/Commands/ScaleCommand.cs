@@ -3,67 +3,78 @@
     #region Using Directives
 
     using System;
-    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Text;
+    using Parsers;
+    using Parsing;
 
     #endregion
 
     /// <summary>
     /// Represents a class which serializes the <c>scale</c> command.
     /// </summary>
-    [Command("SCALE")]
+    [Command("scale", typeof(ScaleCommandParser))]
     public class ScaleCommand : CommandBase
     {
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ScaleCommand"/> class.
-        /// </summary>
-        public ScaleCommand()
-            : this(Array.Empty<string>(), new Dictionary<string, object>())
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ScaleCommand"/> class.
-        /// </summary>
-        /// <param name="args">The command arguments.</param>
-        /// <param name="properties">The command properties.</param>
-        public ScaleCommand(IReadOnlyCollection<string> args, Dictionary<string, object> properties)
-            : base(args, new Dictionary<string, object>())
-        {
-            if (args.Count == 1)
-            {
-                this.Y = this.Z = this.X;
-            }
-        }
-
-        #endregion
-
         #region Properties
 
         /// <summary>
         /// Gets or sets the X-axis scale.
         /// </summary>
-        [Parameter(0, "X", typeof(double))]
+        [DefaultValue(1.0)]
+        [Parameter(0, "x")]
         public double X { get; set; } = 1.0;
 
         /// <summary>
         /// Gets or sets the Y-axis scale.
         /// </summary>
-        [Parameter(1, "Y", typeof(double),
-            DefaultValue  = 1.0,
-            Optional      = true,
-            ParameterType = ParameterType.Literal)]
+        [DefaultValue(1.0)]
+        [Parameter(1, "y",
+            Optional = true)]
         public double Y { get; set; } = 1.0;
 
         /// <summary>
         /// Gets or sets the Z-axis scale.
         /// </summary>
-        [Parameter(2, "Z", typeof(double),
-            DefaultValue  = 1.0,
-            Optional      = true,
-            ParameterType = ParameterType.Literal)]
+        [DefaultValue(1.0)]
+        [Parameter(2, "z",
+            Optional = true)]
         public double Z { get; set; } = 1.0;
+
+        #endregion
+
+        #region Methods
+
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            StringBuilder builder    = new StringBuilder();
+            string        properties = this.GetPropertiesString();
+
+            builder.Append(this.CommandName.ToLowerInvariant()).Append(' ');
+
+            if (Math.Abs(this.X - this.Y) < Double.Epsilon && Math.Abs(this.X - this.Z) < Double.Epsilon)
+            {
+                builder.Append(this.X);
+            }
+            else
+            {
+                builder.Append(this.X).Append(' ')
+                       .Append(this.Y).Append(' ')
+                       .Append(this.Z);
+            }
+
+            builder.Append(' ').Append(properties);
+
+            if (!String.IsNullOrWhiteSpace(properties))
+            {
+                builder.Append(' ');
+            }
+
+            builder.Append(this.GetFlagsString());
+
+            return builder.ToString().Trim();
+        }
 
         #endregion
     }

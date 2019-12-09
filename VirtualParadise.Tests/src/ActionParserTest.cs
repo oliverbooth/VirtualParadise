@@ -34,7 +34,7 @@
             Assert.IsNotNull(nameCommand);
             Assert.AreEqual("foo",     nameCommand.Name);
             Assert.AreEqual(Color.Red, colorCommand.Color);
-            Assert.IsFalse(colorCommand.Tint);
+            Assert.IsFalse(colorCommand.IsTint);
         }
 
         [TestMethod]

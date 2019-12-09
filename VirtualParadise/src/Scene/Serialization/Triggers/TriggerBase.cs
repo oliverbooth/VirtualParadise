@@ -62,7 +62,7 @@
         /// <typeparam name="T">A <see cref="CommandBase"/> derived type.</typeparam>
         public T GetCommandOfType<T>() where T : CommandBase
         {
-            return this.GetCommandsOfType<T>().First();
+            return this.GetCommandsOfType<T>().FirstOrDefault();
         }
 
         /// <summary>

@@ -1,9 +1,8 @@
-﻿namespace VirtualParadise.Scene.Serialization.Commands
+﻿namespace VirtualParadise.Scene.Serialization.Commands.Parsing
 {
     #region Using Directives
 
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using X10D;
 
     #endregion
@@ -23,26 +22,16 @@
         /// </summary>
         /// <param name="index">The parameter index.</param>
         /// <param name="name">The name of the parameter.</param>
-        /// <param name="type">The parameter type.</param>
-        [SuppressMessage("Globalization",
-            "CA1308:Normalize strings to uppercase",
-            Justification = "Lower case string necessary")]
-        public ParameterAttribute(int index, string name, Type type)
+        public ParameterAttribute(int index, string name)
         {
             this.Index    = index.Clamp(0, Int32.MaxValue);
-            this.Name     = name?.ToLowerInvariant() ?? String.Empty;
-            this.Type     = type;
+            this.Name     = name?.ToUpperInvariant() ?? String.Empty;
             this.Sanitize = o => o;
         }
 
         #endregion
 
         #region Properties
-
-        /// <summary>
-        /// Gets the default value of this parameter.
-        /// </summary>
-        public object DefaultValue { get; set; } = default;
 
         /// <summary>
         /// Gets or sets a value indicating how the parameter should be parsed or written in the event it's a boolean.
@@ -63,11 +52,6 @@
         /// Gets or sets a value indicating whether this parameter is optional.
         /// </summary>
         public bool Optional { get; set; } = false;
-
-        /// <summary>
-        /// Gets the data type of the parameter.
-        /// </summary>
-        public Type Type { get; }
 
         /// <summary>
         /// Gets or sets the sanitize function
