@@ -33,12 +33,15 @@
             if (args.Count >= 1 && Double.TryParse(args.ElementAt(0), out a))
             {
                 command.Y = a;
+                command.X = 0.0;
+                command.Z = 0.0;
             }
 
             if (args.Count >= 2 && Double.TryParse(args.ElementAt(1), out double b))
             {
                 command.X = a;
                 command.Y = b;
+                command.Z = 0.0;
             }
 
             if (args.Count >= 3 && Double.TryParse(args.ElementAt(2), out double c))
