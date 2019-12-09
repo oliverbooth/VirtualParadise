@@ -3,6 +3,10 @@
     #region Using Directives
 
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text.RegularExpressions;
+    using API;
     using Parsing;
 
     #endregion
@@ -20,8 +24,20 @@
         /// <returns>Returns a new instance of <see cref="ColorCommand"/>.</returns>
         public override ColorCommand Parse(string input)
         {
-            // nothing special needed
-            return base.Parse(typeof(ColorCommand), input) as ColorCommand;
+            ColorCommand command = base.Parse(typeof(ColorCommand), input) as ColorCommand;
+            List<string> args    = Regex.Split(input, "\\s").ToList();
+
+            if (!(command is null))
+            {
+                if (command.IsTint)
+                {
+                    args.RemoveAt(0);
+                }
+
+                command.Color = Color.FromString(args[0]);
+            }
+
+            return command;
         }
 
         /// <inheritdoc />
