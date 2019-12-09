@@ -2,6 +2,7 @@
 {
     #region Using Directives
 
+    using System;
     using System.ComponentModel;
     using System.Text;
     using API;
@@ -79,9 +80,13 @@
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder(base.ToString());
-            builder.Append(" \"")
-                   .Append(this.Text)
-                   .Append('"');
+
+            if (!String.IsNullOrWhiteSpace(this.Text))
+            {
+                builder.Append(" \"")
+                       .Append(this.Text)
+                       .Append('"');
+            }
 
             return builder.ToString();
         }
