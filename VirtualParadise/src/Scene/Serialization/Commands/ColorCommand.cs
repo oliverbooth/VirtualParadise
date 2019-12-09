@@ -4,6 +4,7 @@
 
     using System;
     using System.ComponentModel;
+    using System.Text;
     using API;
     using Parsers;
     using Parsing;
@@ -37,6 +38,28 @@
         /// </summary>
         [Flag("tint")]
         public bool IsTint { get; set; } = false;
+
+        #endregion
+
+        #region Methods
+
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+
+            builder.Append(this.CommandName.ToLowerInvariant()).Append(' ');
+            if (this.IsTint)
+            {
+                builder.Append("tint ");
+            }
+
+            builder.Append(this.Color).Append(' ');
+            builder.Append(this.GetPropertiesString());
+            builder.Append(this.GetFlagsString("tint"));
+
+            return builder.ToString().Trim();
+        }
 
         #endregion
     }

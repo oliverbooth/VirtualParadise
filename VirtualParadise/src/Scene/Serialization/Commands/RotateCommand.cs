@@ -97,5 +97,31 @@
         public double Wait { get; set; } = 0.0;
 
         #endregion
+
+        #region Methods
+
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            StringBuilder builder    = new StringBuilder();
+            string        properties = this.GetPropertiesString();
+
+            builder.Append(this.CommandName.ToLowerInvariant()).Append(' ')
+                   .Append(this.X).Append(' ')
+                   .Append(this.Y).Append(' ')
+                   .Append(this.Z).Append(' ')
+                   .Append(properties);
+
+            if (!String.IsNullOrWhiteSpace(properties))
+            {
+                builder.Append(' ');
+            }
+
+            builder.Append(this.GetFlagsString());
+
+            return builder.ToString().Trim();
+        }
+
+        #endregion
     }
 }
