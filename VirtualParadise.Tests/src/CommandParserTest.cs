@@ -162,7 +162,7 @@
             VisibleCommand visible = action.Create.GetCommandOfType<VisibleCommand>();
 
             Assert.IsNotNull(visible);
-            Assert.IsFalse(visible.Value);
+            Assert.IsFalse(visible.IsVisible);
             Assert.AreEqual("foo", visible.TargetName);
             Assert.AreEqual(-1.0,  visible.Radius);
 
@@ -170,7 +170,7 @@
             visible = action.Create.GetCommandOfType<VisibleCommand>();
 
             Assert.IsNotNull(visible);
-            Assert.IsTrue(visible.Value);
+            Assert.IsTrue(visible.IsVisible);
             Assert.AreEqual(String.Empty, visible.TargetName);
             Assert.AreEqual(-1.0,         visible.Radius);
 
@@ -178,7 +178,7 @@
             visible = action.Create.GetCommandOfType<VisibleCommand>();
 
             Assert.IsNotNull(visible);
-            Assert.IsFalse(visible.Value);
+            Assert.IsFalse(visible.IsVisible);
             Assert.AreEqual("bar", visible.TargetName);
             Assert.AreEqual(-1.0,  visible.Radius);
 
@@ -186,7 +186,7 @@
             visible = action.Create.GetCommandOfType<VisibleCommand>();
 
             Assert.IsNotNull(visible);
-            Assert.IsTrue(visible.Value);
+            Assert.IsTrue(visible.IsVisible);
             Assert.AreEqual("foobar", visible.TargetName);
             Assert.AreEqual(10.0,     visible.Radius);
         }
@@ -198,7 +198,7 @@
             VisibleCommand visible = action.Create.GetCommandOfType<VisibleCommand>();
 
             Assert.IsNotNull(visible);
-            Assert.IsTrue(visible.Value);
+            Assert.IsTrue(visible.IsVisible);
             Assert.AreEqual(String.Empty, visible.TargetName);
             Assert.AreEqual(-1.0,         visible.Radius);
         }
