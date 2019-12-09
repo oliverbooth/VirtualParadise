@@ -37,7 +37,7 @@
         /// <summary>
         /// Gets or sets a value indicating whether this property is optional.
         /// </summary>
-        public bool Optional { get; set; }
+        public bool Optional { get; set; } = true;
 
         #endregion
     }

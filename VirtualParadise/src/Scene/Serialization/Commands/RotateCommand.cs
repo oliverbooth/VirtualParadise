@@ -8,6 +8,7 @@
     using System.Linq;
     using System.Runtime.InteropServices;
     using System.Runtime.Serialization;
+    using System.Text;
     using Parsers;
     using Parsing;
 
@@ -26,7 +27,7 @@
         /// </summary>
         [DefaultValue(0.0)]
         [Parameter(0, "x",
-            Optional     = true)]
+            Optional = true)]
         public double X { get; set; } = 0.0;
 
         /// <summary>
@@ -34,7 +35,7 @@
         /// </summary>
         [DefaultValue(0.0)]
         [Parameter(1, "y",
-            Optional     = false)]
+            Optional = false)]
         public double Y { get; set; } = 0.0;
 
         /// <summary>
@@ -42,7 +43,7 @@
         /// </summary>
         [DefaultValue(0.0)]
         [Parameter(2, "z",
-            Optional     = true)]
+            Optional = true)]
         public double Z { get; set; } = 0.0;
 
         /// <summary>
