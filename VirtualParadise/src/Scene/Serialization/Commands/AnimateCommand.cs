@@ -19,18 +19,6 @@
     [Command("animate", typeof(AnimateCommandParser))]
     public class AnimateCommand : CommandBase, ITaggedCommand
     {
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AnimateCommand"/> class.
-        /// </summary>
-        public AnimateCommand()
-        {
-            this.FrameList = this.Arguments.Skip(5).Take(this.FrameCount).Select(s => s.To<int>()).ToArray();
-        }
-
-        #endregion
-
         #region Properties
 
         /// <summary>

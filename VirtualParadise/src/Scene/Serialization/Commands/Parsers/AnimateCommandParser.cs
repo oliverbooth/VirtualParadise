@@ -7,6 +7,7 @@
     using System.Linq;
     using System.Text.RegularExpressions;
     using Parsing;
+    using X10D;
 
     #endregion
 
@@ -23,15 +24,20 @@
         /// <returns>Returns a new instance of <see cref="AnimateCommand"/>.</returns>
         public override AnimateCommand Parse(string input)
         {
+            AnimateCommand command = base.Parse(typeof(AnimateCommand), input) as AnimateCommand;
+
             List<string> args = Regex.Split(input, "\\s").ToList();
-            bool         mask = args[0].Equals("mask", StringComparison.InvariantCultureIgnoreCase);
-            if (mask)
+            args.RemoveAll(m => m.Equals("mask", StringComparison.InvariantCultureIgnoreCase));
+
+            if (command != null)
             {
-                args.RemoveAt(0);
+                command.FrameList = args.Skip(6)
+                                        .Take(command.FrameCount)
+                                        .Select(s => s.To<int>())
+                                        .ToArray();
             }
 
-            // nothing special needed
-            return base.Parse(typeof(AnimateCommand), String.Join(" ", args)) as AnimateCommand;
+            return command;
         }
 
         /// <inheritdoc />
