@@ -35,7 +35,7 @@
                 Assert.AreEqual(9,      animate.FrameCount);
                 Assert.AreEqual(100,    animate.FrameDelay);
                 CollectionAssert.AreEqual(
-                    new[] { 1, 2, 3, 4, 5, 4, 3, 2, 1 }, animate.FrameList.ToArray());
+                    new[] {1, 2, 3, 4, 5, 4, 3, 2, 1}, animate.FrameList.ToArray());
                 Assert.IsFalse(animate.IsGlobal);
             }
 
@@ -51,7 +51,7 @@
                 Assert.AreEqual(3,      animate.FrameCount);
                 Assert.AreEqual(100,    animate.FrameDelay);
                 CollectionAssert.AreEqual(
-                    new[] { 1, 2, 1 }, animate.FrameList.ToArray());
+                    new[] {1, 2, 1}, animate.FrameList.ToArray());
                 Assert.IsTrue(animate.IsGlobal);
             }
         }
