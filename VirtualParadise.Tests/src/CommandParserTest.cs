@@ -159,6 +159,27 @@
         }
 
         [TestMethod]
+        public void TestPictureWithCustomValues()
+        {
+            Action         action  = Action.Parse("create picture www.activeworlds.com/images/webcam.jpg update=10");
+            PictureCommand picture = action.Create.GetCommandOfType<PictureCommand>();
+
+            Assert.IsNotNull(picture);
+            Assert.AreEqual("www.activeworlds.com/images/webcam.jpg", picture.Picture);
+            Assert.AreEqual(10,                                       picture.Update);
+        }
+
+        [TestMethod]
+        public void TestPictureWithDefaultValues()
+        {
+            Action         action  = Action.Parse("create picture ab1.jpg");
+            PictureCommand picture = action.Create.GetCommandOfType<PictureCommand>();
+
+            Assert.IsNotNull(picture);
+            Assert.AreEqual("ab1.jpg", picture.Picture);
+        }
+
+        [TestMethod]
         public void TestShearWithAllValues()
         {
             Action       action = Action.Parse("create shear 1 2 3.4 5 6 7");
