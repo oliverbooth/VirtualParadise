@@ -233,35 +233,35 @@
         /// Gets or sets a value indicating whether this command is global.
         /// </summary>
         [Flag("global")]
-        public bool IsGlobal { get; set; }
+        public bool IsGlobal { get; set; } = false;
 
         /// <summary>
         /// Gets or sets a value indicating whether this command is locked.
         /// </summary>
         [Flag("lock")]
-        public bool IsLocked { get; set; }
+        public bool IsLocked { get; set; } = false;
 
         /// <summary>
         /// Gets or sets the name in this command.
         /// </summary>
         [DefaultValue("")]
         [Property("name")]
-        public string TargetName { get; set; }
+        public string TargetName { get; set; } = String.Empty;
 
         /// <summary>
         /// Gets the arguments passed to this command.
         /// </summary>
-        public IReadOnlyCollection<string> Arguments { get; internal set; }
+        public IReadOnlyCollection<string> Arguments { get; internal set; } = new List<string>();
 
         /// <summary>
         /// Gets the flags passed to this command.
         /// </summary>
-        public IReadOnlyCollection<string> Flags { get; internal set; }
+        public IReadOnlyCollection<string> Flags { get; internal set; } = new List<string>();
 
         /// <summary>
         /// Gets the properties passed to this command.
         /// </summary>
-        public IDictionary<string, object> Properties { get; internal set; }
+        public IDictionary<string, object> Properties { get; internal set; } = new Dictionary<string, object>();
 
         #endregion
 
@@ -275,7 +275,8 @@
         {
             {
                 StringBuilder builder = new StringBuilder();
-                builder.Append(this.CommandName.ToLowerInvariant())
+                builder.Append(this.CommandName?.ToLowerInvariant() ??
+                               this.GetType().GetCustomAttribute<CommandAttribute>().Name.ToLowerInvariant())
                        .Append(' ');
 
                 // Add necessary arguments
