@@ -31,7 +31,9 @@
 
             command.CommandName = type.GetCustomAttribute<CommandAttribute>()?.Name ?? String.Empty;
             command.Properties  = this.ExtractProperties(input, out input);
-            command.Arguments   = Regex.Split(input, "\\s");
+            command.Arguments = Regex.Split(input.Trim(), "\\s")
+                                     .Where(s => !String.IsNullOrWhiteSpace(s))
+                                     .ToArray();
 
             command.UpdateProperties();
             command.UpdateFlags();

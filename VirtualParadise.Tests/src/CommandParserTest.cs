@@ -159,6 +159,66 @@
         }
 
         [TestMethod]
+        public void TestShearWithAllValues()
+        {
+            Action       action = Action.Parse("create shear 1 2 3.4 5 6 7");
+            ShearCommand shear  = action.Create.GetCommandOfType<ShearCommand>();
+
+            Assert.IsNotNull(shear);
+            Assert.AreEqual(2.0, shear.Positive.X);
+            Assert.AreEqual(3.4, shear.Positive.Y);
+            Assert.AreEqual(1.0, shear.Positive.Z);
+            Assert.AreEqual(7.0, shear.Negative.X);
+            Assert.AreEqual(5.0, shear.Negative.Y);
+            Assert.AreEqual(6.0, shear.Negative.Z);
+        }
+
+        [TestMethod]
+        public void TestShearWithDefaultValues()
+        {
+            Action       action = Action.Parse("create shear");
+            ShearCommand shear  = action.Create.GetCommandOfType<ShearCommand>();
+
+            Assert.IsNotNull(shear);
+            Assert.AreEqual(0.0, shear.Positive.X);
+            Assert.AreEqual(0.0, shear.Positive.Y);
+            Assert.AreEqual(0.0, shear.Positive.Z);
+            Assert.AreEqual(0.0, shear.Negative.X);
+            Assert.AreEqual(0.0, shear.Negative.Y);
+            Assert.AreEqual(0.0, shear.Negative.Z);
+        }
+
+        [TestMethod]
+        public void TestShearWithNegativeValues()
+        {
+            Action       action = Action.Parse("create shear 0 0 0 1.5 1 1.5");
+            ShearCommand shear  = action.Create.GetCommandOfType<ShearCommand>();
+
+            Assert.IsNotNull(shear);
+            Assert.AreEqual(0.0, shear.Positive.X);
+            Assert.AreEqual(0.0, shear.Positive.Y);
+            Assert.AreEqual(0.0, shear.Positive.Z);
+            Assert.AreEqual(1.5, shear.Negative.X);
+            Assert.AreEqual(1.5, shear.Negative.Y);
+            Assert.AreEqual(1.0, shear.Negative.Z);
+        }
+
+        [TestMethod]
+        public void TestShearWithPositiveValues()
+        {
+            Action       action = Action.Parse("create shear 1.5 1 1.5");
+            ShearCommand shear  = action.Create.GetCommandOfType<ShearCommand>();
+
+            Assert.IsNotNull(shear);
+            Assert.AreEqual(1.0, shear.Positive.X);
+            Assert.AreEqual(1.5, shear.Positive.Y);
+            Assert.AreEqual(1.5, shear.Positive.Z);
+            Assert.AreEqual(0.0, shear.Negative.X);
+            Assert.AreEqual(0.0, shear.Negative.Y);
+            Assert.AreEqual(0.0, shear.Negative.Z);
+        }
+
+        [TestMethod]
         public void TestSignWithCustomValues()
         {
             Action action =
