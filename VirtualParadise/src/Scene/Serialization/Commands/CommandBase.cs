@@ -142,7 +142,14 @@
                     }
                 }
 
-                builder.Append(this.GetPropertiesString()).Append(' ');
+                string properties = this.GetPropertiesString().Trim();
+
+                builder.Append(properties);
+                if (!String.IsNullOrWhiteSpace(properties))
+                {
+                    builder.Append(' ');
+                }
+
                 builder.Append(this.GetFlagsString()).Append(' ');
 
                 return builder.ToString().Trim();
