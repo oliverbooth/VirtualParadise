@@ -425,6 +425,8 @@
                 }
             }
 
+            this.Arguments = args.AsReadOnly();
+
             foreach (PropertyInfo member in members.Where(prop => !(prop.ToVpParameter() is null))
                                                    .OrderBy(prop => prop.ToVpParameter().Index))
             {
@@ -513,7 +515,6 @@
                 {
                     // ignored
                 }
-
             }
             else if (type == typeof(string) && value == default)
             {

@@ -31,7 +31,7 @@
 
             if (command != null)
             {
-                command.FrameList = args.Skip(6)
+                command.FrameList = args.Skip(command.IsMask ? 6 : 5)
                                         .Take(command.FrameCount)
                                         .Select(s => s.To<int>())
                                         .ToArray();
