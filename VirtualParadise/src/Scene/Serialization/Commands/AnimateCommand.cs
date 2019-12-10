@@ -79,7 +79,7 @@
         {
             StringBuilder builder = new StringBuilder();
 
-            string frameList = String.Join(" ", this.FrameList);
+            string frameList = String.Join(" ", this.FrameList ?? Array.Empty<int>());
 
             builder.Append(this.CommandName.ToLowerInvariant())
                    .Append(String.IsNullOrWhiteSpace(this.Tag) ? String.Empty : $" tag={this.Tag}")
