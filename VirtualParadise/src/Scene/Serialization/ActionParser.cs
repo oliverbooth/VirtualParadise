@@ -9,6 +9,7 @@
     using System.Text;
     using System.Text.RegularExpressions;
     using Commands;
+    using Commands.Parsing;
     using Triggers;
 
     #endregion
@@ -92,54 +93,28 @@
         /// <summary>
         /// Registers a command that is recognized by the parser.
         /// </summary>
-        /// <param name="type">The command type.</param>
-        private static void RegisterCommand(Type type)
+        /// <typeparam name="TCommand">A <see cref="CommandBase"/> derived type.</typeparam>
+        private static void RegisterCommand<TCommand>() where TCommand : CommandBase
         {
-            Type commandType = typeof(CommandBase);
-
-            if (!commandType.IsAssignableFrom(type) && !type.IsSubclassOf(commandType))
+            if (!(typeof(TCommand).GetCustomAttribute<CommandAttribute>() is { } command))
             {
                 return;
             }
 
-            if (type.GetCustomAttribute<CommandAttribute>() is { } command)
-            {
-                registeredCommands?.Add(command.Name.ToUpperInvariant(), type);
-            }
-        }
-
-        /// <summary>
-        /// Registers a command that is recognized by the parser.
-        /// </summary>
-        /// <typeparam name="T">A <see cref="CommandBase"/> derived type.</typeparam>
-        private static void RegisterCommand<T>() where T : CommandBase =>
-            RegisterCommand(typeof(T));
-
-        /// <summary>
-        /// Registers a trigger that is recognized by the parser.
-        /// </summary>
-        /// <param name="type">The trigger type.</param>
-        private static void RegisterTrigger(Type type)
-        {
-            Type triggerType = typeof(TriggerBase);
-
-            if (!triggerType.IsAssignableFrom(type) && !type.IsSubclassOf(triggerType))
-            {
-                return;
-            }
-
-            if (type.GetCustomAttribute<TriggerAttribute>() is { } trigger)
-            {
-                registeredTriggers?.Add(trigger.Name.ToUpperInvariant(), type);
-            }
+            registeredCommands?.Add(command.Name.ToUpperInvariant(), typeof(TCommand));
         }
 
         /// <summary>
         /// Registers a trigger that is recognized by the parser.
         /// </summary>
-        /// <typeparam name="T">A <see cref="TriggerBase"/> derived type.</typeparam>
-        private static void RegisterTrigger<T>() where T : TriggerBase =>
-            RegisterTrigger(typeof(T));
+        /// <typeparam name="TTrigger">A <see cref="TriggerBase"/> derived type.</typeparam>
+        private static void RegisterTrigger<TTrigger>() where TTrigger : TriggerBase
+        {
+            if (typeof(TTrigger).GetCustomAttribute<TriggerAttribute>() is { } trigger)
+            {
+                registeredTriggers?.Add(trigger.Name.ToUpperInvariant(), typeof(TTrigger));
+            }
+        }
 
         /// <summary>
         /// Parses a raw action value into serialized triggers and commands.
@@ -246,21 +221,26 @@
                 // split commands with ','
                 foreach (string command in commands)
                 {
-                    string[]                   commandWords = Regex.Split(command, "\\s+");
-                    string                     commandWord  = commandWords.FirstOrDefault() ?? String.Empty;
-                    Dictionary<string, object> properties   = GetPropertiesFromArgs(commandWords.Skip(1));
-                    IEnumerable<string>        args         = GetArgsWithoutProperties(commandWords.Skip(1));
+                    string[] commandWords = Regex.Split(command, "\\s+");
+                    string   commandWord  = commandWords.FirstOrDefault() ?? String.Empty;
 
                     if (!registeredCommands.ContainsKey(commandWord.ToUpperInvariant()))
                     {
                         continue;
                     }
 
-                    if (!(Activator.CreateInstance(registeredCommands[commandWord.ToUpperInvariant()],
-                            new object[] {args.ToArray(), properties})
-                        is CommandBase currentCommand))
+                    Type commandType = registeredCommands[commandWord.ToUpperInvariant()];
+
+                    if (!(Activator.CreateInstance(commandType) is CommandBase currentCommand))
                     {
                         continue;
+                    }
+
+                    CommandAttribute commandAttribute = commandType.GetCustomAttribute<CommandAttribute>();
+                    if (Activator.CreateInstance(commandAttribute.Parser) is CommandParser parser)
+                    {
+                        currentCommand = parser.Parse(currentCommand.GetType(),
+                            String.Join(" ", commandWords.Skip(1)));
                     }
 
                     builder.AddCommand(currentCommand);

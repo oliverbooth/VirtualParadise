@@ -20,6 +20,8 @@
 
         public static Color DarkGrey => new Color(0x30, 0x30, 0x30);
 
+        public static Color DefaultSignBackColor => new Color(0x00, 0x00, 0xC0);
+
         public static Color ForestGreen => new Color(0x23, 0x8E, 0x23);
 
         public static Color Gold => new Color(0xCD, 0x7F, 0x32);
