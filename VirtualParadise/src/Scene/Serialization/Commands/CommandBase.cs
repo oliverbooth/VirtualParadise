@@ -25,6 +25,11 @@
 
         protected CommandBase()
         {
+            if (String.IsNullOrWhiteSpace(this.CommandName))
+            {
+                this.CommandName = (this.GetType().GetCustomAttribute<CommandAttribute>()?.Name ?? String.Empty)
+                   .ToUpperInvariant();
+            }
         }
 
         #endregion
