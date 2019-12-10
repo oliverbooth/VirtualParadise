@@ -101,9 +101,8 @@
             StringBuilder builder    = new StringBuilder();
             string        properties = this.GetPropertiesString();
 
-            builder.Append(this.CommandName.ToLowerInvariant()).Append(' ');
-
-            builder.Append(this.X).Append(' ');
+            builder.Append(this.CommandName.ToLowerInvariant()).Append(' ')
+                   .Append(this.X).Append(' ');
 
             if (this.Y > 0.0 || this.Z > 0.0)
             {
