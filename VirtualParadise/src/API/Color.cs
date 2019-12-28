@@ -149,7 +149,7 @@
                 byte g   = (byte) ((rgb >> 16) & 0xff);
                 byte b   = (byte) ((rgb >> 8)  & 0xff);
                 byte a   = (byte) (rgb         & 0xff);
-                return new Color(r, g, b);
+                return new Color(r, g, b, a);
             }
             catch
             {
