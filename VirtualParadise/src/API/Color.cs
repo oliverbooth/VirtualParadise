@@ -21,7 +21,7 @@
         /// <summary>
         /// Dictionary for known colors.
         /// </summary>
-        private static readonly Dictionary<string, Color> KnownColors = new Dictionary<string, Color>();
+        private static readonly Dictionary<string, Color> knownColors = new Dictionary<string, Color>();
 
         #endregion
 
@@ -35,8 +35,10 @@
             foreach (PropertyInfo member in typeof(Color).GetMembers(BindingFlags.Public | BindingFlags.Static)
                                                          .OfType<PropertyInfo>())
             {
-                KnownColors.Add(member.Name.ToUpperInvariant(), (Color) member.GetValue(null));
+                knownColors.Add(member.Name.ToUpperInvariant(), (Color) member.GetValue(null));
             }
+
+            knownColors.Remove("TRANSPARENT");
         }
 
         /// <summary>
@@ -45,16 +47,33 @@
         /// <param name="r">The red component value.</param>
         /// <param name="g">The green component value.</param>
         /// <param name="b">The blue component value.</param>
-        public Color(byte r, byte g, byte b)
+        public Color(byte r, byte g, byte b) : this(r, g, b, 255)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Color"/> struct by taking the component values.
+        /// </summary>
+        /// <param name="r">The red component value.</param>
+        /// <param name="g">The green component value.</param>
+        /// <param name="b">The blue component value.</param>
+        /// <param name="a">The alpha component value.</param>
+        public Color(byte r, byte g, byte b, byte a)
         {
             this.R = r;
             this.G = g;
             this.B = b;
+            this.A = a;
         }
 
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// Gets or sets the alpha component of this color.
+        /// </summary>
+        public byte A { get; set; }
 
         /// <summary>
         /// Gets or sets the blue component of this color.
@@ -99,9 +118,9 @@
                 str = "white";
             }
 
-            if (KnownColors.ContainsKey(str.ToUpperInvariant()))
+            if (knownColors.ContainsKey(str.ToUpperInvariant()))
             {
-                return KnownColors.FirstOrDefault(c => c.Key.Equals(str, StringComparison.InvariantCultureIgnoreCase))
+                return knownColors.FirstOrDefault(c => c.Key.Equals(str, StringComparison.InvariantCultureIgnoreCase))
                                   .Value;
             }
 
@@ -118,12 +137,18 @@
                 str = builder.ToString();
             }
 
+            if (str.Length == 4)
+            {
+                str += "FF";
+            }
+
             try
             {
-                int  rgb = Convert.ToInt32(str, 16);
-                byte r   = (byte) ((rgb >> 16) & 0xff);
-                byte g   = (byte) ((rgb >> 8)  & 0xff);
-                byte b   = (byte) (rgb         & 0xff);
+                long rgb = Convert.ToInt64(str, 16);
+                byte r   = (byte) ((rgb >> 32) & 0xff);
+                byte g   = (byte) ((rgb >> 16) & 0xff);
+                byte b   = (byte) ((rgb >> 8)  & 0xff);
+                byte a   = (byte) (rgb         & 0xff);
                 return new Color(r, g, b);
             }
             catch
@@ -137,7 +162,8 @@
         {
             return this.R == other.R &&
                    this.G == other.G &&
-                   this.B == other.B;
+                   this.B == other.B &&
+                   this.A == other.A;
         }
 
         /// <inheritdoc />
@@ -151,7 +177,8 @@
         {
             unchecked
             {
-                int hashCode = this.B.GetHashCode();
+                int hashCode = this.A.GetHashCode();
+                hashCode = (hashCode * 397) ^ this.B.GetHashCode();
                 hashCode = (hashCode * 397) ^ this.G.GetHashCode();
                 hashCode = (hashCode * 397) ^ this.R.GetHashCode();
                 return hashCode;
@@ -177,15 +204,23 @@
             {
                 if (!asKnownColor)
                 {
-                    return $"{this.R:X2}{this.G:X2}{this.B:X2}";
+                    string retVal = $"{this.R:X2}{this.G:X2}{this.B:X2}";
+
+                    if (this.A < 255)
+                    {
+                        retVal += $"{this.A:X2}";
+                    }
+
+                    return retVal;
                 }
 
                 Color  that = this;
                 string key;
-                if (!String.IsNullOrWhiteSpace(key = KnownColors
+                if (!String.IsNullOrWhiteSpace(key = knownColors
                                                     .FirstOrDefault(c => that.R == c.Value.R &&
                                                                          that.G == c.Value.G &&
-                                                                         that.B == c.Value.B)
+                                                                         that.B == c.Value.B &&
+                                                                         that.B == c.Value.A)
                                                     .Key))
 
                 {

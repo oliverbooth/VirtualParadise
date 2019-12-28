@@ -60,6 +60,8 @@
 
         public static Color Teal => new Color(0x00, 0x70, 0x70);
 
+        public static Color Transparent => new Color(0x00, 0x00, 0x00, 0x00);
+
         public static Color Turquoise => new Color(0xAD, 0xEA, 0xEA);
 
         public static Color Violet => new Color(0x4F, 0x2F, 0x4F);
