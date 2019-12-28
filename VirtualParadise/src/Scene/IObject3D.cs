@@ -3,12 +3,17 @@
     /// <summary>
     /// Represents a world object.
     /// </summary>
-    public interface IWorldObject : IObject
+    public interface IObject3D : IObject
     {
         /// <summary>
         /// Gets the object action.
         /// </summary>
         string Action { get; }
+
+        /// <summary>
+        /// Gets the object angle.
+        /// </summary>
+        double Angle { get; }
 
         /// <summary>
         /// Gets the object description.

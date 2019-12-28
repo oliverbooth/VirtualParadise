@@ -3,21 +3,25 @@
     #region Using Directives
 
     using System;
+    using VpNet;
 
     #endregion
 
     /// <summary>
     /// Represents a world object.
     /// </summary>
-    public class WorldObject : IWorldObject, IEquatable<WorldObject>, IEquatable<IWorldObject>, IEquatable<IObject>
+    public class Object3D : IObject3D,
+                            IEquatable<Object3D>,
+                            IEquatable<IObject3D>,
+                            IEquatable<IObject>
     {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WorldObject"/> class.
+        /// Initializes a new instance of the <see cref="Object3D"/> class.
         /// </summary>
         /// <param name="id">The object ID.</param>
-        public WorldObject(int id)
+        public Object3D(int id)
         {
             this.ID = id;
         }
@@ -26,8 +30,33 @@
 
         #region Properties
 
+        /// <summary>
+        /// Gets or sets the object action.
+        /// </summary>
+        public string Action { get; set; }
+
+        /// <summary>
+        /// Gets or sets the object angle.
+        /// </summary>
+        public double Angle { get; set; }
+
+        /// <summary>
+        /// Gets or sets the object data.
+        /// </summary>
+        public byte[] Data { get; set; }
+
+        /// <summary>
+        /// Gets or sets the object description.
+        /// </summary>
+        public string Description { get; set; }
+
         /// <inheritdoc />
         public int ID { get; }
+
+        /// <summary>
+        /// Gets or sets the object model.
+        /// </summary>
+        public string Model { get; set; }
 
         /// <summary>
         /// Gets or sets the object owner.
@@ -35,33 +64,38 @@
         public int Owner { get; set; }
 
         /// <summary>
-        /// Gets or sets the object action.
+        /// Gets or sets the object position.
         /// </summary>
-        public string Action { get; set; }
+        public Vector3 Position { get; set; }
 
         /// <summary>
-        /// Gets or sets the object description.
+        /// Gets or sets the object world data.
         /// </summary>
-        public string Description { get; set; }
+        public Vector3 Rotation { get; set; }
 
         /// <summary>
-        /// Gets or sets the object model.
+        /// Gets or sets the date and time this object was built.
         /// </summary>
-        public string Model { get; set; }
+        public DateTime Time { get; set; }
+
+        /// <summary>
+        /// Gets or sets the object type.
+        /// </summary>
+        ObjectType IObject.Type => ObjectType.Object3D;
 
         #endregion
 
         #region Methods
 
         /// <inheritdoc />
-        public bool Equals(WorldObject other)
+        public bool Equals(Object3D other)
         {
             return ReferenceEquals(this, other) ||
                    this.ID == other?.ID;
         }
 
         /// <inheritdoc />
-        public bool Equals(IWorldObject other)
+        public bool Equals(IObject3D other)
         {
             return ReferenceEquals(this, other) ||
                    this.ID == other?.ID;
