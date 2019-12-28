@@ -5,11 +5,9 @@ VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualParadise", "VirtualParadise\VirtualParadise.csproj", "{032EA076-8B12-4913-BA05-D4AC9ED287BC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "X10D", "X10D\X10D\X10D.csproj", "{12951585-34DF-48D2-A5B8-518783E106F2}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualParadise.Tests", "VirtualParadise.Tests\VirtualParadise.Tests.csproj", "{804D670E-04D7-4FD4-B08C-E9D745392EDE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualParadise.Examples", "VirtualParadise.Examples\VirtualParadise.Examples.csproj", "{1912E075-582F-4F34-AC8B-4B126FDF262F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualParadise.Examples", "VirtualParadise.Examples\VirtualParadise.Examples.csproj", "{1912E075-582F-4F34-AC8B-4B126FDF262F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +19,6 @@ Global
 		{032EA076-8B12-4913-BA05-D4AC9ED287BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{032EA076-8B12-4913-BA05-D4AC9ED287BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{032EA076-8B12-4913-BA05-D4AC9ED287BC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{12951585-34DF-48D2-A5B8-518783E106F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{12951585-34DF-48D2-A5B8-518783E106F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{12951585-34DF-48D2-A5B8-518783E106F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{12951585-34DF-48D2-A5B8-518783E106F2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{804D670E-04D7-4FD4-B08C-E9D745392EDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{804D670E-04D7-4FD4-B08C-E9D745392EDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{804D670E-04D7-4FD4-B08C-E9D745392EDE}.Release|Any CPU.ActiveCfg = Release|Any CPU

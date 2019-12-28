@@ -7,7 +7,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\VirtualParadise\VirtualParadise.csproj" />
-    <ProjectReference Include="..\X10D\X10D\X10D.csproj" />
   </ItemGroup>
 
 </Project>
