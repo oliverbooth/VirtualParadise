@@ -107,6 +107,16 @@
         #region Methods
 
         /// <summary>
+        /// Converts a known numeric color value to a <see cref="Color"/>.
+        /// </summary>
+        /// <param name="color">The <see cref="ColorEnum"/> value.</param>
+        /// <returns>Returns an instance of <see cref="Color"/>.</returns>
+        public static Color FromEnum(ColorEnum color)
+        {
+            return FromString($"{(long) color:X2}");
+        }
+
+        /// <summary>
         /// Converts a hex string or known color name to a <see cref="Color"/>.
         /// </summary>
         /// <param name="str">The input string.</param>
