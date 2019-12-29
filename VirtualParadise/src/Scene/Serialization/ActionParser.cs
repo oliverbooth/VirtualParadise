@@ -102,11 +102,26 @@
         /// <typeparam name="TCommand">A <see cref="CommandBase"/> derived type.</typeparam>
         public static void RegisterCommand<TCommand>() where TCommand : CommandBase
         {
-            if (!(typeof(TCommand).GetCustomAttribute<CommandAttribute>() is { } command)) {
+            RegisterCommand(typeof(TCommand));
+        }
+
+        /// <summary>
+        /// Registers a command that is recognized by the parser.
+        /// </summary>
+        /// <param name="type">The command type.</param>
+        public static void RegisterCommand(Type type)
+        {
+            if (!type.IsSubclassOf(typeof(CommandBase)) && !typeof(CommandBase).IsAssignableFrom(type))
+            {
                 return;
             }
 
-            registeredCommands?.Add(command.Name.ToUpperInvariant(), typeof(TCommand));
+            if (!(type.GetCustomAttribute<CommandAttribute>() is { } command))
+            {
+                return;
+            }
+
+            registeredCommands?.Add(command.Name.ToUpperInvariant(), type);
         }
 
         /// <summary>
@@ -115,9 +130,24 @@
         /// <typeparam name="TTrigger">A <see cref="TriggerBase"/> derived type.</typeparam>
         public static void RegisterTrigger<TTrigger>() where TTrigger : TriggerBase
         {
-            if (typeof(TTrigger).GetCustomAttribute<TriggerAttribute>() is { } trigger) {
-                registeredTriggers?.Add(trigger.Name.ToUpperInvariant(), typeof(TTrigger));
+            RegisterTrigger(typeof(TTrigger));
+        }
+
+        /// <summary>
+        /// Registers a command that is recognized by the parser.
+        /// </summary>
+        /// <param name="type">The command type.</param>
+        public static void RegisterTrigger(Type type)
+        {
+            if (!type.IsSubclassOf(typeof(TriggerBase)) && !typeof(TriggerBase).IsAssignableFrom(type)) {
+                return;
             }
+
+            if (!(type.GetCustomAttribute<TriggerAttribute>() is { } trigger)) {
+                return;
+            }
+
+            registeredTriggers?.Add(trigger.Name.ToUpperInvariant(), type);
         }
 
         /// <summary>
