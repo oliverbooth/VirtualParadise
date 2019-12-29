@@ -4,7 +4,6 @@
 
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Linq;
     using System.Reflection;
     using System.Text;
@@ -16,7 +15,7 @@
 
     #endregion
 
-    internal static class ActionParser
+    public static class ActionParser
     {
         #region Fields
 
