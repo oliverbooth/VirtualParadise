@@ -12,6 +12,7 @@
     using System.Text;
     using System.Text.RegularExpressions;
     using API;
+    using Extensions;
     using Internal;
     using Parsing;
 
@@ -118,6 +119,22 @@
     
                             break;*/
 
+                        case ColorEnum ce:
+                            if (!parameter.Optional || ce != member.GetDefaultValue<ColorEnum>()) {
+                                builder.Append(ColorEnumExtensions.ToString(ce))
+                                       .Append(' ');
+                            }
+
+                            break;
+
+                        case Color c:
+                            if (!parameter.Optional || c != member.GetDefaultValue<Color>()) {
+                                builder.Append(c.ToString())
+                                       .Append(' ');
+                            }
+
+                            break;
+
                         case bool b:
                             if (!parameter.Optional || b != member.GetDefaultValue<bool>()) {
                                 // Append ON or OFF for literals, or the parameter name for flags
@@ -189,14 +206,19 @@
                                                                   BindingFlags.NonPublic);
 
             foreach (PropertyInfo member in members.Where(t => !(t.ToVpProperty() is null))) {
-                PropertyAttribute property = member.ToVpProperty();
-                object            value    = member.GetValue(this, null);
+                PropertyAttribute property     = member.ToVpProperty();
+                object            value        = member.GetValue(this, null);
+                string            stringValue  = value.ToString();
+                string            defaultValue = member.GetDefaultValue().ToString();
+
+                if (value is Color) {
+                    defaultValue = ((Color) member.GetDefaultValue<ColorEnum>()).ToString();
+                }
 
                 if (!property.Optional ||
-                    !value.ToString().Equals(member.GetDefaultValue().ToString(),
-                        StringComparison.InvariantCultureIgnoreCase)) {
+                    !stringValue.Equals(defaultValue, StringComparison.InvariantCultureIgnoreCase)) {
                     if (value is Enum) {
-                        value = value.ToString().ToLowerInvariant();
+                        value = stringValue.ToLowerInvariant();
                     }
 
                     builder.Append(property.Name.ToLowerInvariant().Trim())
