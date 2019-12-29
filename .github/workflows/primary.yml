@@ -23,3 +23,5 @@ jobs:
       run: dotnet build ./VirtualParadise.sln --configuration Release
     - name: Test
       run: dotnet test ./VirtualParadise.sln --configuration Release
+    - name: Publish Package
+      run: dotnet nuget push "bin/Release/VirtualParadise.1.0.0.nupkg" --source "github"
