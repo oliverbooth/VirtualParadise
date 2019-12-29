@@ -3,6 +3,7 @@
     #region Using Directives
 
     using System;
+    using System.Diagnostics;
     using System.Linq;
     using API;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -23,7 +24,11 @@
         public void TestAnimate()
         {
             {
-                Action         action  = Action.Parse("create animate tag=foo mask me jump 5 9 100 1 2 3 4 5 4 3 2 1;");
+                Action action = Action.Parse("create animate tag=foo mask me jump 5 9 100 1 2 3 4 5 4 3 2 1;");
+
+                Assert.IsNotNull(action);
+                Assert.IsNotNull(action.Create);
+
                 AnimateCommand animate = action.Create.GetCommandOfType<AnimateCommand>();
 
                 Assert.IsNotNull(animate);
@@ -40,7 +45,11 @@
             }
 
             {
-                Action         action  = Action.Parse("create animate me jump 5 3 100 1 2 1 global;");
+                Action action = Action.Parse("create animate me jump 5 3 100 1 2 1 global;");
+
+                Assert.IsNotNull(action);
+                Assert.IsNotNull(action.Create);
+
                 AnimateCommand animate = action.Create.GetCommandOfType<AnimateCommand>();
 
                 Assert.IsNotNull(animate);
@@ -182,7 +191,7 @@
         [TestMethod]
         public void TestShearWithAllValues()
         {
-            Action       action = Action.Parse("create shear 1 2 3.4 5 6 7");
+            Action       action = Action.Parse("create shear  1   2 3.4 5 6 7");
             ShearCommand shear  = action.Create.GetCommandOfType<ShearCommand>();
 
             Assert.IsNotNull(shear);
