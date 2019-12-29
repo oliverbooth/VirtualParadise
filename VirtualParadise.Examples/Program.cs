@@ -15,7 +15,7 @@
         private static async Task Main(string[] args)
         {
             const string input =
-                "create scale 2, name dond-rtcam, visible off, solid off, rotate -1 sync";
+                "create scale 0.35, visible off, color tint red, ambient 1, diffuse 1, name foobar;activate astart myanim global, move 0 -0.01 time=0.1 smooth global, visible on";
 
             Action action = await Action.ParseAsync(input);
             Console.WriteLine($"Input  = {input}");
@@ -29,14 +29,11 @@
         private static void OutputVerboseAction(Action action)
         {
             Console.WriteLine($"Trigger count = {action.Triggers.Count()}");
-            foreach (TriggerBase trigger in action.Triggers)
-            {
+            foreach (TriggerBase trigger in action.Triggers) {
                 string triggerName = trigger.TriggerName.ToUpperInvariant();
                 Console.WriteLine($"  {triggerName} command count: {trigger.Commands.Count()}");
-                foreach (CommandBase command in trigger.Commands)
-                {
-                    string[] ignoredProperties = new[]
-                    {
+                foreach (CommandBase command in trigger.Commands) {
+                    string[] ignoredProperties = new[] {
                         nameof(CommandBase.CommandName),
                         nameof(CommandBase.Arguments),
                         nameof(CommandBase.Properties),
@@ -46,18 +43,15 @@
                     IEnumerable<PropertyInfo> properties = command.GetType().GetProperties();
                     Console.WriteLine($"      {nameof(CommandBase.CommandName)} = {command.CommandName}");
 
-                    foreach (PropertyInfo property in properties)
-                    {
-                        if (ignoredProperties.Contains(property.Name, StringComparer.InvariantCultureIgnoreCase))
-                        {
+                    foreach (PropertyInfo property in properties) {
+                        if (ignoredProperties.Contains(property.Name, StringComparer.InvariantCultureIgnoreCase)) {
                             // don't output properties we want to ignore
                             continue;
                         }
 
                         object value = property.GetValue(command, null);
 
-                        if ((value?.GetType().IsArray ?? false) && value is IEnumerable enumerable)
-                        {
+                        if ((value?.GetType().IsArray ?? false) && value is IEnumerable enumerable) {
                             // join arrays
                             value = String.Join(", ", enumerable.Cast<object>());
                         }
