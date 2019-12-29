@@ -24,9 +24,6 @@
         /// <returns>Returns a new instance of <see cref="ShearCommand"/>.</returns>
         public override async Task<ShearCommand> ParseAsync(string input)
         {
-            Trace.WriteLine($"Generic {nameof(ShearCommandParser)}.{nameof(ParseAsync)}() called");
-            Trace.WriteLine($"{nameof(ShearCommandParser)}.{nameof(ParseAsync)}(\"{input}\")");
-
             ShearCommand command = await base.ParseAsync(typeof(ShearCommand), input)
                                              .ConfigureAwait(false) as ShearCommand;
 
@@ -68,7 +65,6 @@
         /// <inheritdoc />
         public override async Task<CommandBase> ParseAsync(Type type, string input)
         {
-            Trace.WriteLine($"Base {nameof(ShearCommandParser)}.{nameof(ParseAsync)}() called");
             return await this.ParseAsync(input).ConfigureAwait(false);
         }
     }

@@ -263,10 +263,6 @@
 
                     CommandAttribute attribute = commandType.GetCustomAttribute<CommandAttribute>();
                     if (Activator.CreateInstance(attribute.Parser) is CommandParser parser) {
-                        Trace.WriteLine($"Parsing {command.GetType().Name} using {parser.GetType().Name}");
-                        Trace.WriteLine(
-                            $"Invoking await {parser.GetType().Name}.ParseAsync(typeof({command.GetType().Name}), \"{commandRemainder}\")");
-
                         command = await parser.ParseAsync(command.GetType(), commandRemainder)
                                               .ConfigureAwait(true);
                     }

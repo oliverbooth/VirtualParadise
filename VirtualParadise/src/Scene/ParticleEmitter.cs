@@ -90,7 +90,7 @@
         /// <returns>Returns a new instance of <see cref="ParticleEmitter"/>.</returns>
         public static async Task<ParticleEmitter> FromVpObjectAsync(VpObject obj)
         {
-            throw new NotImplementedException("Not implemented");
+            throw new NotImplementedException("This method is still a work in progress.");
 
             if (obj.ObjectType != (int) ObjectType.Particle) {
                 throw new ArgumentException("Object is not a particle emitter.", nameof(obj));
