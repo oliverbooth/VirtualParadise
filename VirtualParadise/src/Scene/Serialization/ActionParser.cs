@@ -15,7 +15,7 @@
 
     #endregion
 
-    internal static class ActionParser
+    public static class ActionParser
     {
         #region Fields
 
