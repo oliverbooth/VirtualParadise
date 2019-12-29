@@ -5,18 +5,19 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+    using System.Threading.Tasks;
     using Scene.Serialization.Commands;
     using Scene.Serialization.Triggers;
     using Action = Scene.Serialization.Action;
 
     internal class Program
     {
-        private static void Main(string[] args)
+        private static async Task Main(string[] args)
         {
             const string input =
                 "create scale 2, name dond-rtcam, visible off, solid off, rotate -1 sync";
 
-            Action action = Action.Parse(input);
+            Action action = await Action.ParseAsync(input);
             Console.WriteLine($"Input  = {input}");
             Console.WriteLine($"Parsed = {action}\n");
 
