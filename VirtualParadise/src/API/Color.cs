@@ -142,16 +142,16 @@
                 str = builder.ToString();
             }
 
-            if (str.Length == 4) {
+            if (str.Length == 6) {
                 str += "FF";
             }
 
             try {
-                long rgb = Convert.ToInt64(str, 16);
-                byte r   = (byte) ((rgb >> 32) & 0xff);
-                byte g   = (byte) ((rgb >> 16) & 0xff);
-                byte b   = (byte) ((rgb >> 8)  & 0xff);
-                byte a   = (byte) (rgb         & 0xff);
+                long rgba = Convert.ToInt64(str, 16);
+                byte r   = (byte) ((rgba >> 24) & 0xff);
+                byte g   = (byte) ((rgba >> 16) & 0xff);
+                byte b   = (byte) ((rgba >> 8)  & 0xff);
+                byte a   = (byte) (rgba         & 0xff);
                 return new Color(r, g, b, a);
             } catch {
                 return Black;
