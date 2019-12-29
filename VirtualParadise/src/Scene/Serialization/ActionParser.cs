@@ -100,7 +100,7 @@
         /// Registers a command that is recognized by the parser.
         /// </summary>
         /// <typeparam name="TCommand">A <see cref="CommandBase"/> derived type.</typeparam>
-        private static void RegisterCommand<TCommand>() where TCommand : CommandBase
+        public static void RegisterCommand<TCommand>() where TCommand : CommandBase
         {
             if (!(typeof(TCommand).GetCustomAttribute<CommandAttribute>() is { } command)) {
                 return;
@@ -113,7 +113,7 @@
         /// Registers a trigger that is recognized by the parser.
         /// </summary>
         /// <typeparam name="TTrigger">A <see cref="TriggerBase"/> derived type.</typeparam>
-        private static void RegisterTrigger<TTrigger>() where TTrigger : TriggerBase
+        public static void RegisterTrigger<TTrigger>() where TTrigger : TriggerBase
         {
             if (typeof(TTrigger).GetCustomAttribute<TriggerAttribute>() is { } trigger) {
                 registeredTriggers?.Add(trigger.Name.ToUpperInvariant(), typeof(TTrigger));
