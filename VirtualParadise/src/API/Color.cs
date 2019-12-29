@@ -33,8 +33,7 @@
         static Color()
         {
             foreach (PropertyInfo member in typeof(Color).GetMembers(BindingFlags.Public | BindingFlags.Static)
-                                                         .OfType<PropertyInfo>())
-            {
+                                                         .OfType<PropertyInfo>()) {
                 knownColors.Add(member.Name.ToUpperInvariant(), (Color) member.GetValue(null));
             }
 
@@ -47,9 +46,7 @@
         /// <param name="r">The red component value.</param>
         /// <param name="g">The green component value.</param>
         /// <param name="b">The blue component value.</param>
-        public Color(byte r, byte g, byte b) : this(r, g, b, 255)
-        {
-        }
+        public Color(byte r, byte g, byte b) : this(r, g, b, 255) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Color"/> struct by taking the component values.
@@ -94,6 +91,8 @@
 
         #region Operators
 
+        public static implicit operator Color(ColorEnum c) => FromEnum(c);
+
         public static implicit operator Color(string str) => FromString(str);
 
         public static implicit operator string(Color c) => c.ToString(false);
@@ -123,46 +122,38 @@
         /// <returns>Returns an instance of <see cref="Color"/>.</returns>
         public static Color FromString(string str)
         {
-            if (String.IsNullOrWhiteSpace(str))
-            {
+            if (String.IsNullOrWhiteSpace(str)) {
                 str = "white";
             }
 
-            if (knownColors.ContainsKey(str.ToUpperInvariant()))
-            {
+            if (knownColors.ContainsKey(str.ToUpperInvariant())) {
                 return knownColors.FirstOrDefault(c => c.Key.Equals(str, StringComparison.InvariantCultureIgnoreCase))
                                   .Value;
             }
 
             str = str.TrimStart('#');
 
-            if (str.Length == 3)
-            {
+            if (str.Length == 3) {
                 StringBuilder builder = new StringBuilder(6);
-                for (int i = 0; i < 3; i++)
-                {
+                for (int i = 0; i < 3; i++) {
                     builder.Append(str[i].Repeat(2));
                 }
 
                 str = builder.ToString();
             }
 
-            if (str.Length == 4)
-            {
+            if (str.Length == 4) {
                 str += "FF";
             }
 
-            try
-            {
+            try {
                 long rgb = Convert.ToInt64(str, 16);
                 byte r   = (byte) ((rgb >> 32) & 0xff);
                 byte g   = (byte) ((rgb >> 16) & 0xff);
                 byte b   = (byte) ((rgb >> 8)  & 0xff);
                 byte a   = (byte) (rgb         & 0xff);
                 return new Color(r, g, b, a);
-            }
-            catch
-            {
+            } catch {
                 return Black;
             }
         }
@@ -185,8 +176,7 @@
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            unchecked
-            {
+            unchecked {
                 int hashCode = this.A.GetHashCode();
                 hashCode = (hashCode * 397) ^ this.B.GetHashCode();
                 hashCode = (hashCode * 397) ^ this.G.GetHashCode();
@@ -200,7 +190,13 @@
         /// </summary>
         public override string ToString()
         {
-            return this.ToString(false);
+            string retVal = $"{this.R:X2}{this.G:X2}{this.B:X2}";
+
+            if (this.A < 255) {
+                retVal += $"{this.A:X2}";
+            }
+
+            return retVal;
         }
 
         /// <summary>
@@ -210,35 +206,7 @@
         /// to <see langword="false"/>.</param>
         public string ToString(bool asKnownColor)
         {
-            while (true)
-            {
-                if (!asKnownColor)
-                {
-                    string retVal = $"{this.R:X2}{this.G:X2}{this.B:X2}";
-
-                    if (this.A < 255)
-                    {
-                        retVal += $"{this.A:X2}";
-                    }
-
-                    return retVal;
-                }
-
-                Color  that = this;
-                string key;
-                if (!String.IsNullOrWhiteSpace(key = knownColors
-                                                    .FirstOrDefault(c => that.R == c.Value.R &&
-                                                                         that.G == c.Value.G &&
-                                                                         that.B == c.Value.B &&
-                                                                         that.B == c.Value.A)
-                                                    .Key))
-
-                {
-                    return key;
-                }
-
-                asKnownColor = false;
-            }
+            return this.ToString();
         }
 
         #endregion

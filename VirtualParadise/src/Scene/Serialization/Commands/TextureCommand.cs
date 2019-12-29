@@ -12,7 +12,7 @@
     /// <summary>
     /// Represents a class which serializes the <c>texture</c> command.
     /// </summary>
-    [Command("texture", typeof(TextureCommandParser))]
+    [Command("texture", typeof(CommandDefaultParser<TextureCommand>))]
     public class TextureCommand : CommandBase, ITaggedCommand
     {
         #region Properties

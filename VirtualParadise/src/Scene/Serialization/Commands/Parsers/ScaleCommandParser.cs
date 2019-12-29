@@ -3,6 +3,7 @@
     #region Using Directives
 
     using System;
+    using System.Threading.Tasks;
     using Parsing;
 
     #endregion
@@ -18,11 +19,12 @@
         /// </summary>
         /// <param name="input">The input string.</param>
         /// <returns>Returns a new instance of <see cref="ScaleCommand"/>.</returns>
-        public override ScaleCommand Parse(string input)
+        public override async Task<ScaleCommand> ParseAsync(string input)
         {
-            ScaleCommand command = base.Parse(typeof(ScaleCommand), input) as ScaleCommand;
-            if (command?.Arguments.Count == 1)
-            {
+            ScaleCommand command = await base.ParseAsync(typeof(ScaleCommand), input)
+                                               .ConfigureAwait(false) as ScaleCommand;
+
+            if (command?.Arguments.Count == 1) {
                 command.Y = command.Z = command.X;
             }
 
@@ -30,9 +32,9 @@
         }
 
         /// <inheritdoc />
-        public override CommandBase Parse(Type type, string input)
+        public override async Task<CommandBase> ParseAsync(Type type, string input)
         {
-            return this.Parse(input);
+            return await this.ParseAsync(input).ConfigureAwait(false);
         }
     }
 }

@@ -13,7 +13,7 @@
     /// <summary>
     /// Represents a class which serializes the <c>move</c> command.
     /// </summary>
-    [Command("move", typeof(MoveCommandParser))]
+    [Command("move", typeof(CommandDefaultParser<MoveCommand>))]
     public class MoveCommand : CommandBase
     {
         #region Properties

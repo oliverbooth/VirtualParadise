@@ -6,6 +6,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
+    using System.Threading.Tasks;
     using API;
     using Parsing;
 
@@ -22,28 +23,30 @@
         /// </summary>
         /// <param name="input">The input string.</param>
         /// <returns>Returns a new instance of <see cref="ColorCommand"/>.</returns>
-        public override ColorCommand Parse(string input)
+        public override async Task<ColorCommand> ParseAsync(string input)
         {
-            ColorCommand command = base.Parse(typeof(ColorCommand), input) as ColorCommand;
-            List<string> args    = Regex.Split(input, "\\s").ToList();
-
-            if (!(command is null))
-            {
-                if (command.IsTint)
-                {
-                    args.RemoveAt(0);
-                }
-
-                command.Color = Color.FromString(args[0]);
+            if (!(await base.ParseAsync(typeof(ColorCommand), input)
+                            .ConfigureAwait(false) is ColorCommand command)) {
+                return null;
             }
+
+            List<string> args = input.Split(Array.Empty<char>(), StringSplitOptions.RemoveEmptyEntries)
+                                     .ToList();
+
+            if (command.IsTint) {
+                args.RemoveAt(0);
+            }
+
+            command.Color = Color.FromString(args[0]);
 
             return command;
         }
 
         /// <inheritdoc />
-        public override CommandBase Parse(Type type, string input)
+        public override async Task<CommandBase> ParseAsync(Type type, string input)
         {
-            return this.Parse(input);
+            return await this.ParseAsync(input)
+                             .ConfigureAwait(false);
         }
     }
 }

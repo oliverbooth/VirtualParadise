@@ -6,6 +6,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
+    using System.Threading.Tasks;
     using Parsing;
 
     #endregion
@@ -21,22 +22,26 @@
         /// </summary>
         /// <param name="input">The input string.</param>
         /// <returns>Returns a new instance of <see cref="SolidCommand"/>.</returns>
-        public override SolidCommand Parse(string input)
+        public override async Task<SolidCommand> ParseAsync(string input)
         {
-            List<string> words = Regex.Split(input, "\\s").ToList();
-            string       name  = String.Empty;
+            List<string> words = input.Split(Array.Empty<char>(), StringSplitOptions.RemoveEmptyEntries)
+                                      .ToList();
 
-            if (!Keyword.TryBool(words[0], out _))
-            {
+            string name = String.Empty;
+
+            if (!Keyword.TryBool(words[0], out _)) {
                 name = words[0];
                 words.RemoveAt(0);
                 input = String.Join(" ", words);
             }
 
-            SolidCommand command = base.Parse(typeof(SolidCommand), input) as SolidCommand;
 
-            if (command != null && String.IsNullOrWhiteSpace(command.TargetName))
-            {
+            if (!(await base.ParseAsync(typeof(SolidCommand), input)
+                            .ConfigureAwait(false) is SolidCommand command)) {
+                return null;
+            }
+
+            if (String.IsNullOrWhiteSpace(command.TargetName)) {
                 command.TargetName = name;
             }
 
@@ -44,9 +49,9 @@
         }
 
         /// <inheritdoc />
-        public override CommandBase Parse(Type type, string input)
+        public override async Task<CommandBase> ParseAsync(Type type, string input)
         {
-            return this.Parse(input);
+            return await this.ParseAsync(input).ConfigureAwait(false);
         }
     }
 }

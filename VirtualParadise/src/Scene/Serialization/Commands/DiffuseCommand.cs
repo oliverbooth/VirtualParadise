@@ -12,7 +12,7 @@
     /// <summary>
     /// Represents a class which serializes the <c>diffuse</c> command.
     /// </summary>
-    [Command("diffuse", typeof(DiffuseCommandParser))]
+    [Command("diffuse", typeof(CommandDefaultParser<DiffuseCommand>))]
     public class DiffuseCommand : CommandBase, ITaggedCommand
     {
         #region Properties

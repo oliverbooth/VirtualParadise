@@ -12,7 +12,7 @@
     /// <summary>
     /// Represents a class which serializes the <c>normalmap</c> command.
     /// </summary>
-    [Command("normalmap", typeof(NormalMapCommandParser))]
+    [Command("normalmap", typeof(CommandDefaultParser<NormalMapCommand>))]
     public class NormalMapCommand : CommandBase, ITaggedCommand
     {
         #region Properties

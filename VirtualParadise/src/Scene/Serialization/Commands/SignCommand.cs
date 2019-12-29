@@ -29,14 +29,14 @@
         /// <summary>
         /// Gets or sets the background color.
         /// </summary>
-        [DefaultValue("0000C0")]
+        [DefaultValue(ColorEnum.DefaultSignBackColor)]
         [Property("bcolor")]
-        public Color BackColor { get; set; } = new Color(0x00, 0x00, 0xC0);
+        public Color BackColor { get; set; } = Color.DefaultSignBackColor;
 
         /// <summary>
         /// Gets or sets the foreground color.
         /// </summary>
-        [DefaultValue("FFFFFF")]
+        [DefaultValue(ColorEnum.White)]
         [Property("color")]
         public Color ForeColor { get; set; } = Color.White;
 
@@ -81,8 +81,7 @@
         {
             StringBuilder builder = new StringBuilder(base.ToString());
 
-            if (!String.IsNullOrWhiteSpace(this.Text))
-            {
+            if (!String.IsNullOrWhiteSpace(this.Text)) {
                 builder.Append(" \"")
                        .Append(this.Text)
                        .Append('"');

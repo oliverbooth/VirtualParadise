@@ -6,23 +6,23 @@
     public interface IObject3D : IObject
     {
         /// <summary>
-        /// Gets the object action.
+        /// Gets or sets the object action.
         /// </summary>
-        string Action { get; }
+        string Action { get; set; }
 
         /// <summary>
-        /// Gets the object angle.
+        /// Gets or sets the object angle.
         /// </summary>
-        double Angle { get; }
+        double Angle { get; set; }
 
         /// <summary>
-        /// Gets the object description.
+        /// Gets or sets the object description.
         /// </summary>
-        string Description { get; }
+        string Description { get; set; }
 
         /// <summary>
-        /// Gets the object model.
+        /// Gets or sets the object model.
         /// </summary>
-        string Model { get; }
+        string Model { get; set; }
     }
 }

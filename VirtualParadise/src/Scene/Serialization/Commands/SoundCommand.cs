@@ -11,7 +11,7 @@
     /// <summary>
     /// Represents a class which serializes the <c>sound</c> command.
     /// </summary>
-    [Command("sound", typeof(SoundCommandParser))]
+    [Command("sound", typeof(CommandDefaultParser<SoundCommand>))]
     public class SoundCommand : CommandBase
     {
         #region Properties

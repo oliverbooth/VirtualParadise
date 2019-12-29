@@ -11,7 +11,7 @@
     /// <summary>
     /// Represents a class which serializes the <c>framerate</c> command.
     /// </summary>
-    [Command("framerate", typeof(FrameRateCommandParser))]
+    [Command("framerate", typeof(CommandDefaultParser<FrameRateCommand>))]
     public class FrameRateCommand : CommandBase
     {
         #region Properties

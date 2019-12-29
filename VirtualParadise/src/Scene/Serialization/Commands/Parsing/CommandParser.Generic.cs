@@ -2,6 +2,11 @@
 {
     #region Using Directives
 
+    using System;
+    using System.Diagnostics;
+    using System.Threading.Tasks;
+    using Parsers;
+
     #endregion
 
     /// <summary>
@@ -17,7 +22,18 @@
         /// </summary>
         /// <param name="input">The input.</param>
         /// <returns>Returns a <see cref="TCommand"/>.</returns>
-        public abstract TCommand Parse(string input);
+        public abstract Task<TCommand> ParseAsync(string input);
+
+        /// <summary>
+        /// Parses the command.
+        /// </summary>
+        /// <param name="type">The command type.</param>
+        /// <param name="input">The input.</param>
+        public override async Task<CommandBase> ParseAsync(Type type, string input)
+        {
+            return await base.ParseAsync(type, input)
+                             .ConfigureAwait(false);
+        }
 
         #endregion
     }

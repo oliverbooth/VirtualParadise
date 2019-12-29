@@ -11,7 +11,7 @@
     /// <summary>
     /// Represents a class which serializes the <c>opacity</c> command.
     /// </summary>
-    [Command("opacity", typeof(OpacityCommandParser))]
+    [Command("opacity", typeof(CommandDefaultParser<OpacityCommand>))]
     public class OpacityCommand : CommandBase
     {
         #region Properties

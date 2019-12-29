@@ -4,6 +4,7 @@
 
     using System;
     using System.Text;
+    using System.Threading.Tasks;
     using Parsing;
 
     #endregion
@@ -19,7 +20,7 @@
         /// </summary>
         /// <param name="input">The input string.</param>
         /// <returns>Returns a new instance of <see cref="SignCommand"/>.</returns>
-        public override SignCommand Parse(string input)
+        public override async Task<SignCommand> ParseAsync(string input)
         {
             // extract quoted string from argument list
             int firstQuote = input.IndexOf('"');
@@ -29,27 +30,22 @@
 
             StringBuilder args = new StringBuilder();
 
-            if (firstQuote >= 0 && lastQuote > firstQuote)
-            {
+            if (firstQuote >= 0 && lastQuote > firstQuote) {
                 text = input.Substring(firstQuote + 1, lastQuote - firstQuote - 1);
 
                 // trim the quoted string from the input
                 args.Append(input.Substring(0, firstQuote));
                 args.Append(input.Substring(lastQuote + 1));
-            }
-            else
-            {
+            } else {
                 // no quoted string in input, use it all.
                 args.Append(input);
             }
 
+            SignCommand command = await base.ParseAsync(typeof(SignCommand), args.ToString())
+                                            .ConfigureAwait(false) as SignCommand;
 
-            // parse the remainder of the command as usual
-            SignCommand command = base.Parse(typeof(SignCommand), args.ToString()) as SignCommand;
-
-            if (command != null)
-            {
-                // but text is unique. text needs to be assigned manually
+            // text is unique. text needs to be assigned manually
+            if (!(command is null)) {
                 command.Text = text;
             }
 
@@ -57,9 +53,9 @@
         }
 
         /// <inheritdoc />
-        public override CommandBase Parse(Type type, string input)
+        public override async Task<CommandBase> ParseAsync(Type type, string input)
         {
-            return this.Parse(input);
+            return await this.ParseAsync(input).ConfigureAwait(false);
         }
     }
 }

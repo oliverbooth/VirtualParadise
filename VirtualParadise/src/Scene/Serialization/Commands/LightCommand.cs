@@ -12,7 +12,7 @@
     /// <summary>
     /// Represents a class which serializes the <c>light</c> command.
     /// </summary>
-    [Command("light", typeof(LightCommandParser))]
+    [Command("light", typeof(CommandDefaultParser<LightCommand>))]
     public class LightCommand : CommandBase
     {
         #region Properties

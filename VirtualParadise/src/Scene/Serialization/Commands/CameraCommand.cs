@@ -12,7 +12,7 @@
     /// <summary>
     /// Represents a class which serializes the <c>camera</c> command.
     /// </summary>
-    [Command("camera", typeof(CameraCommandParser))]
+    [Command("camera", typeof(CommandDefaultParser<CameraCommand>))]
     public class CameraCommand : CommandBase
     {
         #region Properties

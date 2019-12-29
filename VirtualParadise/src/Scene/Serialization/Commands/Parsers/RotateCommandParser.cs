@@ -5,6 +5,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using Parsing;
 
     #endregion
@@ -20,32 +21,29 @@
         /// </summary>
         /// <param name="input">The input string.</param>
         /// <returns>Returns a new instance of <see cref="RotateCommand"/>.</returns>
-        public override RotateCommand Parse(string input)
+        public override async Task<RotateCommand> ParseAsync(string input)
         {
-            if (!(base.Parse(typeof(RotateCommand), input) is RotateCommand command))
-            {
+            if (!(await base.ParseAsync(typeof(RotateCommand), input)
+                            .ConfigureAwait(false) is RotateCommand command)) {
                 return null;
             }
 
             IReadOnlyCollection<string> args = command.Arguments;
             double                      a    = 0.0;
 
-            if (args.Count >= 1 && Double.TryParse(args.ElementAt(0), out a))
-            {
+            if (args.Count >= 1 && Double.TryParse(args.ElementAt(0), out a)) {
                 command.Y = a;
                 command.X = 0.0;
                 command.Z = 0.0;
             }
 
-            if (args.Count >= 2 && Double.TryParse(args.ElementAt(1), out double b))
-            {
+            if (args.Count >= 2 && Double.TryParse(args.ElementAt(1), out double b)) {
                 command.X = a;
                 command.Y = b;
                 command.Z = 0.0;
             }
 
-            if (args.Count >= 3 && Double.TryParse(args.ElementAt(2), out double c))
-            {
+            if (args.Count >= 3 && Double.TryParse(args.ElementAt(2), out double c)) {
                 command.Z = c;
             }
 
@@ -53,9 +51,9 @@
         }
 
         /// <inheritdoc />
-        public override CommandBase Parse(Type type, string input)
+        public override async Task<CommandBase> ParseAsync(Type type, string input)
         {
-            return this.Parse(input);
+            return await this.ParseAsync(input).ConfigureAwait(false);
         }
     }
 }

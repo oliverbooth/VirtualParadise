@@ -3,7 +3,9 @@
     #region Using Directives
 
     using System;
+    using System.Diagnostics;
     using System.Linq;
+    using System.Threading.Tasks;
     using Parsing;
     using VpNet;
 
@@ -20,55 +22,54 @@
         /// </summary>
         /// <param name="input">The input string.</param>
         /// <returns>Returns a new instance of <see cref="ShearCommand"/>.</returns>
-        public override ShearCommand Parse(string input)
+        public override async Task<ShearCommand> ParseAsync(string input)
         {
-            if (!(base.Parse(typeof(ShearCommand), input) is ShearCommand command))
-            {
-                return null;
-            }
+            Trace.WriteLine($"Generic {nameof(ShearCommandParser)}.{nameof(ParseAsync)}() called");
+            Trace.WriteLine($"{nameof(ShearCommandParser)}.{nameof(ParseAsync)}(\"{input}\")");
+
+            ShearCommand command = await base.ParseAsync(typeof(ShearCommand), input)
+                                             .ConfigureAwait(false) as ShearCommand;
 
             Vector3 positive = new Vector3(0.0);
             Vector3 negative = new Vector3(0.0);
 
-            if (command.Arguments.Count >= 1)
-            {
-                positive.Z = Convert.ToDouble(command.Arguments.ElementAt(0));
+            if (!(command is null)) {
+                if (command.Arguments.Count >= 1) {
+                    positive.Z = Convert.ToDouble(command.Arguments.ElementAt(0));
+                }
+
+                if (command.Arguments.Count >= 2) {
+                    positive.X = Convert.ToDouble(command.Arguments.ElementAt(1));
+                }
+
+                if (command.Arguments.Count >= 3) {
+                    positive.Y = Convert.ToDouble(command.Arguments.ElementAt(2));
+                }
+
+                if (command.Arguments.Count >= 4) {
+                    negative.Y = Convert.ToDouble(command.Arguments.ElementAt(3));
+                }
+
+                if (command.Arguments.Count >= 5) {
+                    negative.Z = Convert.ToDouble(command.Arguments.ElementAt(4));
+                }
+
+                if (command.Arguments.Count >= 6) {
+                    negative.X = Convert.ToDouble(command.Arguments.ElementAt(5));
+                }
+
+                command.Positive = positive;
+                command.Negative = negative;
             }
 
-            if (command.Arguments.Count >= 2)
-            {
-                positive.X = Convert.ToDouble(command.Arguments.ElementAt(1));
-            }
-
-            if (command.Arguments.Count >= 3)
-            {
-                positive.Y = Convert.ToDouble(command.Arguments.ElementAt(2));
-            }
-
-            if (command.Arguments.Count >= 4)
-            {
-                negative.Y = Convert.ToDouble(command.Arguments.ElementAt(3));
-            }
-
-            if (command.Arguments.Count >= 5)
-            {
-                negative.Z = Convert.ToDouble(command.Arguments.ElementAt(4));
-            }
-
-            if (command.Arguments.Count >= 6)
-            {
-                negative.X = Convert.ToDouble(command.Arguments.ElementAt(5));
-            }
-
-            command.Positive = positive;
-            command.Negative = negative;
             return command;
         }
 
         /// <inheritdoc />
-        public override CommandBase Parse(Type type, string input)
+        public override async Task<CommandBase> ParseAsync(Type type, string input)
         {
-            return this.Parse(input);
+            Trace.WriteLine($"Base {nameof(ShearCommandParser)}.{nameof(ParseAsync)}() called");
+            return await this.ParseAsync(input).ConfigureAwait(false);
         }
     }
 }

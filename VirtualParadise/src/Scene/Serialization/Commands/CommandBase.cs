@@ -5,6 +5,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Reflection;
@@ -25,8 +26,7 @@
 
         protected CommandBase()
         {
-            if (String.IsNullOrWhiteSpace(this.CommandName))
-            {
+            if (String.IsNullOrWhiteSpace(this.CommandName)) {
                 this.CommandName = (this.GetType().GetCustomAttribute<CommandAttribute>()?.Name ?? String.Empty)
                    .ToUpperInvariant();
             }
@@ -97,23 +97,21 @@
                                                                       BindingFlags.NonPublic);
 
                 foreach (PropertyInfo member in members.Where(t => !(t.ToVpParameter() is null))
-                                                       .OrderBy(p => p.ToVpParameter().Index))
-                {
+                                                       .OrderBy(p => p.ToVpParameter().Index)) {
                     ParameterAttribute parameter = member.ToVpParameter();
                     object             value     = member.GetValue(this, null);
 
-                    if (value is string str && Regex.Match(str, "\\s").Success)
-                    {
-                        value = $"\"{str}\"";
+                    if (value is string str) {
+                        if (str.Any(Char.IsWhiteSpace)) {
+                            value = '"' + str + '"';
+                        }
                     }
 
-                    if (member.PropertyType.IsEnum)
-                    {
+                    if (member.PropertyType.IsEnum) {
                         value = value.ToString().ToLowerInvariant();
                     }
 
-                    switch (value)
-                    {
+                    switch (value) {
                         /*case Enum _:
                             builder.Append(value.ToString().ToLowerInvariant())
                                    .Append(' ');
@@ -121,8 +119,7 @@
                             break;*/
 
                         case bool b:
-                            if (!parameter.Optional || b != member.GetDefaultValue<bool>())
-                            {
+                            if (!parameter.Optional || b != member.GetDefaultValue<bool>()) {
                                 // Append ON or OFF for literals, or the parameter name for flags
                                 builder.Append(parameter.ParameterType == ParameterType.Flag
                                     ? parameter.Name.ToLowerInvariant()
@@ -135,9 +132,8 @@
 
                         default:
                             if (!parameter.Optional ||
-                                !value.ToString().Equals(member.GetDefaultValue(member.PropertyType).ToString(),
-                                    StringComparison.InvariantCultureIgnoreCase))
-                            {
+                                !value.ToString().Equals(member.GetDefaultValue().ToString(),
+                                    StringComparison.InvariantCultureIgnoreCase)) {
                                 // Just append the value
                                 builder.Append(value)
                                        .Append(' ');
@@ -150,8 +146,7 @@
                 string properties = this.GetPropertiesString().Trim();
 
                 builder.Append(properties);
-                if (!String.IsNullOrWhiteSpace(properties))
-                {
+                if (!String.IsNullOrWhiteSpace(properties)) {
                     builder.Append(' ');
                 }
 
@@ -171,12 +166,10 @@
                                                                   BindingFlags.Public   |
                                                                   BindingFlags.NonPublic);
 
-            foreach (PropertyInfo member in members.Where(t => !(t.GetCustomAttribute<FlagAttribute>() is null)))
-            {
+            foreach (PropertyInfo member in members.Where(t => !(t.GetCustomAttribute<FlagAttribute>() is null))) {
                 FlagAttribute flag  = member.GetCustomAttribute<FlagAttribute>();
                 object        value = member.GetValue(this, null);
-                if (value is bool b && b && !ignore.Contains(flag.Name, StringComparer.InvariantCultureIgnoreCase))
-                {
+                if (value is bool b && b && !ignore.Contains(flag.Name, StringComparer.InvariantCultureIgnoreCase)) {
                     builder.Append(flag.Name.ToLowerInvariant())
                            .Append(' ');
                 }
@@ -195,17 +188,14 @@
                                                                   BindingFlags.Public   |
                                                                   BindingFlags.NonPublic);
 
-            foreach (PropertyInfo member in members.Where(t => !(t.ToVpProperty() is null)))
-            {
+            foreach (PropertyInfo member in members.Where(t => !(t.ToVpProperty() is null))) {
                 PropertyAttribute property = member.ToVpProperty();
                 object            value    = member.GetValue(this, null);
 
                 if (!property.Optional ||
-                    !value.ToString().Equals(member.GetDefaultValue(member.PropertyType).ToString(),
-                        StringComparison.InvariantCultureIgnoreCase))
-                {
-                    if (value is Enum)
-                    {
+                    !value.ToString().Equals(member.GetDefaultValue().ToString(),
+                        StringComparison.InvariantCultureIgnoreCase)) {
+                    if (value is Enum) {
                         value = value.ToString().ToLowerInvariant();
                     }
 
@@ -229,18 +219,14 @@
                                                         BindingFlags.Public   |
                                                         BindingFlags.NonPublic);
 
-            List<string> args = this.Arguments
-                                    .Where(a => !Regex.Match(a, "\\S+=\\S").Success)
-                                    .ToList();
+            List<string> args = this.Arguments.Where(a => a.IndexOf('=') < 0).ToList();
             args.RemoveAll(String.IsNullOrWhiteSpace);
 
             // get arguments without flags
             foreach (PropertyInfo member in members.Where(prop => !(prop.GetCustomAttribute<FlagAttribute>() is null))
-                                                   .Where(prop => prop.PropertyType == typeof(bool)))
-            {
+                                                   .Where(prop => prop.PropertyType == typeof(bool))) {
                 FlagAttribute flag = member.GetCustomAttribute<FlagAttribute>();
-                if (args.Select(a => a.ToUpperInvariant()).Contains(flag.Name.ToUpperInvariant()))
-                {
+                if (args.Select(a => a.ToUpperInvariant()).Contains(flag.Name.ToUpperInvariant())) {
                     args.RemoveAll(a => a.Equals(flag.Name, StringComparison.InvariantCultureIgnoreCase));
                 }
             }
@@ -248,10 +234,9 @@
             this.Arguments = args.AsReadOnly();
 
             foreach (PropertyInfo member in members.Where(prop => !(prop.ToVpParameter() is null))
-                                                   .OrderBy(prop => prop.ToVpParameter().Index))
-            {
+                                                   .OrderBy(prop => prop.ToVpParameter().Index)) {
                 ParameterAttribute attribute = member.ToVpParameter();
-                object             value     = member.GetDefaultValue(member.PropertyType);
+                object             value     = member.GetDefaultValue();
 
                 value = SanitizeValue(member.PropertyType, args.Count > attribute.Index
                     ? args[attribute.Index]
@@ -271,20 +256,21 @@
                                                                  BindingFlags.Public   |
                                                                  BindingFlags.NonPublic);
 
-            List<string> args = this.Arguments
-                                    .Where(a => !Regex.Match(a, "\\S+=\\S").Success)
-                                    .ToList();
+            List<string> args = this.Arguments.Where(a => a.IndexOf('=') < 0).ToList();
 
             foreach (PropertyInfo memberProperty in
                 memberProperties.Where(prop => !(prop.GetCustomAttribute<FlagAttribute>() is null))
-                                .Where(prop => prop.PropertyType == typeof(bool)))
-            {
+                                .Where(prop => prop.PropertyType == typeof(bool))) {
                 FlagAttribute flag = memberProperty.GetCustomAttribute<FlagAttribute>();
-                if (args.Select(a => a.ToUpperInvariant()).Contains(flag.Name.ToUpperInvariant()))
-                {
+                if (args.Any(a => a.Equals(flag.Name, StringComparison.InvariantCultureIgnoreCase))) {
                     memberProperty.SetValue(this, true, null);
+
+                    int index = args.FindIndex(s => s.Equals(flag.Name, StringComparison.InvariantCultureIgnoreCase));
+                    args.RemoveAt(index);
                 }
             }
+
+            this.Arguments = args.AsReadOnly();
         }
 
         /// <summary>
@@ -297,18 +283,16 @@
                                                         BindingFlags.Public   |
                                                         BindingFlags.NonPublic);
 
-            foreach (PropertyInfo member in members.Where(prop => !(prop.ToVpProperty() is null)))
-            {
-                PropertyAttribute attribute = member.ToVpProperty();
-
-                // fetch default value for property
-                object value = member.GetDefaultValue(member.PropertyType);
-
-                if (this.Properties.ContainsKey(attribute.Name.ToUpperInvariant()))
-                {
-                    // assign parsed value if it exists
-                    value = this.Properties[attribute.Name.ToUpperInvariant()];
+            foreach (PropertyInfo member in members) {
+                PropertyAttribute property = member.ToVpProperty();
+                if (property is null) {
+                    continue;
                 }
+
+                // fetch default value for property, or parse it if it exists
+                object value = this.Properties.ContainsKey(property.Name.ToUpperInvariant())
+                    ? this.Properties[property.Name.ToUpperInvariant()]
+                    : member.GetDefaultValue();
 
                 value = SanitizeValue(member.PropertyType, value);
                 member.SetValue(this, value, null);
@@ -317,31 +301,23 @@
 
         private static object SanitizeValue(Type type, object value)
         {
-            if (type == typeof(Color))
-            {
+            if (type == typeof(string) && value == default) {
+                value = String.Empty;
+            } else if (value is null) {
+                return null;
+            } else if (type == typeof(ColorEnum)) {
+                value = Color.FromEnum((ColorEnum) value);
+            } else if (type == typeof(Color)) {
                 value = Color.FromString(value.ToString());
-            }
-            else if (type == typeof(bool))
-            {
+            } else if (type == typeof(bool)) {
                 value = Keyword.TryBool(value.ToString(), out bool b) && b;
-            }
-            else if (type.IsEnum)
-            {
-                try
-                {
-                    value = Enum.Parse(type, value?.ToString() ?? String.Empty, true);
-                }
-                catch
-                {
+            } else if (type.IsEnum) {
+                try {
+                    value = Enum.Parse(type, value.ToString(), true);
+                } catch {
                     // ignored
                 }
-            }
-            else if (type == typeof(string) && value == default)
-            {
-                value = String.Empty;
-            }
-            else
-            {
+            } else {
                 value = Convert.ChangeType(value, type);
             }
 

@@ -12,7 +12,7 @@
     /// <summary>
     /// Represents a class which serializes the <c>ambient</c> command.
     /// </summary>
-    [Command("ambient", typeof(AmbientCommandParser))]
+    [Command("ambient", typeof(CommandDefaultParser<AmbientCommand>))]
     public class AmbientCommand : CommandBase, ITaggedCommand
     {
         #region Properties

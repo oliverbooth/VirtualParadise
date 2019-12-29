@@ -5,6 +5,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using Commands;
     using Triggers;
 
@@ -18,6 +19,11 @@
         #region Fields
 
         /// <summary>
+        /// Represents an empty action.
+        /// </summary>
+        public static readonly Action Empty = new Action();
+
+        /// <summary>
         /// Backing field for <see cref="Triggers"/>.
         /// </summary>
         private readonly List<TriggerBase> triggers = new List<TriggerBase>();
@@ -29,9 +35,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="Action"/> class.
         /// </summary>
-        internal Action()
-        {
-        }
+        internal Action() { }
 
         #endregion
 
@@ -46,8 +50,7 @@
             {
                 AdoneTrigger             trigger  = new AdoneTrigger();
                 IEnumerable<CommandBase> commands = this.Triggers.OfType<AdoneTrigger>().SelectMany(t => t.Commands);
-                foreach (CommandBase command in commands)
-                {
+                foreach (CommandBase command in commands) {
                     trigger.AddCommand(command);
                 }
 
@@ -64,8 +67,7 @@
             {
                 ActivateTrigger          trigger  = new ActivateTrigger();
                 IEnumerable<CommandBase> commands = this.Triggers.OfType<ActivateTrigger>().SelectMany(t => t.Commands);
-                foreach (CommandBase command in commands)
-                {
+                foreach (CommandBase command in commands) {
                     trigger.AddCommand(command);
                 }
 
@@ -82,8 +84,7 @@
             {
                 BumpTrigger              trigger  = new BumpTrigger();
                 IEnumerable<CommandBase> commands = this.Triggers.OfType<BumpTrigger>().SelectMany(t => t.Commands);
-                foreach (CommandBase command in commands)
-                {
+                foreach (CommandBase command in commands) {
                     trigger.AddCommand(command);
                 }
 
@@ -100,8 +101,7 @@
             {
                 BumpEndTrigger           trigger  = new BumpEndTrigger();
                 IEnumerable<CommandBase> commands = this.Triggers.OfType<BumpEndTrigger>().SelectMany(t => t.Commands);
-                foreach (CommandBase command in commands)
-                {
+                foreach (CommandBase command in commands) {
                     trigger.AddCommand(command);
                 }
 
@@ -118,8 +118,7 @@
             {
                 CreateTrigger            trigger  = new CreateTrigger();
                 IEnumerable<CommandBase> commands = this.Triggers.OfType<CreateTrigger>().SelectMany(t => t.Commands);
-                foreach (CommandBase command in commands)
-                {
+                foreach (CommandBase command in commands) {
                     trigger.AddCommand(command);
                 }
 
@@ -137,9 +136,31 @@
 
         #region Methods
 
-        public static Action Parse(string input)
+        /// <summary>
+        /// Parses an action string.
+        /// </summary>
+        /// <param name="input">The action string.</param>
+        /// <param name="throwOnError">Optional. Whether or not the parser should throw an exception if an operation
+        /// failed. Defaults to <see langword="false"/>.</param>
+        /// <returns>Returns an instance of <see cref="Action"/>.</returns>
+        public static Action Parse(string input, bool throwOnError = false)
         {
-            return ActionParser.Parse(input);
+            return ActionParser.ParseAsync(input, throwOnError)
+                               .ConfigureAwait(false)
+                               .GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Asynchronously parses an action string.
+        /// </summary>
+        /// <param name="input">The action string.</param>
+        /// <param name="throwOnError">Optional. Whether or not the parser should throw an exception if an operation
+        /// failed. Defaults to <see langword="false"/>.</param>
+        /// <returns>Returns an instance of <see cref="Action"/>.</returns>
+        public static async Task<Action> ParseAsync(string input, bool throwOnError = false)
+        {
+            return await ActionParser.ParseAsync(input, throwOnError)
+                                     .ConfigureAwait(false);
         }
 
         /// <inheritdoc />
@@ -155,8 +176,7 @@
         {
             string join = ";";
 
-            switch (format)
-            {
+            switch (format) {
                 case ActionFormat.Compressed:
                     break;
                 case ActionFormat.None:

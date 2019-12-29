@@ -1,6 +1,5 @@
 ﻿namespace VirtualParadise.Scene.Serialization.Internal
 {
-    using System;
     using System.ComponentModel;
     using System.Reflection;
     using Commands.Parsing;
@@ -9,37 +8,22 @@
     {
         public static ParameterAttribute ToVpParameter(this PropertyInfo memberInfo)
         {
-            return memberInfo.GetCustomAttribute<ParameterAttribute>() is { } attribute ? attribute : null;
+            return memberInfo.GetCustomAttribute<ParameterAttribute>();
         }
 
         public static PropertyAttribute ToVpProperty(this PropertyInfo memberInfo)
         {
-            return memberInfo.GetCustomAttribute<PropertyAttribute>() is { } attribute ? attribute : null;
+            return memberInfo.GetCustomAttribute<PropertyAttribute>();
         }
 
-        public static object GetDefaultValue(this PropertyInfo memberInfo, Type type)
+        public static object GetDefaultValue(this PropertyInfo memberInfo)
         {
-            if (!(memberInfo.GetCustomAttribute<DefaultValueAttribute>() is { } attribute))
-            {
-                return default;
-            }
-
-            object value = attribute.Value;
-            try
-            {
-                value = Convert.ChangeType(attribute.Value, type);
-            }
-            catch
-            {
-                // ignored
-            }
-
-            return value;
+            return memberInfo.GetCustomAttribute<DefaultValueAttribute>() is { } attribute ? attribute.Value : default;
         }
 
         public static T GetDefaultValue<T>(this PropertyInfo memberInfo)
         {
-            return (T) memberInfo.GetDefaultValue(typeof(T));
+            return (T) memberInfo.GetDefaultValue();
         }
     }
 }

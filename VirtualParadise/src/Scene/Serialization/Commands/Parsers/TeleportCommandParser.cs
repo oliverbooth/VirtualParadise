@@ -3,6 +3,7 @@
     #region Using Directives
 
     using System;
+    using System.Threading.Tasks;
     using API;
     using Parsing;
 
@@ -19,21 +20,22 @@
         /// </summary>
         /// <param name="input">The input string.</param>
         /// <returns>Returns a new instance of <see cref="TeleportCommand"/>.</returns>
-        public override TeleportCommand Parse(string input)
+        public override async Task<TeleportCommand> ParseAsync(string input)
         {
-            if (!(base.Parse(typeof(TeleportCommand), String.Empty) is TeleportCommand command))
-            {
-                return null;
+            TeleportCommand command = await base.ParseAsync(typeof(TeleportCommand), input)
+                                                .ConfigureAwait(false) as TeleportCommand;
+
+            if (!(command is null)) {
+                command.Coordinates = Coordinates.Parse(input);
             }
 
-            command.Coordinates = Coordinates.Parse(input);
             return command;
         }
 
         /// <inheritdoc />
-        public override CommandBase Parse(Type type, string input)
+        public override async Task<CommandBase> ParseAsync(Type type, string input)
         {
-            return this.Parse(input);
+            return await this.ParseAsync(input).ConfigureAwait(false);
         }
     }
 }

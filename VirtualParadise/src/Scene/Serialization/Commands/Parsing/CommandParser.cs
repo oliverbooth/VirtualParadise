@@ -4,9 +4,11 @@
 
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Reflection;
     using System.Text.RegularExpressions;
+    using System.Threading.Tasks;
 
     #endregion
 
@@ -22,19 +24,25 @@
         /// </summary>
         /// <param name="type">The command type.</param>
         /// <param name="input">The input.</param>
-        public virtual CommandBase Parse(Type type, string input)
+        public virtual async Task<CommandBase> ParseAsync(Type type, string input)
         {
-            if (!(Activator.CreateInstance(type) is CommandBase command))
-            {
+            if (!(Activator.CreateInstance(type) is CommandBase command)) {
                 return null;
             }
 
-            command.CommandName = type.GetCustomAttribute<CommandAttribute>()?.Name ?? String.Empty;
-            command.Properties  = this.ExtractProperties(input, out input);
-            command.Arguments = Regex.Split(input.Trim(), "\\s")
-                                     .Where(s => !String.IsNullOrWhiteSpace(s))
-                                     .ToArray();
+            if (!(type.GetCustomAttribute<CommandAttribute>() is { } attribute)) {
+                return null;
+            }
 
+            command.CommandName = (attribute.Name ?? String.Empty).ToUpperInvariant();
+
+            (Dictionary<string, object> properties, string remainder) =
+                await this.ExtractPropertiesAsync(input).ConfigureAwait(false);
+
+            string[] args = remainder.Split(Array.Empty<char>(), StringSplitOptions.RemoveEmptyEntries);
+
+            command.Properties = properties;
+            command.Arguments  = args.ToList();
             command.UpdateProperties();
             command.UpdateFlags();
             command.UpdateArguments();
@@ -46,33 +54,20 @@
         /// Extracts the key/value properties pairs from an argument set.
         /// </summary>
         /// <param name="input">The command arguments.</param>
-        /// <param name="remainder">The args that remain after extracting properties.</param>
         /// <returns></returns>
-        protected Dictionary<string, object> ExtractProperties(string input, out string remainder)
+        protected async Task<(Dictionary<string, object>, string)> ExtractPropertiesAsync(string input)
         {
-            IEnumerable<string> words = Regex.Split(input, "\\s")
-                                             .Where(s => !String.IsNullOrWhiteSpace(s))
-                                             .ToArray();
+            string[] words =
+                input.Split(Array.Empty<char>(), StringSplitOptions.RemoveEmptyEntries);
+            string sanitized = String.Join("\n", words);
+            IDictionary<string, string> dict = await PropertiesParser.ParseAsync(sanitized)
+                                                                     .ConfigureAwait(false);
 
-            // convert key=value pairs to a dictionary we can assign as the command properties
-            Dictionary<string, object> pairs = words.Where(w => Regex.Match(w, "\\S+=\\S+").Success)
-                                                    .Select(p =>
-                                                     {
-                                                         Match match = Regex.Match(p, "(\\S+)=(\\S+)");
-                                                         return new[]
-                                                         {
-                                                             match.Groups[1].Value.ToUpperInvariant(),
-                                                             match.Groups[2].Value
-                                                         };
-                                                     })
-                                                    .ToDictionary(s => s.ElementAt(0), s => (object) s.ElementAt(1));
-
-            // pass back the input arguments without key=value pairs
             List<string> remainderList = words.ToList();
-            remainderList.RemoveAll(w => Regex.Match(w, "\\S+=\\S+").Success);
-            remainder = String.Join(" ", remainderList);
+            remainderList.RemoveAll(s => s.Contains('='));
 
-            return pairs;
+            string remainder = String.Join(" ", remainderList);
+            return (dict.ToDictionary(s => s.Key.ToUpperInvariant(), s => (object) s.Value), remainder);
         }
 
         #endregion

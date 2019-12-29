@@ -6,6 +6,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
+    using System.Threading.Tasks;
     using Parsing;
     using X10D;
 
@@ -22,28 +23,30 @@
         /// </summary>
         /// <param name="input">The input string.</param>
         /// <returns>Returns a new instance of <see cref="AnimateCommand"/>.</returns>
-        public override AnimateCommand Parse(string input)
+        public override async Task<AnimateCommand> ParseAsync(string input)
         {
-            AnimateCommand command = base.Parse(typeof(AnimateCommand), input) as AnimateCommand;
+            if (!(await base.ParseAsync(typeof(AnimateCommand), input)
+                            .ConfigureAwait(false) is AnimateCommand command)) {
+                return null;
+            }
 
-            List<string> args = Regex.Split(input, "\\s").ToList();
+            List<string> args = input.Split(Array.Empty<char>(), StringSplitOptions.RemoveEmptyEntries)
+                                     .ToList();
+
             args.RemoveAll(m => m.Equals("mask", StringComparison.InvariantCultureIgnoreCase));
 
-            if (command != null)
-            {
-                command.FrameList = args.Skip(command.IsMask ? 6 : 5)
-                                        .Take(command.FrameCount)
-                                        .Select(s => s.To<int>())
-                                        .ToArray();
-            }
+            command.FrameList = args.Skip(command.IsMask ? 6 : 5)
+                                    .Take(command.FrameCount)
+                                    .Select(s => s.To<int>())
+                                    .ToArray();
 
             return command;
         }
 
         /// <inheritdoc />
-        public override CommandBase Parse(Type type, string input)
+        public override async Task<CommandBase> ParseAsync(Type type, string input)
         {
-            return this.Parse(input);
+            return await this.ParseAsync(input).ConfigureAwait(false);
         }
     }
 }
