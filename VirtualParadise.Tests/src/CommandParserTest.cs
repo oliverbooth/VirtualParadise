@@ -141,6 +141,62 @@
         }
 
         [TestMethod]
+        public void TestMoveWithCustomValues()
+        {
+            Action      action = Action.Parse("create move 1");
+            MoveCommand move   = action.Create.GetCommandOfType<MoveCommand>();
+
+            Assert.IsNotNull(move);
+            Assert.AreEqual("move", move.CommandName, true);
+            Assert.AreEqual(1.0,    move.X);
+            Assert.AreEqual(0.0,    move.Y);
+            Assert.AreEqual(0.0,    move.Z);
+            Assert.IsFalse(move.IsLocalAxis);
+            Assert.IsFalse(move.IsLooping);
+            Assert.IsFalse(move.IsGlobal);
+
+            action = Action.Parse("create move 1 2 loop global");
+            move   = action.Create.GetCommandOfType<MoveCommand>();
+
+            Assert.IsNotNull(move);
+            Assert.AreEqual("move", move.CommandName, true);
+            Assert.AreEqual(1.0,    move.X);
+            Assert.AreEqual(2.0,    move.Y);
+            Assert.AreEqual(0.0,    move.Z);
+            Assert.IsFalse(move.IsLocalAxis);
+            Assert.IsTrue(move.IsLooping);
+            Assert.IsTrue(move.IsGlobal);
+
+            action = Action.Parse("create move 0 -0.01 loop");
+            move   = action.Create.GetCommandOfType<MoveCommand>();
+
+            Assert.IsNotNull(move);
+            Assert.AreEqual("move", move.CommandName, true);
+            Assert.AreEqual(0.0,    move.X);
+            Assert.IsTrue(Math.Abs(move.Y) > 0.0);
+            Assert.AreEqual(0.0, move.Z);
+            Assert.IsFalse(move.IsLocalAxis);
+            Assert.IsTrue(move.IsLooping);
+            Assert.IsFalse(move.IsGlobal);
+        }
+
+        [TestMethod]
+        public void TestMoveWithDefaultValues()
+        {
+            Action      action = Action.Parse("create move");
+            MoveCommand move   = action.Create.GetCommandOfType<MoveCommand>();
+
+            Assert.IsNotNull(move);
+            Assert.AreEqual("move", move.CommandName, true);
+            Assert.AreEqual(0.0,    move.X);
+            Assert.AreEqual(0.0,    move.Y);
+            Assert.AreEqual(0.0,    move.Z);
+            Assert.IsFalse(move.IsLocalAxis);
+            Assert.IsFalse(move.IsLooping);
+            Assert.IsFalse(move.IsGlobal);
+        }
+
+        [TestMethod]
         public void TestNameWithCustomValues()
         {
             Action      action = Action.Parse("create name foo name=bar global");
