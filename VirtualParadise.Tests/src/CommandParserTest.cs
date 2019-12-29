@@ -3,7 +3,6 @@
     #region Using Directives
 
     using System;
-    using System.Diagnostics;
     using System.Linq;
     using API;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
