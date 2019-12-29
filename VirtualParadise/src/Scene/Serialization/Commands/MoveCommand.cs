@@ -13,7 +13,7 @@
     /// <summary>
     /// Represents a class which serializes the <c>move</c> command.
     /// </summary>
-    [Command("move", typeof(CommandDefaultParser<MoveCommand>))]
+    [Command("move", typeof(MoveCommandParser))]
     public class MoveCommand : CommandBase
     {
         #region Properties
@@ -104,7 +104,7 @@
             builder.Append(this.CommandName.ToLowerInvariant()).Append(' ')
                    .Append(this.X).Append(' ');
 
-            if (this.Y > 0.0 || this.Z > 0.0)
+            if (Math.Abs(this.Y) > 0.0 || Math.Abs(this.Z) > 0.0)
             {
                 builder.Append(this.Y).Append(' ');
 
