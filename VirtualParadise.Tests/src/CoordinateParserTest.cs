@@ -2,6 +2,7 @@ namespace VirtualParadise.Tests
 {
     #region Using Directives
 
+    using System.Diagnostics;
     using API;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -18,6 +19,10 @@ namespace VirtualParadise.Tests
         {
             string      message     = $"Input = {input}";
             Coordinates coordinates = Coordinates.Parse(input);
+
+            Trace.WriteLine(message);
+            Trace.WriteLine($"Parsed = {coordinates.ToString()}");
+            Trace.WriteLine($"Parsed (formatted) = {coordinates.ToString("{0:0.0}")}");
 
             Assert.AreEqual(x,        coordinates.X,          message);
             Assert.AreEqual(y,        coordinates.Y,          message);

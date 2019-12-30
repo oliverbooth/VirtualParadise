@@ -69,44 +69,53 @@
             return CoordinateParser.ParseCoordinates(coordinates);
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Returns the string representation of these coordinates.
+        /// </summary>
+        /// <returns>Returns a <see cref="String"/>.</returns>
         public override string ToString()
+        {
+            return this.ToString("{0}");
+        }
+
+        /// <summary>
+        /// Returns the string representation of these coordinates.
+        /// </summary>
+        /// <param name="format">The format to apply to each component.</param>
+        /// <returns>Returns a <see cref="String"/>.</returns>
+        public string ToString(string format)
         {
             StringBuilder builder = new StringBuilder();
 
-            if (!String.IsNullOrWhiteSpace(this.World))
-            {
+            if (!String.IsNullOrWhiteSpace(this.World)) {
                 builder.Append(this.World)
                        .Append(' ');
             }
 
-            if (this.IsRelative)
-            {
+            if (this.IsRelative) {
                 builder.Append(this.Z >= 0.0 ? "+" : "")
-                       .Append(this.Z)
+                       .Append(String.Format(format, this.Z))
                        .Append(' ')
                        .Append(this.X >= 0.0 ? "+" : "")
-                       .Append(this.X)
+                       .Append(String.Format(format, this.X))
                        .Append(' ')
                        .Append(this.Y >= 0.0 ? "+" : "")
-                       .Append(this.Y)
+                       .Append(String.Format(format, this.Y))
                        .Append('a')
                        .Append(' ')
                        .Append(this.Direction >= 0.0 ? "+" : "")
-                       .Append(this.Direction);
-            }
-            else
-            {
-                builder.Append(Math.Abs(this.Z))
+                       .Append(String.Format(format, this.Direction));
+            } else {
+                builder.Append(String.Format(format, Math.Abs(this.Z)))
                        .Append(this.Z >= 0.0 ? 'n' : 's')
                        .Append(' ')
-                       .Append(Math.Abs(this.X))
+                       .Append(String.Format(format, Math.Abs(this.X)))
                        .Append(this.X >= 0.0 ? 'w' : 'e')
                        .Append(' ')
-                       .Append(this.Y)
+                       .Append(String.Format(format, this.Y))
                        .Append('a')
                        .Append(' ')
-                       .Append(this.Direction);
+                       .Append(String.Format(format, this.Direction));
             }
 
 
@@ -123,8 +132,7 @@
         [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode")]
         public override int GetHashCode()
         {
-            unchecked
-            {
+            unchecked {
                 int hashCode = this.Direction.GetHashCode();
                 hashCode = (hashCode * 397) ^ this.X.GetHashCode();
                 hashCode = (hashCode * 397) ^ this.Y.GetHashCode();
