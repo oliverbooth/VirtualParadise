@@ -20,9 +20,9 @@
         public void TestMultipleCreateCommands()
         {
             Action      action        = Action.Parse("create name foo,   color  red;activate specular;");
-            TriggerBase firstTrigger  = action.Triggers.First();
-            CommandBase firstCommand  = firstTrigger.Commands.First();
-            CommandBase secondCommand = firstTrigger.Commands.ElementAt(1);
+            Trigger firstTrigger  = action.Triggers.First();
+            Command firstCommand  = firstTrigger.Commands.First();
+            Command secondCommand = firstTrigger.Commands.ElementAt(1);
 
             Assert.IsTrue(firstTrigger is CreateTrigger);
             Assert.IsTrue(firstCommand is NameCommand);
