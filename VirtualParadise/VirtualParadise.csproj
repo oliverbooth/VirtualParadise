@@ -6,9 +6,15 @@
         <Authors>Oliver Booth</Authors>
         <Version>0.1.0</Version>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Platforms>AnyCPU;x64</Platforms>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <PlatformTarget>x64</PlatformTarget>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
         <PlatformTarget>x64</PlatformTarget>
         <DefineConstants>DEBUG;TRACE</DefineConstants>
     </PropertyGroup>
@@ -17,9 +23,13 @@
         <PlatformTarget>x64</PlatformTarget>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+        <PlatformTarget>x64</PlatformTarget>
+    </PropertyGroup>
+
     <ItemGroup>
-      <PackageReference Include="VpNet" Version="2.0.0-alpha0025" />
-      <PackageReference Include="X10D" Version="1.2.2-alpha.2" />
+        <PackageReference Include="VpNet" Version="2.0.0-alpha0025" />
+        <PackageReference Include="X10D" Version="1.2.2-alpha.2" />
     </ItemGroup>
 
 </Project>
