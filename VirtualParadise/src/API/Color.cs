@@ -91,11 +91,55 @@
 
         #region Operators
 
+        #region Conversions
+
+        /// <summary>
+        /// Implicit converts a <see cref="Color"/> to a <see cref="System.Drawing.Color"/>.
+        /// </summary>
+        /// <param name="c">The <see cref="Color"/> value.</param>
+        public static implicit operator System.Drawing.Color(Color c) =>
+            System.Drawing.Color.FromArgb(c.A, c.R, c.G, c.B);
+
+        /// <summary>
+        /// Implicit converts a <see cref="System.Drawing.Color"/> to a <see cref="Color"/>.
+        /// </summary>
+        /// <param name="c">The <see cref="System.Drawing.Color"/> value.</param>
+        public static implicit operator Color(System.Drawing.Color c) =>
+            new Color(c.R, c.G, c.B, c.A);
+
+        /// <summary>
+        /// Implicit converts a <see cref="Color"/> to a <see cref="VpNet.Color"/>.
+        /// </summary>
+        /// <param name="c">The <see cref="Color"/> value.</param>
+        public static implicit operator VpNet.Color(Color c) =>
+            new VpNet.Color(c.R, c.G, c.B);
+
+        /// <summary>
+        /// Implicit converts a <see cref="VpNet.Color"/> to a <see cref="Color"/>.
+        /// </summary>
+        /// <param name="c">The <see cref="VpNet.Color"/> value.</param>
+        public static implicit operator Color(VpNet.Color c) =>
+            new Color(c.R, c.G, c.B);
+
+        /// <summary>
+        /// Implicit converts a <see cref="ColorEnum"/> to a <see cref="Color"/> by calling <see cref="FromEnum"/>.
+        /// </summary>
+        /// <param name="c">The <see cref="ColorEnum"/> value.</param>
         public static implicit operator Color(ColorEnum c) => FromEnum(c);
 
+        /// <summary>
+        /// Implicit converts a <see cref="String"/> to a <see cref="Color"/> by calling <see cref="FromString"/>.
+        /// </summary>
+        /// <param name="str">The <see cref="String"/> value.</param>
         public static implicit operator Color(string str) => FromString(str);
 
+        /// <summary>
+        /// Implicit converts a <see cref="Color"/> to a <see cref="String"/> by calling <see cref="ToString()"/>.
+        /// </summary>
+        /// <param name="c">The <see cref="Color"/> value.</param>
         public static implicit operator string(Color c) => c.ToString(false);
+
+        #endregion
 
         public static bool operator ==(Color a, Color b) => a.Equals(b);
 
@@ -148,10 +192,10 @@
 
             try {
                 long rgba = Convert.ToInt64(str, 16);
-                byte r   = (byte) ((rgba >> 24) & 0xff);
-                byte g   = (byte) ((rgba >> 16) & 0xff);
-                byte b   = (byte) ((rgba >> 8)  & 0xff);
-                byte a   = (byte) (rgba         & 0xff);
+                byte r    = (byte) ((rgba >> 24) & 0xff);
+                byte g    = (byte) ((rgba >> 16) & 0xff);
+                byte b    = (byte) ((rgba >> 8)  & 0xff);
+                byte a    = (byte) (rgba         & 0xff);
                 return new Color(r, g, b, a);
             } catch {
                 return Black;
