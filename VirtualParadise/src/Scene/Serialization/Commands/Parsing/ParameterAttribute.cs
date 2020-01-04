@@ -8,7 +8,7 @@
     #endregion
 
     /// <summary>
-    /// Represents an attribute to be attached to properties in a <see cref="CommandBase"/> derived type
+    /// Represents an attribute to be attached to properties in a <see cref="Command"/> derived type
     /// which represent command parameters.
     /// This class cannot be inherited.
     /// </summary>

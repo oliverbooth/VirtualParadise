@@ -12,7 +12,7 @@
     /// Represents a class which serializes the <c>noise</c> command.
     /// </summary>
     [Command("noise", typeof(CommandDefaultParser<NoiseCommand>))]
-    public class NoiseCommand : CommandBase
+    public class NoiseCommand : Command
     {
         #region Properties
 

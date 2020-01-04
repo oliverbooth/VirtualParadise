@@ -12,7 +12,7 @@
     /// Represents a class which serializes the <c>visible</c> command.
     /// </summary>
     [Command("visible", typeof(VisibleCommandParser))]
-    public class VisibleCommand : CommandBase
+    public class VisibleCommand : Command
     {
         #region Properties
 

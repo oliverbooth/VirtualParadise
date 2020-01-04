@@ -15,7 +15,7 @@
     /// Represents a class which serializes the <c>animate</c> command.
     /// </summary>
     [Command("animate", typeof(AnimateCommandParser))]
-    public class AnimateCommand : CommandBase, ITaggedCommand
+    public class AnimateCommand : Command, ITaggedCommand
     {
         #region Properties
 

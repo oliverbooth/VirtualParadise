@@ -15,7 +15,7 @@
     /// Represents a class which serializes the <c>sign</c> command.
     /// </summary>
     [Command("sign", typeof(SignCommandParser))]
-    public class SignCommand : CommandBase
+    public class SignCommand : Command
     {
         #region Properties
 

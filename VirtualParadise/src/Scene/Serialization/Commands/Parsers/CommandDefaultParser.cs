@@ -13,7 +13,7 @@
     /// This class cannot be inherited.
     /// </summary>
     public sealed class CommandDefaultParser<TCommand> : CommandParser
-        where TCommand : CommandBase
+        where TCommand : Command
     {
         /// <summary>
         /// Parses the command and returns a <see cref="TCommand"/>.
@@ -27,7 +27,7 @@
         }
 
         /// <inheritdoc />
-        public override async Task<CommandBase> ParseAsync(Type type, string input)
+        public override async Task<Command> ParseAsync(Type type, string input)
         {
             return await this.ParseAsync(input)
                              .ConfigureAwait(false);

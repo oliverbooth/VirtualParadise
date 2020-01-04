@@ -99,8 +99,8 @@
         /// <summary>
         /// Registers a command that is recognized by the parser.
         /// </summary>
-        /// <typeparam name="TCommand">A <see cref="CommandBase"/> derived type.</typeparam>
-        public static void RegisterCommand<TCommand>() where TCommand : CommandBase
+        /// <typeparam name="TCommand">A <see cref="Command"/> derived type.</typeparam>
+        public static void RegisterCommand<TCommand>() where TCommand : Command
         {
             RegisterCommand(typeof(TCommand));
         }
@@ -111,7 +111,7 @@
         /// <param name="type">The command type.</param>
         public static void RegisterCommand(Type type)
         {
-            if (!type.IsSubclassOf(typeof(CommandBase)) && !typeof(CommandBase).IsAssignableFrom(type))
+            if (!type.IsSubclassOf(typeof(Command)) && !typeof(Command).IsAssignableFrom(type))
             {
                 return;
             }
@@ -275,10 +275,10 @@
                     }
 
                     Type        commandType = registeredCommands[commandWord];
-                    CommandBase command;
+                    Command command;
                     try {
                         // again, earlier type-checking "guarantees" this to pass... but here we are
-                        command = Activator.CreateInstance(commandType) as CommandBase;
+                        command = Activator.CreateInstance(commandType) as Command;
                         if (command is null) {
                             throw new NullReferenceException("Instantiated command " + commandType.Name + " is null");
                         }

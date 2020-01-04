@@ -14,7 +14,7 @@
     /// Represents a class which serializes the <c>scale</c> command.
     /// </summary>
     [Command("scale", typeof(ScaleCommandParser))]
-    public class ScaleCommand : CommandBase
+    public class ScaleCommand : Command
     {
         #region Properties
 

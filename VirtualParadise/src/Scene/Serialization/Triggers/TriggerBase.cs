@@ -21,7 +21,7 @@
         /// <summary>
         /// Backing field for <see cref="Commands"/>.
         /// </summary>
-        private readonly List<CommandBase> commands = new List<CommandBase>();
+        private readonly List<Command> commands = new List<Command>();
 
         #endregion
 
@@ -45,7 +45,7 @@
         /// <summary>
         /// Gets the commands in this trigger.
         /// </summary>
-        public IEnumerable<CommandBase> Commands => this.commands.AsReadOnly();
+        public IEnumerable<Command> Commands => this.commands.AsReadOnly();
 
         /// <summary>
         /// Gets the trigger name.
@@ -59,8 +59,8 @@
         /// <summary>
         /// Gets the first command of the specified type.
         /// </summary>
-        /// <typeparam name="T">A <see cref="CommandBase"/> derived type.</typeparam>
-        public T GetCommandOfType<T>() where T : CommandBase
+        /// <typeparam name="T">A <see cref="Command"/> derived type.</typeparam>
+        public T GetCommandOfType<T>() where T : Command
         {
             return this.GetCommandsOfType<T>().FirstOrDefault();
         }
@@ -68,8 +68,8 @@
         /// <summary>
         /// Gets all commands of the specified type.
         /// </summary>
-        /// <typeparam name="T">A <see cref="CommandBase"/> derived type.</typeparam>
-        public IEnumerable<T> GetCommandsOfType<T>() where T : CommandBase
+        /// <typeparam name="T">A <see cref="Command"/> derived type.</typeparam>
+        public IEnumerable<T> GetCommandsOfType<T>() where T : Command
         {
             return this.commands.OfType<T>();
         }
@@ -116,7 +116,7 @@
         /// Adds a commands to the trigger.
         /// </summary>
         /// <param name="command">The commands to add.</param>
-        internal void AddCommand(params CommandBase[] command)
+        internal void AddCommand(params Command[] command)
         {
             this.commands.AddRange(command);
         }

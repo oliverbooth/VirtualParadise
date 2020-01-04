@@ -11,7 +11,7 @@
     /// Represents a class which serializes the <c>astop</c> command.
     /// </summary>
     [Command("astop", typeof(CommandDefaultParser<AstopCommand>))]
-    public class AstopCommand : CommandBase
+    public class AstopCommand : Command
     {
         #region Properties
 

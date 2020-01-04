@@ -22,9 +22,9 @@
         /// </summary>
         /// <param name="type">The command type.</param>
         /// <param name="input">The input.</param>
-        public virtual async Task<CommandBase> ParseAsync(Type type, string input)
+        public virtual async Task<Command> ParseAsync(Type type, string input)
         {
-            if (!(Activator.CreateInstance(type) is CommandBase command)) {
+            if (!(Activator.CreateInstance(type) is Command command)) {
                 return null;
             }
 

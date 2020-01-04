@@ -15,7 +15,7 @@
     /// Represents a class which serializes the <c>color</c> command.
     /// </summary>
     [Command("color", typeof(ColorCommandParser))]
-    public class ColorCommand : CommandBase, ITaggedCommand
+    public class ColorCommand : Command, ITaggedCommand
     {
         #region Properties
 

@@ -7,7 +7,7 @@
     #endregion
 
     /// <summary>
-    /// Represents an attribute to be attached to <see cref="CommandBase"/> derived type.
+    /// Represents an attribute to be attached to <see cref="Command"/> derived type.
     /// This class cannot be inherited.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]

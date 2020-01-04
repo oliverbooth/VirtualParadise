@@ -49,8 +49,8 @@
             get
             {
                 AdoneTrigger             trigger  = new AdoneTrigger();
-                IEnumerable<CommandBase> commands = this.Triggers.OfType<AdoneTrigger>().SelectMany(t => t.Commands);
-                foreach (CommandBase command in commands) {
+                IEnumerable<Command> commands = this.Triggers.OfType<AdoneTrigger>().SelectMany(t => t.Commands);
+                foreach (Command command in commands) {
                     trigger.AddCommand(command);
                 }
 
@@ -66,8 +66,8 @@
             get
             {
                 ActivateTrigger          trigger  = new ActivateTrigger();
-                IEnumerable<CommandBase> commands = this.Triggers.OfType<ActivateTrigger>().SelectMany(t => t.Commands);
-                foreach (CommandBase command in commands) {
+                IEnumerable<Command> commands = this.Triggers.OfType<ActivateTrigger>().SelectMany(t => t.Commands);
+                foreach (Command command in commands) {
                     trigger.AddCommand(command);
                 }
 
@@ -83,8 +83,8 @@
             get
             {
                 BumpTrigger              trigger  = new BumpTrigger();
-                IEnumerable<CommandBase> commands = this.Triggers.OfType<BumpTrigger>().SelectMany(t => t.Commands);
-                foreach (CommandBase command in commands) {
+                IEnumerable<Command> commands = this.Triggers.OfType<BumpTrigger>().SelectMany(t => t.Commands);
+                foreach (Command command in commands) {
                     trigger.AddCommand(command);
                 }
 
@@ -100,8 +100,8 @@
             get
             {
                 BumpEndTrigger           trigger  = new BumpEndTrigger();
-                IEnumerable<CommandBase> commands = this.Triggers.OfType<BumpEndTrigger>().SelectMany(t => t.Commands);
-                foreach (CommandBase command in commands) {
+                IEnumerable<Command> commands = this.Triggers.OfType<BumpEndTrigger>().SelectMany(t => t.Commands);
+                foreach (Command command in commands) {
                     trigger.AddCommand(command);
                 }
 
@@ -117,8 +117,8 @@
             get
             {
                 CreateTrigger            trigger  = new CreateTrigger();
-                IEnumerable<CommandBase> commands = this.Triggers.OfType<CreateTrigger>().SelectMany(t => t.Commands);
-                foreach (CommandBase command in commands) {
+                IEnumerable<Command> commands = this.Triggers.OfType<CreateTrigger>().SelectMany(t => t.Commands);
+                foreach (Command command in commands) {
                     trigger.AddCommand(command);
                 }
 

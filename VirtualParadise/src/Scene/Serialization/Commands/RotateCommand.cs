@@ -14,7 +14,7 @@
     /// Represents a class which serializes the <c>rotate</c> command.
     /// </summary>
     [Command("rotate", typeof(RotateCommandParser))]
-    public class RotateCommand : CommandBase
+    public class RotateCommand : Command
     {
         #region Properties
 

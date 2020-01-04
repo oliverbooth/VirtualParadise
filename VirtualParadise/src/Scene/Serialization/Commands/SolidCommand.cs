@@ -12,7 +12,7 @@
     /// Represents a class which serializes the <c>solid</c> command.
     /// </summary>
     [Command("solid", typeof(SolidCommandParser))]
-    public class SolidCommand : CommandBase
+    public class SolidCommand : Command
     {
         #region Properties
 

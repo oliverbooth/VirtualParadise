@@ -11,7 +11,7 @@
     /// Represents the base class for command parsers.
     /// </summary>
     public abstract class CommandParser<TCommand> : CommandParser
-        where TCommand : CommandBase
+        where TCommand : Command
     {
         #region Methods
 
@@ -27,7 +27,7 @@
         /// </summary>
         /// <param name="type">The command type.</param>
         /// <param name="input">The input.</param>
-        public override async Task<CommandBase> ParseAsync(Type type, string input)
+        public override async Task<Command> ParseAsync(Type type, string input)
         {
             return await base.ParseAsync(type, input)
                              .ConfigureAwait(false);

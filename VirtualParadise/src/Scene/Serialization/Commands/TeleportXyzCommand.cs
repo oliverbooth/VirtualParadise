@@ -12,7 +12,7 @@
     /// Represents a class which serializes the <c>teleportxyz</c> command.
     /// </summary>
     [Command("teleportxyz", typeof(CommandDefaultParser<TeleportXyzCommand>))]
-    public class TeleportXyzCommand : CommandBase
+    public class TeleportXyzCommand : Command
     {
         #region Properties
 

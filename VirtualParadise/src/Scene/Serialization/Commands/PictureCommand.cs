@@ -13,7 +13,7 @@
     /// Represents a class which serializes the <c>picture</c> command.
     /// </summary>
     [Command("picture", typeof(CommandDefaultParser<PictureCommand>))]
-    public class PictureCommand : CommandBase, ITaggedCommand
+    public class PictureCommand : Command, ITaggedCommand
     {
         #region Properties
 

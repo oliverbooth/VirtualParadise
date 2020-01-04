@@ -46,7 +46,7 @@
         }
 
         /// <inheritdoc />
-        public override async Task<CommandBase> ParseAsync(Type type, string input)
+        public override async Task<Command> ParseAsync(Type type, string input)
         {
             return await this.ParseAsync(input).ConfigureAwait(false);
         }

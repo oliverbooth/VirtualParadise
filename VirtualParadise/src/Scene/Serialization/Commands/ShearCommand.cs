@@ -14,7 +14,7 @@
     /// Represents a class which serializes the <c>shear</c> command.
     /// </summary>
     [Command("shear", typeof(ShearCommandParser))]
-    public class ShearCommand : CommandBase
+    public class ShearCommand : Command
     {
         #region Properties
 

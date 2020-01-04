@@ -45,10 +45,10 @@
         /// <summary>
         /// Adds a command to the builder by adding it to the current trigger.
         /// </summary>
-        /// <typeparam name="T">A <see cref="CommandBase"/> derived type.</typeparam>
+        /// <typeparam name="T">A <see cref="Command"/> derived type.</typeparam>
         /// <param name="command">The command to add.</param>
-        /// <returns>Returns the current instance of <see cref="CommandBase"/>.</returns>
-        public ActionBuilder AddCommand<T>(T command) where T : CommandBase
+        /// <returns>Returns the current instance of <see cref="Command"/>.</returns>
+        public ActionBuilder AddCommand<T>(T command) where T : Command
         {
             this.currentTrigger?.AddCommand(command);
             return this;

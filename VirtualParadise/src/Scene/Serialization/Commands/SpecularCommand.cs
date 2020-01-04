@@ -13,7 +13,7 @@
     /// Represents a class which serializes the <c>specular</c> command.
     /// </summary>
     [Command("specular", typeof(CommandDefaultParser<SpecularCommand>))]
-    public class SpecularCommand : CommandBase, ITaggedCommand
+    public class SpecularCommand : Command, ITaggedCommand
     {
         #region Properties
 

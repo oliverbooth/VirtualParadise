@@ -12,7 +12,7 @@
     /// Represents a class which serializes the <c>name</c> command.
     /// </summary>
     [Command("name", typeof(CommandDefaultParser<NameCommand>))]
-    public class NameCommand : CommandBase
+    public class NameCommand : Command
     {
         #region Properties
 

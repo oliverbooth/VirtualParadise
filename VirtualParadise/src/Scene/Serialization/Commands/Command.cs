@@ -19,11 +19,11 @@
     /// <summary>
     /// Represents the base class for all commands.
     /// </summary>
-    public abstract class CommandBase
+    public abstract class Command
     {
         #region Constructors
 
-        protected CommandBase()
+        protected Command()
         {
             if (String.IsNullOrWhiteSpace(this.CommandName)) {
                 this.CommandName = (this.GetType().GetCustomAttribute<CommandAttribute>()?.Name ?? String.Empty)
