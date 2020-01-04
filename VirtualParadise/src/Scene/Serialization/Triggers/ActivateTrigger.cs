@@ -5,7 +5,7 @@
     /// This class cannot be inherited.
     /// </summary>
     [Trigger("ACTIVATE")]
-    public sealed class ActivateTrigger : TriggerBase
+    public sealed class ActivateTrigger : Trigger
     {
     }
 }

@@ -26,7 +26,7 @@
         /// <summary>
         /// Backing field for <see cref="Triggers"/>.
         /// </summary>
-        private readonly List<TriggerBase> triggers = new List<TriggerBase>();
+        private readonly List<Trigger> triggers = new List<Trigger>();
 
         #endregion
 
@@ -129,7 +129,7 @@
         /// <summary>
         /// Gets the triggers.
         /// </summary>
-        public IEnumerable<TriggerBase> Triggers =>
+        public IEnumerable<Trigger> Triggers =>
             this.triggers.AsReadOnly();
 
         #endregion
@@ -196,7 +196,7 @@
         /// Adds a trigger to this action.
         /// </summary>
         /// <param name="trigger">The trigger to add.</param>
-        internal void AddTrigger(TriggerBase trigger)
+        internal void AddTrigger(Trigger trigger)
         {
             this.triggers.Add(trigger);
         }

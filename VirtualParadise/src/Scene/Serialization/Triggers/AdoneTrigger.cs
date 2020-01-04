@@ -5,7 +5,7 @@
     /// This class cannot be inherited.
     /// </summary>
     [Trigger("ADONE")]
-    public sealed class AdoneTrigger : TriggerBase
+    public sealed class AdoneTrigger : Trigger
     {
     }
 }

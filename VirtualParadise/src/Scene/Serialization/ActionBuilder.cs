@@ -20,7 +20,7 @@
         #region Fields
 
         private readonly Action action = new Action();
-        private TriggerBase currentTrigger;
+        private Trigger currentTrigger;
 
         #endregion
 
@@ -57,10 +57,10 @@
         /// <summary>
         /// Adds a trigger to the builder by adding it to the current action.
         /// </summary>
-        /// <typeparam name="T">A <see cref="TriggerBase"/> derived type.</typeparam>
+        /// <typeparam name="T">A <see cref="Trigger"/> derived type.</typeparam>
         /// <param name="trigger">The trigger to add.</param>
         /// <returns>Returns the current instance of <see cref="ActionBuilder"/>.</returns>
-        public ActionBuilder AddTrigger<T>(T trigger) where T : TriggerBase
+        public ActionBuilder AddTrigger<T>(T trigger) where T : Trigger
         {
             this.action.AddTrigger(trigger);
             this.currentTrigger = trigger;

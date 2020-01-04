@@ -127,8 +127,8 @@
         /// <summary>
         /// Registers a trigger that is recognized by the parser.
         /// </summary>
-        /// <typeparam name="TTrigger">A <see cref="TriggerBase"/> derived type.</typeparam>
-        public static void RegisterTrigger<TTrigger>() where TTrigger : TriggerBase
+        /// <typeparam name="TTrigger">A <see cref="Trigger"/> derived type.</typeparam>
+        public static void RegisterTrigger<TTrigger>() where TTrigger : Trigger
         {
             RegisterTrigger(typeof(TTrigger));
         }
@@ -139,7 +139,7 @@
         /// <param name="type">The command type.</param>
         public static void RegisterTrigger(Type type)
         {
-            if (!type.IsSubclassOf(typeof(TriggerBase)) && !typeof(TriggerBase).IsAssignableFrom(type)) {
+            if (!type.IsSubclassOf(typeof(Trigger)) && !typeof(Trigger).IsAssignableFrom(type)) {
                 return;
             }
 
@@ -215,11 +215,11 @@
                 }
 
                 Type        triggerType = registeredTriggers[triggerWord];
-                TriggerBase trigger;
+                Trigger trigger;
                 try {
                     // earlier type-checking "guarantees" this to pass.
                     // it this should not throw an exception but it's good to be robust I suppose
-                    trigger = Activator.CreateInstance(triggerType) as TriggerBase;
+                    trigger = Activator.CreateInstance(triggerType) as Trigger;
 
                     if (trigger is null) {
                         throw new NullReferenceException("Instantiated command " + triggerType.Name + " is null");

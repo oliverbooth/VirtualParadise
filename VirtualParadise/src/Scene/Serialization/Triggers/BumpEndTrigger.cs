@@ -5,7 +5,7 @@
     /// This class cannot be inherited.
     /// </summary>
     [Trigger("BUMPEND")]
-    public sealed class BumpEndTrigger : TriggerBase
+    public sealed class BumpEndTrigger : Trigger
     {
     }
 }

@@ -8,7 +8,7 @@
     #endregion
 
     /// <summary>
-    /// Represents an attribute to be attached to <see cref="TriggerBase"/> derived type.
+    /// Represents an attribute to be attached to <see cref="Trigger"/> derived type.
     /// This class cannot be inherited.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]

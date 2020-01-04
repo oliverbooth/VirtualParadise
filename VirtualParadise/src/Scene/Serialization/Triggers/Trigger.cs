@@ -14,7 +14,7 @@
     /// <summary>
     /// Represents the base class for all triggers.
     /// </summary>
-    public abstract class TriggerBase
+    public abstract class Trigger
     {
         #region Fields
 
@@ -28,12 +28,12 @@
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TriggerBase"/> class.
+        /// Initializes a new instance of the <see cref="Trigger"/> class.
         /// </summary>
         [SuppressMessage("Globalization",
             "CA1308:Normalize strings to uppercase",
             Justification = "Lower case string necessary")]
-        protected TriggerBase()
+        protected Trigger()
         {
             this.TriggerName = this.GetType().GetCustomAttribute<TriggerAttribute>()?.Name ?? String.Empty;
         }
