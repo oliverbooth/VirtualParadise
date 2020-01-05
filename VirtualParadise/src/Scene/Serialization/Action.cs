@@ -48,7 +48,7 @@
         {
             get
             {
-                AdoneTrigger             trigger  = new AdoneTrigger();
+                AdoneTrigger         trigger  = new AdoneTrigger();
                 IEnumerable<Command> commands = this.Triggers.OfType<AdoneTrigger>().SelectMany(t => t.Commands);
                 foreach (Command command in commands) {
                     trigger.AddCommand(command);
@@ -65,7 +65,7 @@
         {
             get
             {
-                ActivateTrigger          trigger  = new ActivateTrigger();
+                ActivateTrigger      trigger  = new ActivateTrigger();
                 IEnumerable<Command> commands = this.Triggers.OfType<ActivateTrigger>().SelectMany(t => t.Commands);
                 foreach (Command command in commands) {
                     trigger.AddCommand(command);
@@ -82,7 +82,7 @@
         {
             get
             {
-                BumpTrigger              trigger  = new BumpTrigger();
+                BumpTrigger          trigger  = new BumpTrigger();
                 IEnumerable<Command> commands = this.Triggers.OfType<BumpTrigger>().SelectMany(t => t.Commands);
                 foreach (Command command in commands) {
                     trigger.AddCommand(command);
@@ -99,7 +99,7 @@
         {
             get
             {
-                BumpEndTrigger           trigger  = new BumpEndTrigger();
+                BumpEndTrigger       trigger  = new BumpEndTrigger();
                 IEnumerable<Command> commands = this.Triggers.OfType<BumpEndTrigger>().SelectMany(t => t.Commands);
                 foreach (Command command in commands) {
                     trigger.AddCommand(command);
@@ -116,7 +116,7 @@
         {
             get
             {
-                CreateTrigger            trigger  = new CreateTrigger();
+                CreateTrigger        trigger  = new CreateTrigger();
                 IEnumerable<Command> commands = this.Triggers.OfType<CreateTrigger>().SelectMany(t => t.Commands);
                 foreach (Command command in commands) {
                     trigger.AddCommand(command);
@@ -163,6 +163,15 @@
                                      .ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Adds triggers to this action.
+        /// </summary>
+        /// <param name="trigger">The triggers to add.</param>
+        public void AddTrigger(params Trigger[] trigger)
+        {
+            this.triggers.AddRange(trigger);
+        }
+
         /// <inheritdoc />
         public override string ToString()
         {
@@ -190,15 +199,6 @@
             }
 
             return String.Join(join, this.Triggers.Select(t => t.ToString(format).Trim()));
-        }
-
-        /// <summary>
-        /// Adds a trigger to this action.
-        /// </summary>
-        /// <param name="trigger">The trigger to add.</param>
-        internal void AddTrigger(Trigger trigger)
-        {
-            this.triggers.Add(trigger);
         }
 
         #endregion
