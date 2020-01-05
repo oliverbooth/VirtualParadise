@@ -4,10 +4,8 @@
 
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Reflection;
     using System.Text;
-    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using Commands;
     using Commands.Parsing;
@@ -111,13 +109,11 @@
         /// <param name="type">The command type.</param>
         public static void RegisterCommand(Type type)
         {
-            if (!type.IsSubclassOf(typeof(Command)) && !typeof(Command).IsAssignableFrom(type))
-            {
+            if (!type.IsSubclassOf(typeof(Command)) && !typeof(Command).IsAssignableFrom(type)) {
                 return;
             }
 
-            if (!(type.GetCustomAttribute<CommandAttribute>() is { } command))
-            {
+            if (!(type.GetCustomAttribute<CommandAttribute>() is { } command)) {
                 return;
             }
 
@@ -151,12 +147,13 @@
         }
 
         /// <summary>
-        /// 
+        /// Parses an action string.
         /// </summary>
-        /// <param name="input"></param>
-        /// <param name="throwOnError"></param>
-        /// <returns></returns>
-        public static Action Parse(string input, bool throwOnError) // TODO add optional, remove overload
+        /// <param name="input">The input string.</param>
+        /// <param name="throwOnError">Optional. Whether or not the parser should throw an exception if an operation
+        /// failed. Defaults to <see langword="false"/>.</param>
+        /// <returns>Returns an instance of <see cref="Action"/>.</returns>
+        public static Action Parse(string input, bool throwOnError = false)
         {
             return ParseAsync(input, throwOnError).GetAwaiter().GetResult();
         }
@@ -214,7 +211,7 @@
                     continue;
                 }
 
-                Type        triggerType = registeredTriggers[triggerWord];
+                Type    triggerType = registeredTriggers[triggerWord];
                 Trigger trigger;
                 try {
                     // earlier type-checking "guarantees" this to pass.
@@ -224,11 +221,7 @@
                     if (trigger is null) {
                         throw new NullReferenceException("Instantiated command " + triggerType.Name + " is null");
                     }
-                } catch {
-                    if (throwOnError) {
-                        throw;
-                    }
-
+                } catch when (!throwOnError) {
                     continue;
                 }
 
@@ -274,7 +267,7 @@
                         continue;
                     }
 
-                    Type        commandType = registeredCommands[commandWord];
+                    Type    commandType = registeredCommands[commandWord];
                     Command command;
                     try {
                         // again, earlier type-checking "guarantees" this to pass... but here we are
@@ -282,11 +275,7 @@
                         if (command is null) {
                             throw new NullReferenceException("Instantiated command " + commandType.Name + " is null");
                         }
-                    } catch {
-                        if (throwOnError) {
-                            throw;
-                        }
-
+                    } catch when (!throwOnError) {
                         continue;
                     }
 
@@ -469,14 +458,12 @@
             }
 
             return builder.Build();
-        }*/
-
+        }
         private static IEnumerable<string> GetArgsWithoutProperties(IEnumerable<string> args)
         {
             Regex regex = new Regex("([^\\s]+)=([^\\s]+)");
             return args.Where(a => !regex.Match(a).Success && !String.IsNullOrWhiteSpace(a)).ToArray();
         }
-
         private static Dictionary<string, object> GetPropertiesFromArgs(IEnumerable<string> args)
         {
             Regex  regex = new Regex("([^\\s]+)=([^\\s]+)");
@@ -486,6 +473,7 @@
                         .ToDictionary(m => m.Groups[1].Value,
                              m => (object) m.Groups[2].Value);
         }
+*/
 
         #endregion
     }

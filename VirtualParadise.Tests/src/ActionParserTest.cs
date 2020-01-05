@@ -7,6 +7,7 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Scene.Serialization;
     using Scene.Serialization.Commands;
+    using Scene.Serialization.Fluent;
     using Scene.Serialization.Triggers;
 
     #endregion
@@ -17,9 +18,19 @@
         #region Methods
 
         [TestMethod]
+        public void TestColor()
+        {
+            Action      action = VP.Create().Sign(color: Color.Red);
+            SignCommand sign   = action.Create.GetCommandOfType<SignCommand>();
+
+            Assert.IsNotNull(sign);
+            Assert.IsTrue(sign.ForeColor.Equals(System.Drawing.Color.Red));
+        }
+
+        [TestMethod]
         public void TestMultipleCreateCommands()
         {
-            Action      action        = Action.Parse("create name foo,   color  red;activate specular;");
+            Action  action        = Action.Parse("create name foo,   color  red;activate specular;");
             Trigger firstTrigger  = action.Triggers.First();
             Command firstCommand  = firstTrigger.Commands.First();
             Command secondCommand = firstTrigger.Commands.ElementAt(1);

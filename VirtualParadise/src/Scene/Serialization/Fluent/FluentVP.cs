@@ -34,15 +34,9 @@ namespace VirtualParadise.Scene.Serialization.Fluent
 
         #region Conversions
 
-        public static implicit operator Action(FluentVP vp)
-        {
-            return vp.actionBuilder.Build();
-        }
+        public static implicit operator Action(FluentVP vp) => vp.actionBuilder.Build();
 
-        public static implicit operator string(FluentVP vp)
-        {
-            return vp.ToString();
-        }
+        public static implicit operator string(FluentVP vp) => vp.ToString();
 
         #endregion
 
@@ -205,6 +199,20 @@ namespace VirtualParadise.Scene.Serialization.Fluent
 
             this.actionBuilder.AddCommand(new ScaleCommand
                 {X = x, Y = y, Z = z, IsGlobal = global, IsLocked = locked, TargetName = targetName});
+            return this;
+        }
+
+        public FluentVP Sign(string        text   = "", ColorEnum color = ColorEnum.White,
+                             ColorEnum     bcolor = ColorEnum.DefaultSignBackColor,
+                             TextAlignment align  = TextAlignment.Center,
+                             double        margin = 0.0,   double hmargin = 0.0,   double vmargin    = 0.0,
+                             bool          global = false, bool   locked  = false, string targetName = "")
+        {
+            this.actionBuilder.AddCommand(new SignCommand {
+                Text      = text, ForeColor        = color, BackColor          = bcolor,
+                Margin    = margin, VerticalMargin = vmargin, HorizontalMargin = hmargin,
+                Alignment = align, IsGlobal        = global, IsLocked          = locked, TargetName = targetName
+            });
             return this;
         }
 

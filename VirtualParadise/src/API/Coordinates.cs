@@ -118,7 +118,6 @@
                        .Append(String.Format(format, this.Direction));
             }
 
-
             return builder.ToString();
         }
 

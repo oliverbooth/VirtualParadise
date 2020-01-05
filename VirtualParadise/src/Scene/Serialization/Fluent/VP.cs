@@ -2,7 +2,7 @@
 
 namespace VirtualParadise.Scene.Serialization.Fluent
 {
-    public class VP
+    public static class VP
     {
         #region Triggers
 
