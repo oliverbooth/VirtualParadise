@@ -57,6 +57,15 @@
         #region Methods
 
         /// <summary>
+        /// Adds commands to the trigger.
+        /// </summary>
+        /// <param name="command">The commands to add.</param>
+        public void AddCommand(params Command[] command)
+        {
+            this.commands.AddRange(command);
+        }
+
+        /// <summary>
         /// Gets the first command of the specified type.
         /// </summary>
         /// <typeparam name="T">A <see cref="Command"/> derived type.</typeparam>
@@ -91,8 +100,7 @@
             string join   = ",";
             bool   indent = false;
 
-            switch (format)
-            {
+            switch (format) {
                 case ActionFormat.Compressed:
                     break;
                 case ActionFormat.None:
@@ -110,15 +118,6 @@
                 this.TriggerName.ToLowerInvariant() +
                 (indent ? "\n  " : " ")             +
                 String.Join(join, this.Commands.Select(c => c.ToString().Trim()));
-        }
-
-        /// <summary>
-        /// Adds a commands to the trigger.
-        /// </summary>
-        /// <param name="command">The commands to add.</param>
-        internal void AddCommand(params Command[] command)
-        {
-            this.commands.AddRange(command);
         }
 
         #endregion

@@ -23,7 +23,7 @@
             string[]   lines = input.Split(new[] {'\r', '\n'}, StringSplitOptions.RemoveEmptyEntries);
             List<Task> tasks = lines.Select(line => ParseLineAsync(line, ref properties)).ToList();
 
-            await Task.WhenAll(tasks);
+            await Task.WhenAll(tasks).ConfigureAwait(false);
             return properties;
         }
 
@@ -36,13 +36,14 @@
         {
             int eq = line.IndexOf('=');
 
-            if (eq >= 0 && line.Length >= eq + 1) {
-                string key   = line.Substring(0, eq);
-                string value = line.Substring(eq + 1);
-
-                properties.Add(key, value);
+            if (eq < 0 || line.Length < eq + 1) {
+                return Task.CompletedTask;
             }
 
+            string key   = line.Substring(0, eq);
+            string value = line.Substring(eq + 1);
+
+            properties.Add(key, value);
             return Task.CompletedTask;
         }
     }

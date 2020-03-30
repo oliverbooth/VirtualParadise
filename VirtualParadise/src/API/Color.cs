@@ -14,7 +14,9 @@
     /// <summary>
     /// Represents a color.
     /// </summary>
-    public partial struct Color : IEquatable<Color>
+    public partial struct Color : IEquatable<Color>,
+                                  IEquatable<VpNet.Color>,
+                                  IEquatable<System.Drawing.Color>
     {
         #region Fields
 
@@ -128,6 +130,21 @@
         public static implicit operator Color(ColorEnum c) => FromEnum(c);
 
         /// <summary>
+        /// Attempts to implicit converts a <see cref="Color"/> to a <see cref="ColorEnum"/>.
+        /// </summary>
+        /// <param name="c">The <see cref="Color"/> value.</param>
+        public static implicit operator ColorEnum(Color c)
+        {
+            string str = c.ToString();
+            if (str.Length < 8) {
+                str += "FF";
+            }
+
+            int rgba = Convert.ToInt32(str, 16);
+            return (ColorEnum) rgba;
+        }
+
+        /// <summary>
         /// Implicit converts a <see cref="String"/> to a <see cref="Color"/> by calling <see cref="FromString"/>.
         /// </summary>
         /// <param name="str">The <see cref="String"/> value.</param>
@@ -140,6 +157,22 @@
         public static implicit operator string(Color c) => c.ToString(false);
 
         #endregion
+
+        public static bool operator ==(Color a, System.Drawing.Color b) => a.Equals(b);
+
+        public static bool operator !=(Color a, System.Drawing.Color b) => !(a == b);
+
+        public static bool operator ==(System.Drawing.Color a, Color b) => b.Equals(a);
+
+        public static bool operator !=(System.Drawing.Color a, Color b) => !(a == b);
+
+        public static bool operator ==(Color a, VpNet.Color b) => a.Equals(b);
+
+        public static bool operator !=(Color a, VpNet.Color b) => !(a == b);
+
+        public static bool operator ==(VpNet.Color a, Color b) => b.Equals(a);
+
+        public static bool operator !=(VpNet.Color a, Color b) => !(a == b);
 
         public static bool operator ==(Color a, Color b) => a.Equals(b);
 
@@ -200,6 +233,24 @@
             } catch {
                 return Black;
             }
+        }
+
+        /// <inheritdoc />
+        public bool Equals(System.Drawing.Color other)
+        {
+            return this.R == other.R &&
+                   this.G == other.G &&
+                   this.B == other.B &&
+                   this.A == other.A;
+        }
+
+        /// <inheritdoc />
+        public bool Equals(VpNet.Color other)
+        {
+            return !(other is null)  &&
+                   this.R == other.R &&
+                   this.G == other.G &&
+                   this.B == other.B;
         }
 
         /// <inheritdoc />

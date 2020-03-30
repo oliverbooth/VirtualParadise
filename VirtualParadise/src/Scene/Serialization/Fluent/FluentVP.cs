@@ -202,6 +202,20 @@ namespace VirtualParadise.Scene.Serialization.Fluent
             return this;
         }
 
+        public FluentVP Sign(string        text   = "", ColorEnum color = ColorEnum.White,
+                             ColorEnum     bcolor = ColorEnum.DefaultSignBackColor,
+                             TextAlignment align  = TextAlignment.Center,
+                             double        margin = 0.0,   double hmargin = 0.0,   double vmargin    = 0.0,
+                             bool          global = false, bool   locked  = false, string targetName = "")
+        {
+            this.actionBuilder.AddCommand(new SignCommand {
+                Text      = text, ForeColor        = color, BackColor          = bcolor,
+                Margin    = margin, VerticalMargin = vmargin, HorizontalMargin = hmargin,
+                Alignment = align, IsGlobal        = global, IsLocked          = locked, TargetName = targetName
+            });
+            return this;
+        }
+
         public FluentVP Solid(bool solid, bool global = false, bool locked = false, string targetName = "")
         {
             this.actionBuilder.AddCommand(new SolidCommand

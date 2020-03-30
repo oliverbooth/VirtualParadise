@@ -153,7 +153,7 @@
         /// <param name="throwOnError">Optional. Whether or not the parser should throw an exception if an operation
         /// failed. Defaults to <see langword="false"/>.</param>
         /// <returns>Returns an instance of <see cref="Action"/>.</returns>
-        public static Action Parse(string input, bool throwOnError) // TODO add optional, remove overload
+        public static Action Parse(string input, bool throwOnError = false)
         {
             return ParseAsync(input, throwOnError).GetAwaiter().GetResult();
         }
@@ -343,7 +343,7 @@
 
             return Task.CompletedTask;
         }
-
+        
         #endregion
     }
 }
