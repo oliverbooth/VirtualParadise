@@ -28,7 +28,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="VpNet" Version="2.0.0-alpha0025" />
+        <PackageReference Include="VpNet" Version="2.0.0-alpha0031" />
         <PackageReference Include="X10D" Version="1.2.2-alpha.2" />
     </ItemGroup>
 
