@@ -2,7 +2,10 @@
 
 namespace VirtualParadise.Scene.Serialization.Fluent
 {
-    public class VP
+    /// <summary>
+    /// Represents a class which implements a Fluent-esque API.
+    /// </summary>
+    public static class VP
     {
         #region Triggers
 

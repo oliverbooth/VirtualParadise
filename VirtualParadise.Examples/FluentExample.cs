@@ -3,11 +3,7 @@
     #region Using Directives
 
     using System;
-    using System.Drawing;
-    using Scene.Serialization;
-    using Scene.Serialization.Commands;
     using Scene.Serialization.Fluent;
-    using Scene.Serialization.Triggers;
     using Action = Scene.Serialization.Action;
 
     #endregion

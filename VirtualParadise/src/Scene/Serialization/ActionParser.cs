@@ -4,10 +4,8 @@
 
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Reflection;
     using System.Text;
-    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using Commands;
     using Commands.Parsing;
@@ -111,13 +109,11 @@
         /// <param name="type">The command type.</param>
         public static void RegisterCommand(Type type)
         {
-            if (!type.IsSubclassOf(typeof(Command)) && !typeof(Command).IsAssignableFrom(type))
-            {
+            if (!type.IsSubclassOf(typeof(Command)) && !typeof(Command).IsAssignableFrom(type)) {
                 return;
             }
 
-            if (!(type.GetCustomAttribute<CommandAttribute>() is { } command))
-            {
+            if (!(type.GetCustomAttribute<CommandAttribute>() is { } command)) {
                 return;
             }
 
@@ -151,11 +147,12 @@
         }
 
         /// <summary>
-        /// 
+        /// Parses an action string.
         /// </summary>
-        /// <param name="input"></param>
-        /// <param name="throwOnError"></param>
-        /// <returns></returns>
+        /// <param name="input">The input string.</param>
+        /// <param name="throwOnError">Optional. Whether or not the parser should throw an exception if an operation
+        /// failed. Defaults to <see langword="false"/>.</param>
+        /// <returns>Returns an instance of <see cref="Action"/>.</returns>
         public static Action Parse(string input, bool throwOnError) // TODO add optional, remove overload
         {
             return ParseAsync(input, throwOnError).GetAwaiter().GetResult();
@@ -214,7 +211,7 @@
                     continue;
                 }
 
-                Type        triggerType = registeredTriggers[triggerWord];
+                Type    triggerType = registeredTriggers[triggerWord];
                 Trigger trigger;
                 try {
                     // earlier type-checking "guarantees" this to pass.
@@ -224,11 +221,7 @@
                     if (trigger is null) {
                         throw new NullReferenceException("Instantiated command " + triggerType.Name + " is null");
                     }
-                } catch {
-                    if (throwOnError) {
-                        throw;
-                    }
-
+                } catch when (!throwOnError) {
                     continue;
                 }
 
@@ -274,7 +267,7 @@
                         continue;
                     }
 
-                    Type        commandType = registeredCommands[commandWord];
+                    Type    commandType = registeredCommands[commandWord];
                     Command command;
                     try {
                         // again, earlier type-checking "guarantees" this to pass... but here we are
@@ -282,11 +275,7 @@
                         if (command is null) {
                             throw new NullReferenceException("Instantiated command " + commandType.Name + " is null");
                         }
-                    } catch {
-                        if (throwOnError) {
-                            throw;
-                        }
-
+                    } catch when (!throwOnError) {
                         continue;
                     }
 
@@ -353,138 +342,6 @@
             }
 
             return Task.CompletedTask;
-        }
-
-        /*
-         /// <summary>
-        /// Parses a raw action value into serialized triggers and commands.
-        /// </summary>
-        /// <param name="text">The action text.</param>
-        /// <returns>Returns a new instance of <see cref="System.Action"/>.</returns>
-        public static async Task<Action> Parse(string text)
-        {
-            ActionBuilder builder       = new ActionBuilder();
-            StringBuilder triggerBuffer = new StringBuilder();
-            List<string>  triggers      = new List<string>();
-            bool          triggerQuote  = false;
-
-            foreach (char c in text ?? String.Empty) {
-                switch (c) {
-                    case '"':
-                        triggerBuffer.Append(c);
-                        triggerQuote = !triggerQuote;
-                        break;
-
-                    case ';':
-                        if (!triggerQuote) {
-                            triggers.Add(triggerBuffer.ToString().Trim());
-                            triggerBuffer.Clear();
-                        } else {
-                            triggerBuffer.Append(c);
-                        }
-
-                        break;
-
-                    default:
-                        triggerBuffer.Append(c);
-                        break;
-                }
-            }
-
-            if (!String.IsNullOrWhiteSpace(triggerBuffer.ToString())) {
-                triggers.Add(triggerBuffer.ToString().Trim());
-                triggerBuffer.Clear();
-            }
-
-            foreach (string trigger in triggers) {
-                string triggerWord = Array.Find(Regex.Split(trigger, "\\s+"),
-                    s => !String.IsNullOrWhiteSpace(s));
-
-                if (!registeredTriggers.ContainsKey(triggerWord.ToUpperInvariant())) {
-                    continue;
-                }
-
-                if (!(Activator.CreateInstance(registeredTriggers[triggerWord.ToUpperInvariant()])
-                    is TriggerBase currentTrigger)) {
-                    continue;
-                }
-
-                builder.AddTrigger(currentTrigger);
-
-                StringBuilder commandBuffer = new StringBuilder();
-                List<string>  commands      = new List<string>();
-                bool          commandQuote  = false;
-
-                foreach (char c in trigger.Substring(triggerWord.Length)) {
-                    switch (c) {
-                        case '"':
-                            commandBuffer.Append(c);
-                            commandQuote = !commandQuote;
-                            break;
-
-                        case ',':
-                            if (!commandQuote) {
-                                commands.Add(commandBuffer.ToString().Trim());
-                                commandBuffer.Clear();
-                            } else {
-                                commandBuffer.Append(c);
-                            }
-
-                            break;
-
-                        default:
-                            commandBuffer.Append(c);
-                            break;
-                    }
-                }
-
-                if (!String.IsNullOrWhiteSpace(commandBuffer.ToString())) {
-                    commands.Add(commandBuffer.ToString().Trim());
-                    commandBuffer.Clear();
-                }
-
-                // split commands with ','
-                foreach (string command in commands) {
-                    string[] commandWords = Regex.Split(command, "\\s+");
-                    string   commandWord  = commandWords.FirstOrDefault() ?? String.Empty;
-
-                    if (!registeredCommands.ContainsKey(commandWord.ToUpperInvariant())) {
-                        continue;
-                    }
-
-                    Type commandType = registeredCommands[commandWord.ToUpperInvariant()];
-
-                    if (!(Activator.CreateInstance(commandType) is CommandBase currentCommand)) {
-                        continue;
-                    }
-
-                    CommandAttribute commandAttribute = commandType.GetCustomAttribute<CommandAttribute>();
-                    if (Activator.CreateInstance(commandAttribute.Parser) is CommandParser parser) {
-                        currentCommand = await parser.ParseAsync(currentCommand.GetType(),
-                            String.Join(" ", commandWords.Skip(1)));
-                    }
-
-                    builder.AddCommand(currentCommand);
-                }
-            }
-
-            return builder.Build();
-        }*/
-
-        private static IEnumerable<string> GetArgsWithoutProperties(IEnumerable<string> args)
-        {
-            Regex regex = new Regex("([^\\s]+)=([^\\s]+)");
-            return args.Where(a => !regex.Match(a).Success && !String.IsNullOrWhiteSpace(a)).ToArray();
-        }
-
-        private static Dictionary<string, object> GetPropertiesFromArgs(IEnumerable<string> args)
-        {
-            Regex  regex = new Regex("([^\\s]+)=([^\\s]+)");
-            string str   = String.Join(" ", args);
-            return regex.Matches(str)
-                        .Cast<Match>()
-                        .ToDictionary(m => m.Groups[1].Value,
-                             m => (object) m.Groups[2].Value);
         }
 
         #endregion

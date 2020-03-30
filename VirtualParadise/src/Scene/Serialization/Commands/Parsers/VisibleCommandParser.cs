@@ -26,7 +26,6 @@
             List<string> words = input.Split(Array.Empty<char>(), StringSplitOptions.RemoveEmptyEntries)
                                       .ToList();
 
-
             string name = String.Empty;
 
             if (words.Count > 0 && !Keyword.TryBool(words[0], out _)) {

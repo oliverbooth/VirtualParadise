@@ -4,7 +4,6 @@
 
     using System;
     using System.Diagnostics.CodeAnalysis;
-    using System.Text;
 
     #endregion
 
@@ -85,41 +84,37 @@
         /// <returns>Returns a <see cref="String"/>.</returns>
         public string ToString(string format)
         {
-            StringBuilder builder = new StringBuilder();
+            string result = "";
 
             if (!String.IsNullOrWhiteSpace(this.World)) {
-                builder.Append(this.World)
-                       .Append(' ');
+                result += $"{this.World} ";
             }
+
+            bool north = this.Z         >= 0.0;
+            bool west  = this.X         >= 0.0;
+            bool up    = this.Y         >= 0.0;
+            bool dir   = this.Direction >= 0.0;
 
             if (this.IsRelative) {
-                builder.Append(this.Z >= 0.0 ? "+" : "")
-                       .Append(String.Format(format, this.Z))
-                       .Append(' ')
-                       .Append(this.X >= 0.0 ? "+" : "")
-                       .Append(String.Format(format, this.X))
-                       .Append(' ')
-                       .Append(this.Y >= 0.0 ? "+" : "")
-                       .Append(String.Format(format, this.Y))
-                       .Append('a')
-                       .Append(' ')
-                       .Append(this.Direction >= 0.0 ? "+" : "")
-                       .Append(String.Format(format, this.Direction));
+                string zChar   = north ? "+" : "";
+                string xChar   = west ? "+" : "";
+                string upChar  = up ? "+" : "";
+                string dirChar = dir ? "+" : "";
+
+                result += zChar   + String.Format(format, this.Z) + " " +
+                          xChar   + String.Format(format, this.X) + " " +
+                          upChar  + String.Format(format, this.Y) + " " +
+                          dirChar + String.Format(format, this.Direction);
             } else {
-                builder.Append(String.Format(format, Math.Abs(this.Z)))
-                       .Append(this.Z >= 0.0 ? 'n' : 's')
-                       .Append(' ')
-                       .Append(String.Format(format, Math.Abs(this.X)))
-                       .Append(this.X >= 0.0 ? 'w' : 'e')
-                       .Append(' ')
-                       .Append(String.Format(format, this.Y))
-                       .Append('a')
-                       .Append(' ')
-                       .Append(String.Format(format, this.Direction));
+                string zChar = north ? "n" : "s";
+                string xChar = west ? "w" : "e";
+                result += zChar + String.Format(format, this.Z) + " "  +
+                          xChar + String.Format(format, this.X) + " "  +
+                          String.Format(format,         this.Y) + "a " +
+                          String.Format(format,         this.Direction);
             }
 
-
-            return builder.ToString();
+            return result;
         }
 
         /// <inheritdoc />

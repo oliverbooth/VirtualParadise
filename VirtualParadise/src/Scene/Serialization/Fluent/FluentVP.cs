@@ -34,15 +34,9 @@ namespace VirtualParadise.Scene.Serialization.Fluent
 
         #region Conversions
 
-        public static implicit operator Action(FluentVP vp)
-        {
-            return vp.actionBuilder.Build();
-        }
+        public static implicit operator Action(FluentVP vp) => vp.actionBuilder.Build();
 
-        public static implicit operator string(FluentVP vp)
-        {
-            return vp.ToString();
-        }
+        public static implicit operator string(FluentVP vp) => vp.ToString();
 
         #endregion
 
