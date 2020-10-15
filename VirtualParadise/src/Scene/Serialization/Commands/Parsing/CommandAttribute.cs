@@ -1,10 +1,6 @@
 ﻿namespace VirtualParadise.Scene.Serialization.Commands.Parsing
 {
-    #region Using Directives
-
     using System;
-
-    #endregion
 
     /// <summary>
     /// Represents an attribute to be attached to <see cref="Command"/> derived type.
@@ -13,8 +9,6 @@
     [AttributeUsage(AttributeTargets.Class)]
     public sealed class CommandAttribute : Attribute
     {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="CommandAttribute"/> class.
         /// </summary>
@@ -30,10 +24,6 @@
             }
         }
 
-        #endregion
-
-        #region Properties
-
         /// <summary>
         /// Gets the command name.
         /// </summary>
@@ -43,7 +33,5 @@
         /// Gets the command parser type.
         /// </summary>
         public Type Parser { get; }
-
-        #endregion
     }
 }

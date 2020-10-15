@@ -1,19 +1,13 @@
 ﻿namespace VirtualParadise.API
 {
-    #region Using Directives
-
     using System;
     using System.Diagnostics.CodeAnalysis;
-
-    #endregion
 
     /// <summary>
     /// Represents a struct which contains Virtual Paradise coordinates.
     /// </summary>
     public struct Coordinates : IEquatable<Coordinates>
     {
-        #region Properties
-
         /// <summary>
         /// Gets or sets the direction.
         /// </summary>
@@ -44,19 +38,11 @@
         /// </summary>
         public double Z { get; set; }
 
-        #endregion
-
-        #region Operators
-
         public static bool operator ==(Coordinates left, Coordinates right) =>
             left.Equals(right);
 
         public static bool operator !=(Coordinates left, Coordinates right) =>
             !(left == right);
-
-        #endregion
-
-        #region Methods
 
         /// <summary>
         /// Parses a coordinate string.
@@ -144,7 +130,5 @@
                    this.Y.Equals(other.Y)                 &&
                    this.Z.Equals(other.Z);
         }
-
-        #endregion
     }
 }

@@ -1,11 +1,7 @@
 ﻿namespace VirtualParadise.API
 {
-    #region Using Directives
-
     using System;
     using System.Text.RegularExpressions;
-
-    #endregion
 
     /// <summary>
     /// Represents a class which can translate a coordinate string to a <see cref="Coordinates"/>

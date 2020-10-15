@@ -1,7 +1,5 @@
 ﻿namespace VirtualParadise.Examples
 {
-    #region Using Directives
-
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -10,8 +8,6 @@
     using Scene.Serialization.Commands;
     using Scene.Serialization.Triggers;
     using Action = Scene.Serialization.Action;
-
-    #endregion
 
     public static class ParsingExample
     {

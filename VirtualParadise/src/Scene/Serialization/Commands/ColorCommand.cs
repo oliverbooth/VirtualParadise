@@ -1,7 +1,5 @@
 ﻿namespace VirtualParadise.Scene.Serialization.Commands
 {
-    #region Using Directives
-
     using System;
     using System.ComponentModel;
     using System.Text;
@@ -9,16 +7,12 @@
     using Parsers;
     using Parsing;
 
-    #endregion
-
     /// <summary>
     /// Represents a class which serializes the <c>color</c> command.
     /// </summary>
     [Command("color", typeof(ColorCommandParser))]
     public class ColorCommand : Command, ITaggedCommand
     {
-        #region Properties
-
         /// <summary>
         /// Gets or sets the name value.
         /// </summary>
@@ -39,10 +33,6 @@
         [Flag("tint")]
         public bool IsTint { get; set; } = false;
 
-        #endregion
-
-        #region Methods
-
         /// <inheritdoc />
         public override string ToString()
         {
@@ -60,7 +50,5 @@
 
             return builder.ToString().Trim();
         }
-
-        #endregion
     }
 }

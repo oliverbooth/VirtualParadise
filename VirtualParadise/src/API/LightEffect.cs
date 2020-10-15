@@ -1,10 +1,6 @@
 ﻿namespace VirtualParadise.API
 {
-    #region Using Directives
-
     using System.ComponentModel;
-
-    #endregion
 
     /// <summary>
     /// An enumeration of light effects that can be used on the <c>lightfx</c> property on the <c>light</c> command.

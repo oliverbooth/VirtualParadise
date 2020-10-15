@@ -1,7 +1,5 @@
 ﻿namespace VirtualParadise.Scene
 {
-    #region Using Directives
-
     using System;
     using System.Collections.Generic;
     using System.Reflection;
@@ -14,8 +12,6 @@
     using X10D;
     using Color = API.Color;
 
-    #endregion
-
     /// <summary>
     /// Represents a particle emitter.
     /// </summary>
@@ -24,8 +20,6 @@
                                    IEquatable<IParticleEmitter>,
                                    IEquatable<IObject>
     {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ParticleEmitter"/> class.
         /// </summary>
@@ -34,10 +28,6 @@
         {
             this.ID = id;
         }
-
-        #endregion
-
-        #region Properties
 
         /// <inheritdoc />
         public BlendMode BlendMode { get; set; }
@@ -77,10 +67,6 @@
 
         /// <inheritdoc />
         ObjectType IObject.Type => ObjectType.Particle;
-
-        #endregion
-
-        #region Methods
 
         /// <summary>
         /// Converts an instance of <see cref="VpObject"/> to a new instance of <see cref="ParticleEmitter"/>.
@@ -144,8 +130,6 @@
         {
             return this.ID;
         }
-
-        #endregion
     }
 }
 

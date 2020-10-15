@@ -1,18 +1,12 @@
 namespace VirtualParadise.Tests
 {
-    #region Using Directives
-
     using System.Diagnostics;
     using API;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    #endregion
-
     [TestClass]
     public class CoordinateParserTest
     {
-        #region Methods
-
         internal static void TestCoordinates(string input,
                                              double x,         double y,                double z,
                                              double yaw = 0.0, bool   relative = false, string world = "")
@@ -50,7 +44,5 @@ namespace VirtualParadise.Tests
             TestCoordinates("+0   +0 +5a",   0.0, 5.0,  0.0,  0.0, true);
             TestCoordinates("+1 +1 +1a",     1.0, 1.0,  1.0,  0.0, true);
         }
-
-        #endregion
     }
 }

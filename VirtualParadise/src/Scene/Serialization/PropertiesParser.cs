@@ -1,13 +1,9 @@
 ﻿namespace VirtualParadise.Scene.Serialization
 {
-    #region Using Directives
-
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-
-    #endregion
 
     public static class PropertiesParser
     {

@@ -1,14 +1,10 @@
 ﻿namespace VirtualParadise.Scene.Serialization.Commands
 {
-    #region Using Directives
-
     using System;
     using System.ComponentModel;
     using System.Text;
     using Parsers;
     using Parsing;
-
-    #endregion
 
     /// <summary>
     /// Represents a class which serializes the <c>move</c> command.
@@ -16,8 +12,6 @@
     [Command("move", typeof(MoveCommandParser))]
     public class MoveCommand : Command
     {
-        #region Properties
-
         /// <summary>
         /// Gets or sets the file name or URL of the noise.
         /// </summary>
@@ -91,10 +85,6 @@
         [Property("wait")]
         public double Wait { get; set; } = 0.0;
 
-        #endregion
-
-        #region Methods
-
         /// <inheritdoc />
         public override string ToString()
         {
@@ -125,7 +115,5 @@
 
             return builder.ToString().Trim();
         }
-
-        #endregion
     }
 }

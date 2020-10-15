@@ -1,11 +1,7 @@
 ﻿namespace VirtualParadise.Scene.Serialization.Commands
 {
-    #region Using Directives
-
     using Parsers;
     using Parsing;
-
-    #endregion
 
     /// <summary>
     /// Represents a class which serializes the <c>astop</c> command.
@@ -13,14 +9,10 @@
     [Command("astop", typeof(CommandDefaultParser<AstopCommand>))]
     public class AstopCommand : Command
     {
-        #region Properties
-
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
         [Parameter(0, "name")]
         public string Name { get; set; }
-
-        #endregion
     }
 }

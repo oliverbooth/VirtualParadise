@@ -1,15 +1,11 @@
 ﻿namespace VirtualParadise.API
 {
-    #region Using Directives
-
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
     using System.Text;
     using X10D;
-
-    #endregion
 
     /// <summary>
     /// Represents a color.
@@ -18,16 +14,10 @@
                                   IEquatable<VpNet.Color>,
                                   IEquatable<System.Drawing.Color>
     {
-        #region Fields
-
         /// <summary>
         /// Dictionary for known colors.
         /// </summary>
         private static readonly Dictionary<string, Color> knownColors = new Dictionary<string, Color>();
-
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Static constructor for <see cref="Color"/>.
@@ -65,10 +55,6 @@
             this.A = a;
         }
 
-        #endregion
-
-        #region Properties
-
         /// <summary>
         /// Gets or sets the alpha component of this color.
         /// </summary>
@@ -88,12 +74,6 @@
         /// Gets or sets the red component of this color.
         /// </summary>
         public byte R { get; set; }
-
-        #endregion
-
-        #region Operators
-
-        #region Conversions
 
         /// <summary>
         /// Implicit converts a <see cref="Color"/> to a <see cref="System.Drawing.Color"/>.
@@ -156,8 +136,6 @@
         /// <param name="c">The <see cref="Color"/> value.</param>
         public static implicit operator string(Color c) => c.ToString(false);
 
-        #endregion
-
         public static bool operator ==(Color a, System.Drawing.Color b) => a.Equals(b);
 
         public static bool operator !=(Color a, System.Drawing.Color b) => !(a == b);
@@ -177,10 +155,6 @@
         public static bool operator ==(Color a, Color b) => a.Equals(b);
 
         public static bool operator !=(Color a, Color b) => !(a == b);
-
-        #endregion
-
-        #region Methods
 
         /// <summary>
         /// Converts a known numeric color value to a <see cref="Color"/>.
@@ -303,7 +277,5 @@
         {
             return this.ToString();
         }
-
-        #endregion
     }
 }

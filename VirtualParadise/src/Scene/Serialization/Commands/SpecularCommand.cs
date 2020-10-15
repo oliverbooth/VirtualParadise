@@ -1,13 +1,9 @@
 ﻿namespace VirtualParadise.Scene.Serialization.Commands
 {
-    #region Using Directives
-
     using System;
     using System.ComponentModel;
     using Parsers;
     using Parsing;
-
-    #endregion
 
     /// <summary>
     /// Represents a class which serializes the <c>specular</c> command.
@@ -15,8 +11,6 @@
     [Command("specular", typeof(CommandDefaultParser<SpecularCommand>))]
     public class SpecularCommand : Command, ITaggedCommand
     {
-        #region Properties
-
         /// <summary>
         /// Gets or sets a value indicating whether to apply specular highlights onto alpha transparent objects.
         /// </summary>
@@ -43,7 +37,5 @@
         [DefaultValue(30.0)]
         [Parameter(1, "shininess", Optional = true)]
         public double Shininess { get; set; } = 30.0;
-
-        #endregion
     }
 }

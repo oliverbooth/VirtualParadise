@@ -1,7 +1,5 @@
 ﻿namespace VirtualParadise.Tests
 {
-    #region Using Directives
-
     using System.Linq;
     using API;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -10,13 +8,9 @@
     using Scene.Serialization.Fluent;
     using Scene.Serialization.Triggers;
 
-    #endregion
-
     [TestClass]
     public class ActionParserTest
     {
-        #region Methods
-
         [TestMethod]
         public void TestColor()
         {
@@ -62,7 +56,5 @@
             Assert.AreEqual("create name foo; activate diffuse 1 name=foo",
                 action.ToString(ActionFormat.None));
         }
-
-        #endregion
     }
 }

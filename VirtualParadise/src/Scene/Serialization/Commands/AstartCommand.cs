@@ -1,11 +1,7 @@
 ﻿namespace VirtualParadise.Scene.Serialization.Commands
 {
-    #region Using Directives
-
     using Parsers;
     using Parsing;
-
-    #endregion
 
     /// <summary>
     /// Represents a class which serializes the <c>astart</c> command.
@@ -13,8 +9,6 @@
     [Command("astart", typeof(CommandDefaultParser<AstartCommand>))]
     public class AstartCommand : Command
     {
-        #region Properties
-
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
@@ -26,7 +20,5 @@
         /// </summary>
         [Flag("looping")]
         public bool Loop { get; set; } = false;
-
-        #endregion
     }
 }

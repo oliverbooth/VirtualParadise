@@ -1,12 +1,8 @@
 ﻿namespace VirtualParadise.Scene.Serialization.Commands
 {
-    #region Using Directives
-
     using System.ComponentModel;
     using Parsers;
     using Parsing;
-
-    #endregion
 
     /// <summary>
     /// Represents a class which serializes the <c>noise</c> command.
@@ -14,8 +10,6 @@
     [Command("noise", typeof(CommandDefaultParser<NoiseCommand>))]
     public class NoiseCommand : Command
     {
-        #region Properties
-
         /// <summary>
         /// Gets or sets the file name or URL of the noise.
         /// </summary>
@@ -35,7 +29,5 @@
         [DefaultValue(1.0)]
         [Property("volume")]
         public double Volume { get; set; } = 1.0;
-
-        #endregion
     }
 }

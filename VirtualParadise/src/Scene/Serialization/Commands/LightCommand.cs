@@ -1,13 +1,9 @@
 ﻿namespace VirtualParadise.Scene.Serialization.Commands
 {
-    #region Using Directives
-
     using System.ComponentModel;
     using API;
     using Parsers;
     using Parsing;
-
-    #endregion
 
     /// <summary>
     /// Represents a class which serializes the <c>light</c> command.
@@ -15,8 +11,6 @@
     [Command("light", typeof(CommandDefaultParser<LightCommand>))]
     public class LightCommand : Command
     {
-        #region Properties
-
         /// <summary>
         /// Gets or sets the angle of the light.
         /// </summary>
@@ -72,7 +66,5 @@
         [DefaultValue("point")]
         [Property("type")]
         public LightType Type { get; set; } = LightType.Point;
-
-        #endregion
     }
 }

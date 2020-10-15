@@ -1,10 +1,6 @@
 ﻿namespace VirtualParadise.Scene.Serialization
 {
-    #region Using Directives
-
     using System;
-
-    #endregion
 
     /// <summary>
     /// Action keyword parser

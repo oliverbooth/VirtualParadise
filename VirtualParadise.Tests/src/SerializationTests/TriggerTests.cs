@@ -1,13 +1,9 @@
 ﻿namespace VirtualParadise.Tests.SerializationTests
 {
-    #region Using Directives
-
     using System.Linq;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Scene.Serialization;
     using Scene.Serialization.Triggers;
-
-    #endregion
 
     /// <summary>
     /// Tests for trigger serialization.
@@ -15,8 +11,6 @@
     [TestClass]
     public class TriggerTests
     {
-        #region Methods
-
         /// <summary>
         /// Tests the <c>activate</c> trigger.
         /// </summary>
@@ -66,7 +60,5 @@
             Action action = Action.Parse("create;");
             Assert.IsTrue(action.Triggers.First() is CreateTrigger);
         }
-
-        #endregion
     }
 }

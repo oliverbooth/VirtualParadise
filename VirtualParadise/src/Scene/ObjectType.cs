@@ -1,11 +1,7 @@
 ﻿namespace VirtualParadise.Scene
 {
-    #region Using Directives
-
     using System;
     using System.ComponentModel;
-
-    #endregion
 
     /// <summary>
     /// An enumeration of object types.

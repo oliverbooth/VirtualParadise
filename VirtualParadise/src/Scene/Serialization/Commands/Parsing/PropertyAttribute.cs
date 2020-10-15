@@ -1,10 +1,6 @@
 ﻿namespace VirtualParadise.Scene.Serialization.Commands.Parsing
 {
-    #region Using Directives
-
     using System;
-
-    #endregion
 
     /// <summary>
     /// Represents an attribute to be attached to properties in a <see cref="Command"/> derived type
@@ -14,8 +10,6 @@
     [AttributeUsage(AttributeTargets.Property)]
     public sealed class PropertyAttribute : Attribute
     {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="PropertyAttribute"/> class.
         /// </summary>
@@ -24,10 +18,6 @@
         {
             this.Name     = name?.ToUpperInvariant() ?? String.Empty;
         }
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Gets the property name.
@@ -38,7 +28,5 @@
         /// Gets or sets a value indicating whether this property is optional.
         /// </summary>
         public bool Optional { get; set; } = true;
-
-        #endregion
     }
 }

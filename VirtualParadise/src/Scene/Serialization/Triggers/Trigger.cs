@@ -1,7 +1,5 @@
 ﻿namespace VirtualParadise.Scene.Serialization.Triggers
 {
-    #region Using Directives
-
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
@@ -9,23 +7,15 @@
     using System.Reflection;
     using Commands;
 
-    #endregion
-
     /// <summary>
     /// Represents the base class for all triggers.
     /// </summary>
     public abstract class Trigger
     {
-        #region Fields
-
         /// <summary>
         /// Backing field for <see cref="Commands"/>.
         /// </summary>
         private readonly List<Command> commands = new List<Command>();
-
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Trigger"/> class.
@@ -38,10 +28,6 @@
             this.TriggerName = this.GetType().GetCustomAttribute<TriggerAttribute>()?.Name ?? String.Empty;
         }
 
-        #endregion
-
-        #region Properties
-
         /// <summary>
         /// Gets the commands in this trigger.
         /// </summary>
@@ -51,10 +37,6 @@
         /// Gets the trigger name.
         /// </summary>
         public string TriggerName { get; }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>
         /// Adds commands to the trigger.
@@ -119,7 +101,5 @@
                 (indent ? "\n  " : " ")             +
                 String.Join(join, this.Commands.Select(c => c.ToString().Trim()));
         }
-
-        #endregion
     }
 }

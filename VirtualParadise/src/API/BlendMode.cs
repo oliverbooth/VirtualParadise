@@ -1,11 +1,7 @@
 ﻿namespace VirtualParadise.API
 {
-    #region Using Directives
-
     using System.ComponentModel;
     using Scene;
-
-    #endregion
 
     /// <summary>
     /// An enumeration of blend modes for an <see cref="IParticleEmitter"/>.

@@ -2,45 +2,27 @@
 
 namespace VirtualParadise.Scene.Serialization.Fluent
 {
-    #region Using Directives
-
     using System;
     using API;
     using Commands;
     using Triggers;
     using Action = Action;
 
-    #endregion
-
     public class FluentVP
     {
-        #region Fields
-
         /// <summary>
         /// The underlying <see cref="ActionBuilder"/> instance.
         /// </summary>
         internal readonly ActionBuilder actionBuilder = new ActionBuilder();
-
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FluentVP"/> class.
         /// </summary>
         internal FluentVP() { }
 
-        #endregion
-
-        #region Conversions
-
         public static implicit operator Action(FluentVP vp) => vp.actionBuilder.Build();
 
         public static implicit operator string(FluentVP vp) => vp.ToString();
-
-        #endregion
-
-        #region Triggers
 
         public FluentVP Activate()
         {
@@ -71,10 +53,6 @@ namespace VirtualParadise.Scene.Serialization.Fluent
             this.actionBuilder.AddTrigger(new CreateTrigger());
             return this;
         }
-
-        #endregion
-
-        #region Commands
 
         public FluentVP Animate(string animation  = ".", string name = "me", string tag = "",
                                 int    imageCount = 1,
@@ -272,16 +250,10 @@ namespace VirtualParadise.Scene.Serialization.Fluent
             return this;
         }
 
-        #endregion
-
-        #region Methods
-
         /// <inheritdoc />
         public override string ToString()
         {
             return this.actionBuilder.Build().ToString();
         }
-
-        #endregion
     }
 }

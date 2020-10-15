@@ -1,7 +1,5 @@
 ﻿namespace VirtualParadise.Scene.Sequencing
 {
-    #region Using Directives
-
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
@@ -9,15 +7,11 @@
     using Serialization.Commands;
     using Serialization.Triggers;
 
-    #endregion
-
     /// <summary>
     /// Represents an Astart, Animate, Adone sequence.
     /// </summary>
     public class Sequence
     {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Sequence"/> class.
         /// </summary>
@@ -26,10 +20,6 @@
         {
             this.Name = name;
         }
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Gets or sets the name of this sequence.
@@ -45,10 +35,6 @@
         /// Gets or sets a value whether this sequence loops.
         /// </summary>
         public bool IsLooping { get; set; }
-
-        #endregion
-
-        #region Methods
 
         public IEnumerable<Action> ToActions()
         {
@@ -98,7 +84,5 @@
 
             return stringBuilder.ToString();
         }
-
-        #endregion
     }
 }

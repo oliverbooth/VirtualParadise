@@ -1,7 +1,5 @@
 ﻿namespace VirtualParadise.Scene.Serialization.Commands
 {
-    #region Using Directives
-
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -9,16 +7,12 @@
     using Parsers;
     using Parsing;
 
-    #endregion
-
     /// <summary>
     /// Represents a class which serializes the <c>animate</c> command.
     /// </summary>
     [Command("animate", typeof(AnimateCommandParser))]
     public class AnimateCommand : Command, ITaggedCommand
     {
-        #region Properties
-
         /// <summary>
         /// Gets or sets the animation name.
         /// </summary>
@@ -67,10 +61,6 @@
         [Property("tag")]
         public string Tag { get; set; } = String.Empty;
 
-        #endregion
-
-        #region Methods
-
         /// <inheritdoc />
         /// <remarks>The <c>animate</c> command has a variable argument count (thanks to <see cref="FrameList"/>), and
         /// so its <see cref="ToString"/> implementation differs. Results may be inconsistent with other
@@ -94,7 +84,5 @@
 
             return builder.ToString();
         }
-
-        #endregion
     }
 }

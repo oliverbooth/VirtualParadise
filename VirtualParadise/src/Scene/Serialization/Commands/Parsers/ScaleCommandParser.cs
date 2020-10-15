@@ -1,12 +1,8 @@
 ﻿namespace VirtualParadise.Scene.Serialization.Commands.Parsers
 {
-    #region Using Directives
-
     using System;
     using System.Threading.Tasks;
     using Parsing;
-
-    #endregion
 
     /// <summary>
     /// Represents a class which implements the parser for <see cref="ScaleCommand"/>.

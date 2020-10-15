@@ -1,13 +1,9 @@
 ﻿namespace VirtualParadise.Scene.Serialization.Commands
 {
-    #region Using Directives
-
     using System;
     using System.ComponentModel;
     using Parsers;
     using Parsing;
-
-    #endregion
 
     /// <summary>
     /// Represents a class which serializes the <c>picture</c> command.
@@ -15,8 +11,6 @@
     [Command("picture", typeof(CommandDefaultParser<PictureCommand>))]
     public class PictureCommand : Command, ITaggedCommand
     {
-        #region Properties
-
         /// <summary>
         /// Gets or sets the picture value.
         /// </summary>
@@ -36,7 +30,5 @@
         [DefaultValue(0.0)]
         [Property("update")]
         public double Update { get; set; } = 0.0;
-
-        #endregion
     }
 }

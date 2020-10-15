@@ -1,11 +1,7 @@
 ﻿namespace VirtualParadise.Scene.Serialization.Triggers
 {
-    #region Using Directives
-
     using System;
     using System.Diagnostics.CodeAnalysis;
-
-    #endregion
 
     /// <summary>
     /// Represents an attribute to be attached to <see cref="Trigger"/> derived type.
@@ -14,8 +10,6 @@
     [AttributeUsage(AttributeTargets.Class)]
     public sealed class TriggerAttribute : Attribute
     {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="TriggerAttribute"/> class.
         /// </summary>
@@ -28,15 +22,9 @@
             this.Name = name?.ToLowerInvariant() ?? String.Empty;
         }
 
-        #endregion
-
-        #region Properties
-
         /// <summary>
         /// Gets the trigger name.
         /// </summary>
         public string Name { get; }
-
-        #endregion
     }
 }

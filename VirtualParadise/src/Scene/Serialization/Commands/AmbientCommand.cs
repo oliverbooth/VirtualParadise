@@ -1,13 +1,9 @@
 ﻿namespace VirtualParadise.Scene.Serialization.Commands
 {
-    #region Using Directives
-
     using System;
     using System.ComponentModel;
     using Parsers;
     using Parsing;
-
-    #endregion
 
     /// <summary>
     /// Represents a class which serializes the <c>ambient</c> command.
@@ -15,8 +11,6 @@
     [Command("ambient", typeof(CommandDefaultParser<AmbientCommand>))]
     public class AmbientCommand : Command, ITaggedCommand
     {
-        #region Properties
-
         /// <summary>
         /// Gets or sets the intensity.
         /// </summary>
@@ -30,7 +24,5 @@
         [DefaultValue("")]
         [Property("tag")]
         public string Tag { get; set; } = String.Empty;
-
-        #endregion
     }
 }

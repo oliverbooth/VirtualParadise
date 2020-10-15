@@ -1,7 +1,5 @@
 ﻿namespace VirtualParadise.Scene.Serialization.Commands
 {
-    #region Using Directives
-
     using System;
     using System.ComponentModel;
     using System.Text;
@@ -9,16 +7,12 @@
     using Parsers;
     using Parsing;
 
-    #endregion
-
     /// <summary>
     /// Represents a class which serializes the <c>sign</c> command.
     /// </summary>
     [Command("sign", typeof(SignCommandParser))]
     public class SignCommand : Command
     {
-        #region Properties
-
         /// <summary>
         /// Gets or sets the text alignment.
         /// </summary>
@@ -72,10 +66,6 @@
         [Property("vmargin")]
         public double VerticalMargin { get; set; } = 0.0;
 
-        #endregion
-
-        #region Methods
-
         /// <inheritdoc />
         public override string ToString()
         {
@@ -89,7 +79,5 @@
 
             return builder.ToString();
         }
-
-        #endregion
     }
 }

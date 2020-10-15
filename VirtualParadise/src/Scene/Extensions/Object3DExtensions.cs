@@ -1,11 +1,7 @@
 ﻿namespace VirtualParadise.Scene.Extensions
 {
-    #region Using Directives
-
     using System;
     using Serialization.Commands;
-
-    #endregion
 
     /// <summary>
     /// Extension methods for <see cref="Object3D"/>.

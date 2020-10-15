@@ -1,14 +1,10 @@
 ﻿namespace VirtualParadise.Scene.Serialization.Commands.Parsers
 {
-    #region Using Directives
-
     using System;
     using System.Linq;
     using System.Threading.Tasks;
     using Parsing;
     using VpNet;
-
-    #endregion
 
     /// <summary>
     /// Represents a class which implements the parser for <see cref="ShearCommand"/>.

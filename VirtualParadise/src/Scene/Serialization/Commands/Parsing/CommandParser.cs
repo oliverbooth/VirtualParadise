@@ -1,22 +1,16 @@
 ﻿namespace VirtualParadise.Scene.Serialization.Commands.Parsing
 {
-    #region Using Directives
-
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
     using System.Threading.Tasks;
 
-    #endregion
-
     /// <summary>
     /// Represents the base class for command parsers.
     /// </summary>
     public abstract class CommandParser
     {
-        #region Methods
-
         /// <summary>
         /// Parses the command.
         /// </summary>
@@ -67,7 +61,5 @@
             string remainder = String.Join(" ", remainderList);
             return (dict.ToDictionary(s => s.Key.ToUpperInvariant(), s => (object) s.Value), remainder);
         }
-
-        #endregion
     }
 }

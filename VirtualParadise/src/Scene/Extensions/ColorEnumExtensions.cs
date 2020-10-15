@@ -1,10 +1,6 @@
 ﻿namespace VirtualParadise.Scene.Extensions
 {
-    #region Using Directives
-
     using API;
-
-    #endregion
 
     /// <summary>
     /// Extension methods for <see cref="ColorEnum"/>.

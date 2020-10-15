@@ -1,7 +1,5 @@
 ﻿namespace VirtualParadise.Tests
 {
-    #region Using Directives
-
     using System;
     using System.Linq;
     using API;
@@ -9,13 +7,9 @@
     using Scene.Serialization.Commands;
     using Action = Scene.Serialization.Action;
 
-    #endregion
-
     [TestClass]
     public class CommandParserTest
     {
-        #region Methods
-
         /// <summary>
         /// Tests the <c>animate</c> command.
         /// </summary>
@@ -388,7 +382,5 @@
             Assert.AreEqual(String.Empty, visible.TargetName);
             Assert.AreEqual(-1.0,         visible.Radius);
         }
-
-        #endregion
     }
 }

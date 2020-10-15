@@ -1,12 +1,8 @@
 ﻿namespace VirtualParadise.Examples
 {
-    #region Using Directives
-
     using System;
     using Scene.Serialization.Fluent;
     using Action = Scene.Serialization.Action;
-
-    #endregion
 
     public static class FluentExample
     {

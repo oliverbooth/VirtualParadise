@@ -7,16 +7,10 @@
 
     public class SequenceBuilder
     {
-        #region Fields
-
         /// <summary>
         /// The current <see cref="Sequence"/> instance.
         /// </summary>
         private readonly Sequence sequence;
-
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SequenceBuilder"/> class.
@@ -26,10 +20,6 @@
         {
             this.sequence = new Sequence(name) {IsLooping = loop};
         }
-
-        #endregion
-
-        #region Properties
 
         public SequenceBuilder Append(FluentVP vp, double delay)
         {
@@ -63,7 +53,5 @@
         {
             return this.sequence;
         }
-
-        #endregion
     }
 }

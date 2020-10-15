@@ -1,13 +1,9 @@
 ﻿namespace VirtualParadise.Scene.Serialization.Commands
 {
-    #region Using Directives
-
     using System;
     using System.ComponentModel;
     using Parsers;
     using Parsing;
-
-    #endregion
 
     /// <summary>
     /// Represents a class which serializes the <c>texture</c> command.
@@ -15,8 +11,6 @@
     [Command("texture", typeof(CommandDefaultParser<TextureCommand>))]
     public class TextureCommand : Command, ITaggedCommand
     {
-        #region Properties
-
         /// <summary>
         /// Gets or sets the texture mask.
         /// </summary>
@@ -36,7 +30,5 @@
         /// </summary>
         [Parameter(0, "texture")]
         public string Texture { get; set; } = String.Empty;
-
-        #endregion
     }
 }

@@ -1,13 +1,9 @@
 ﻿namespace VirtualParadise.Scene
 {
-    #region Using Directives
-
     using System;
     using System.Threading.Tasks;
     using VpNet;
     using Action = Serialization.Action;
-
-    #endregion
 
     /// <summary>
     /// Represents a world object.
@@ -17,8 +13,6 @@
                             IEquatable<IObject3D>,
                             IEquatable<IObject>
     {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Object3D"/> class.
         /// </summary>
@@ -27,10 +21,6 @@
         {
             this.ID = id;
         }
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Gets or sets the object action.
@@ -69,10 +59,6 @@
 
         /// <inheritdoc />
         ObjectType IObject.Type => ObjectType.Object3D;
-
-        #endregion
-
-        #region Methods
 
         /// <summary>
         /// Converts an instance of <see cref="VpObject"/> to a new instance of <see cref="ParticleEmitter"/>.
@@ -135,7 +121,5 @@
         {
             return this.ID;
         }
-
-        #endregion
     }
 }

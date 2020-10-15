@@ -1,7 +1,5 @@
 ﻿namespace VirtualParadise.Scene.Serialization
 {
-    #region Using Directives
-
     using System;
     using System.Collections.Generic;
     using System.Reflection;
@@ -11,12 +9,8 @@
     using Commands.Parsing;
     using Triggers;
 
-    #endregion
-
     public static class ActionParser
     {
-        #region Fields
-
         private const char CommandChar = ',';
 
         private const char TriggerChar = ';';
@@ -30,10 +24,6 @@
         /// Backing field for <see cref="RegisteredTriggers"/>.
         /// </summary>
         private static readonly Dictionary<string, Type> registeredTriggers = new Dictionary<string, Type>();
-
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Static constructor for <see cref="ActionParser"/>.
@@ -74,10 +64,6 @@
             RegisterCommand<VisibleCommand>();
         }
 
-        #endregion
-
-        #region Properties
-
         /// <summary>
         /// Gets the commands registered to the parser.
         /// </summary>
@@ -89,10 +75,6 @@
         /// </summary>
         public static IEnumerable<Type> RegisteredTriggers =>
             registeredTriggers.Values;
-
-        #endregion
-
-        #region Methods
 
         /// <summary>
         /// Registers a command that is recognized by the parser.
@@ -343,7 +325,5 @@
 
             return Task.CompletedTask;
         }
-        
-        #endregion
     }
 }

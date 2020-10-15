@@ -1,14 +1,10 @@
 ﻿namespace VirtualParadise.Scene.Serialization.Commands
 {
-    #region Using Directives
-
     using System;
     using System.ComponentModel;
     using System.Text;
     using Parsers;
     using Parsing;
-
-    #endregion
 
     /// <summary>
     /// Represents a class which serializes the <c>rotate</c> command.
@@ -16,8 +12,6 @@
     [Command("rotate", typeof(RotateCommandParser))]
     public class RotateCommand : Command
     {
-        #region Properties
-
         /// <summary>
         /// Gets or sets the X axis rotation.
         /// </summary>
@@ -93,10 +87,6 @@
         [Property("wait")]
         public double Wait { get; set; } = 0.0;
 
-        #endregion
-
-        #region Methods
-
         /// <inheritdoc />
         public override string ToString()
         {
@@ -127,7 +117,5 @@
 
             return builder.ToString().Trim();
         }
-
-        #endregion
     }
 }

@@ -1,14 +1,10 @@
 ﻿namespace VirtualParadise.Scene.Extensions
 {
-    #region Using Directives
-
     using System;
     using Serialization.Commands;
     using VpNet;
     using Action = Serialization.Action;
     using Callback = System.Action<object, VpNet.ObjectClickArgsT<VpNet.Avatar, VpNet.VpObject>>;
-
-    #endregion
 
     public static class SdkExtensions
     {

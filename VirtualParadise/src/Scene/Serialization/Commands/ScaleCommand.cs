@@ -1,14 +1,10 @@
 ﻿namespace VirtualParadise.Scene.Serialization.Commands
 {
-    #region Using Directives
-
     using System;
     using System.ComponentModel;
     using System.Text;
     using Parsers;
     using Parsing;
-
-    #endregion
 
     /// <summary>
     /// Represents a class which serializes the <c>scale</c> command.
@@ -16,8 +12,6 @@
     [Command("scale", typeof(ScaleCommandParser))]
     public class ScaleCommand : Command
     {
-        #region Properties
-
         /// <summary>
         /// Gets or sets the X-axis scale.
         /// </summary>
@@ -40,10 +34,6 @@
         [Parameter(2, "z",
             Optional = true)]
         public double Z { get; set; } = 1.0;
-
-        #endregion
-
-        #region Methods
 
         /// <inheritdoc />
         public override string ToString()
@@ -75,7 +65,5 @@
 
             return builder.ToString().Trim();
         }
-
-        #endregion
     }
 }

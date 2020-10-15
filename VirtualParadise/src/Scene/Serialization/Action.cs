@@ -1,7 +1,5 @@
 ﻿namespace VirtualParadise.Scene.Serialization
 {
-    #region Using Directives
-
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -9,15 +7,11 @@
     using Commands;
     using Triggers;
 
-    #endregion
-
     /// <summary>
     /// Represents a serialized action.
     /// </summary>
     public sealed class Action
     {
-        #region Fields
-
         /// <summary>
         /// Represents an empty action.
         /// </summary>
@@ -28,18 +22,10 @@
         /// </summary>
         private readonly List<Trigger> triggers = new List<Trigger>();
 
-        #endregion
-
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Action"/> class.
         /// </summary>
         internal Action() { }
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Gets all commands within the <c>adone</c> trigger.
@@ -132,10 +118,6 @@
         public IEnumerable<Trigger> Triggers =>
             this.triggers.AsReadOnly();
 
-        #endregion
-
-        #region Methods
-
         /// <summary>
         /// Parses an action string.
         /// </summary>
@@ -200,7 +182,5 @@
 
             return String.Join(join, this.Triggers.Select(t => t.ToString(format).Trim()));
         }
-
-        #endregion
     }
 }

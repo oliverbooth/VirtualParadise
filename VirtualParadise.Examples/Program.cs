@@ -1,10 +1,6 @@
 ﻿namespace VirtualParadise.Examples
 {
-    #region Using Directives
-
     using System;
-
-    #endregion
 
     internal static class Program
     {

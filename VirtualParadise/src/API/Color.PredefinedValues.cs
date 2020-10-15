@@ -2,8 +2,6 @@
 {
     public partial struct Color
     {
-        #region Predefined Values
-
         public static Color Aquamarine => new Color(0x70, 0xDB, 0x93);
 
         public static Color Black => new Color(0x00, 0x00, 0x00);
@@ -69,7 +67,5 @@
         public static Color White => new Color(0xFF, 0xFF, 0xFF);
 
         public static Color Yellow => new Color(0xFF, 0xFF, 0x00);
-
-        #endregion
     }
 }

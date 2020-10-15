@@ -1,14 +1,10 @@
 ﻿namespace VirtualParadise.Scene.Serialization
 {
-    #region Using Directives
-
     using System;
     using System.Runtime.Serialization;
     using System.Security;
     using Commands;
     using Triggers;
-
-    #endregion
 
     /// <summary>
     /// Represents a mutable action.
@@ -17,14 +13,8 @@
     [Serializable]
     public sealed class ActionBuilder : ISerializable
     {
-        #region Fields
-
         private readonly Action action = new Action();
         private Trigger currentTrigger;
-
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ActionBuilder"/> class.
@@ -37,10 +27,6 @@
             : this()
         {
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>
         /// Adds a command to the builder by adding it to the current trigger.
@@ -86,7 +72,5 @@
 
             info.AddValue("m_StringValue", this.action);
         }
-
-        #endregion
     }
 }

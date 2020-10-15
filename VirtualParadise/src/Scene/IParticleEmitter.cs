@@ -1,14 +1,10 @@
 ﻿namespace VirtualParadise.Scene
 {
-    #region Using Directives
-
     using System.ComponentModel;
     using API;
     using Serialization.Commands.Parsing;
     using VpNet;
     using Color = API.Color;
-
-    #endregion
 
     /// <summary>
     /// Represents a particle emitter object.

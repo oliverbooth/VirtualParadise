@@ -1,11 +1,7 @@
 ﻿namespace VirtualParadise.Scene.Serialization.Commands.Parsing
 {
-    #region Using Directives
-
     using System;
     using System.Threading.Tasks;
-
-    #endregion
 
     /// <summary>
     /// Represents the base class for command parsers.
@@ -13,8 +9,6 @@
     public abstract class CommandParser<TCommand> : CommandParser
         where TCommand : Command
     {
-        #region Methods
-
         /// <summary>
         /// Parses the command.
         /// </summary>
@@ -32,7 +26,5 @@
             return await base.ParseAsync(type, input)
                              .ConfigureAwait(false);
         }
-
-        #endregion
     }
 }

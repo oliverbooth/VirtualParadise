@@ -1,14 +1,10 @@
 ﻿namespace VirtualParadise.Scene.Serialization.Commands
 {
-    #region Using Directives
-
     using System;
     using System.Text;
     using Parsers;
     using Parsing;
     using VpNet;
-
-    #endregion
 
     /// <summary>
     /// Represents a class which serializes the <c>shear</c> command.
@@ -16,8 +12,6 @@
     [Command("shear", typeof(ShearCommandParser))]
     public class ShearCommand : Command
     {
-        #region Properties
-
         /// <summary>
         /// Gets or sets the positive shear.
         /// </summary>
@@ -27,10 +21,6 @@
         /// Gets or sets the negative shear.
         /// </summary>
         public Vector3 Negative { get; set; } = new Vector3(0.0);
-
-        #endregion
-
-        #region Methods
 
         /// <inheritdoc />
         /// <remarks>The <c>shear</c> command has an enumerable argument set, and so its <see cref="ToString"/>
@@ -58,7 +48,5 @@
 
             return builder.ToString().Trim();
         }
-
-        #endregion
     }
 }

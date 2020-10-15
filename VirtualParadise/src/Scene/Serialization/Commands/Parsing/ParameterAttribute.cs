@@ -1,11 +1,7 @@
 ﻿namespace VirtualParadise.Scene.Serialization.Commands.Parsing
 {
-    #region Using Directives
-
     using System;
     using X10D;
-
-    #endregion
 
     /// <summary>
     /// Represents an attribute to be attached to properties in a <see cref="Command"/> derived type
@@ -15,8 +11,6 @@
     [AttributeUsage(AttributeTargets.Property)]
     public sealed class ParameterAttribute : Attribute
     {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ParameterAttribute"/> class.
         /// </summary>
@@ -28,10 +22,6 @@
             this.Name     = name?.ToUpperInvariant() ?? String.Empty;
             this.Sanitize = o => o;
         }
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Gets or sets a value indicating how the parameter should be parsed or written in the event it's a boolean.
@@ -57,7 +47,5 @@
         /// Gets or sets the sanitize function
         /// </summary>
         public Func<object, object> Sanitize { get; set; }
-
-        #endregion
     }
 }

@@ -7,8 +7,6 @@ namespace VirtualParadise.Scene.Serialization.Fluent
     /// </summary>
     public static class VP
     {
-        #region Triggers
-
         public static FluentVP Activate()
         {
             return new FluentVP().Activate();
@@ -33,7 +31,5 @@ namespace VirtualParadise.Scene.Serialization.Fluent
         {
             return new FluentVP().Create();
         }
-
-        #endregion
     }
 }

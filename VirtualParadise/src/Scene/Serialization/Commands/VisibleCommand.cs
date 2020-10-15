@@ -1,12 +1,8 @@
 ﻿namespace VirtualParadise.Scene.Serialization.Commands
 {
-    #region Using Directives
-
     using System.ComponentModel;
     using Parsers;
     using Parsing;
-
-    #endregion
 
     /// <summary>
     /// Represents a class which serializes the <c>visible</c> command.
@@ -14,8 +10,6 @@
     [Command("visible", typeof(VisibleCommandParser))]
     public class VisibleCommand : Command
     {
-        #region Properties
-
         /// <summary>
         /// Gets or sets the radius of influence.
         /// </summary>
@@ -29,7 +23,5 @@
         [DefaultValue(true)]
         [Parameter(0, "visible")]
         public bool IsVisible { get; set; } = true;
-
-        #endregion
     }
 }

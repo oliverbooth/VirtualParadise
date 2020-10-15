@@ -1,7 +1,5 @@
 ﻿namespace VirtualParadise.Scene.Serialization.Commands
 {
-    #region Using Directives
-
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -14,15 +12,11 @@
     using Internal;
     using Parsing;
 
-    #endregion
-
     /// <summary>
     /// Represents the base class for all commands.
     /// </summary>
     public abstract class Command
     {
-        #region Constructors
-
         protected Command()
         {
             if (String.IsNullOrWhiteSpace(this.CommandName)) {
@@ -30,10 +24,6 @@
                    .ToUpperInvariant();
             }
         }
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Gets the command name.
@@ -73,10 +63,6 @@
         /// Gets the properties passed to this command.
         /// </summary>
         public IDictionary<string, object> Properties { get; internal set; } = new Dictionary<string, object>();
-
-        #endregion
-
-        #region Methods
 
         /// <inheritdoc />
         [SuppressMessage("Globalization",
@@ -343,7 +329,5 @@
 
             return value;
         }
-
-        #endregion
     }
 }

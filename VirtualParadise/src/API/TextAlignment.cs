@@ -1,10 +1,6 @@
 ﻿namespace VirtualParadise.API
 {
-    #region Using Directives
-
     using System.ComponentModel;
-
-    #endregion
 
     /// <summary>
     /// An enumeration of text alignments.

@@ -1,20 +1,14 @@
 ﻿namespace VirtualParadise.Scene.Sequencing
 {
-    #region Using Directives
-
     using System;
     using System.Collections.Generic;
     using Serialization.Commands;
-
-    #endregion
 
     /// <summary>
     /// Represents a sequence frame.
     /// </summary>
     public class Frame
     {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Frame"/> class.
         /// </summary>
@@ -23,10 +17,6 @@
         {
             this.Sequence = sequence;
         }
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Gets the commands in this frame.
@@ -42,7 +32,5 @@
         /// Gets the sequence that this frame is in.
         /// </summary>
         public Sequence Sequence { get; }
-
-        #endregion
     }
 }

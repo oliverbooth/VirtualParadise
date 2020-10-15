@@ -1,11 +1,7 @@
 ﻿namespace VirtualParadise.Scene
 {
-    #region Using Directives
-
     using System;
     using VpNet;
-
-    #endregion
 
     /// <summary>
     /// Represents an object.

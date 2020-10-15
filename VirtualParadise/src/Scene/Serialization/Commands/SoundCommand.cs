@@ -1,12 +1,8 @@
 ﻿namespace VirtualParadise.Scene.Serialization.Commands
 {
-    #region Using Directives
-
     using System.ComponentModel;
     using Parsers;
     using Parsing;
-
-    #endregion
 
     /// <summary>
     /// Represents a class which serializes the <c>sound</c> command.
@@ -14,8 +10,6 @@
     [Command("sound", typeof(CommandDefaultParser<SoundCommand>))]
     public class SoundCommand : Command
     {
-        #region Properties
-
         /// <summary>
         /// Gets or sets the file name or URL of the sound effect.
         /// </summary>
@@ -65,7 +59,5 @@
             get => !this.IsLooping;
             set => this.IsLooping = !value;
         }
-
-        #endregion
     }
 }

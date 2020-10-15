@@ -1,10 +1,6 @@
 ﻿namespace VirtualParadise.Scene.Serialization
 {
-    #region Using Directives
-
     using System.ComponentModel;
-
-    #endregion
 
     /// <summary>
     /// An enumeration of action formats.
